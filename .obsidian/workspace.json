@@ -1,0 +1,192 @@
+{
+  "main": {
+    "id": "ab904c494a9ca6ca",
+    "type": "split",
+    "children": [
+      {
+        "id": "a20f09276538d9f0",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0905b7c22bfeb4a5",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "对话备份/亨通光电-20260221-1453.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "亨通光电-20260221-1453"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "20aef35c1d7e93c8",
+    "type": "split",
+    "children": [
+      {
+        "id": "9fcaf56f7781fc06",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "d3f1a45e6ac9bab4",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "文件列表"
+            }
+          },
+          {
+            "id": "4fa4cfb0eb5667f9",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "搜索"
+            }
+          },
+          {
+            "id": "4dc394d2179d71b5",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "书签"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "17f8c9fd7960a72e",
+    "type": "split",
+    "children": [
+      {
+        "id": "5fdcd3fb5c8d90f9",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0986f821c069f9d5",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "对话备份/亨通光电-20260221-1453.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "亨通光电-20260221-1453 的反向链接列表"
+            }
+          },
+          {
+            "id": "a9225a8f79b52aca",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "对话备份/亨通光电-20260221-1453.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "亨通光电-20260221-1453 的出链列表"
+            }
+          },
+          {
+            "id": "e86f9fc4424a2d98",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "标签"
+            }
+          },
+          {
+            "id": "d0a6e42d4b5d0597",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "添加笔记属性"
+            }
+          },
+          {
+            "id": "b2766696a553f3da",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "对话备份/亨通光电-20260221-1453.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "亨通光电-20260221-1453 的大纲"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:打开快速切换": false,
+      "graph:查看关系图谱": false,
+      "canvas:新建白板": false,
+      "daily-notes:打开/创建今天的日记": false,
+      "templates:插入模板": false,
+      "command-palette:打开命令面板": false,
+      "bases:新建数据库": false
+    }
+  },
+  "active": "0905b7c22bfeb4a5",
+  "lastOpenFiles": [
+    "AGENTS.md",
+    "对话备份/亨通光电-20260221-1453.md",
+    "对话备份"
+  ]
+}

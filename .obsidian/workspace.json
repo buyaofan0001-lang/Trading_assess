@@ -180,11 +180,13 @@
       "daily-notes:打开/创建今天的日记": false,
       "templates:插入模板": false,
       "command-palette:打开命令面板": false,
-      "bases:新建数据库": false
+      "bases:新建数据库": false,
+      "obsidian-git:Open Git source control": false
     }
   },
-  "active": "0905b7c22bfeb4a5",
+  "active": "d3f1a45e6ac9bab4",
   "lastOpenFiles": [
+    "对话备份/三花智控-20260221-1714.md",
     "AGENTS.md",
     "对话备份/亨通光电-20260221-1453.md",
     "对话备份"

@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "对话备份/亨通光电-20260221-1453.md",
+                "file": "对话备份/三花智控-20260221-1714.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "亨通光电-20260221-1453"
+              "title": "三花智控-20260221-1714"
             }
           }
         ]
@@ -94,7 +94,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "对话备份/亨通光电-20260221-1453.md",
+                "file": "对话备份/三花智控-20260221-1714.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -104,7 +104,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "亨通光电-20260221-1453 的反向链接列表"
+              "title": "三花智控-20260221-1714 的反向链接列表"
             }
           },
           {
@@ -113,12 +113,12 @@
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "对话备份/亨通光电-20260221-1453.md",
+                "file": "对话备份/三花智控-20260221-1714.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
               "icon": "links-going-out",
-              "title": "亨通光电-20260221-1453 的出链列表"
+              "title": "三花智控-20260221-1714 的出链列表"
             }
           },
           {
@@ -156,13 +156,13 @@
             "state": {
               "type": "outline",
               "state": {
-                "file": "对话备份/亨通光电-20260221-1453.md",
+                "file": "对话备份/三花智控-20260221-1714.md",
                 "followCursor": false,
                 "showSearch": false,
                 "searchQuery": ""
               },
               "icon": "lucide-list",
-              "title": "亨通光电-20260221-1453 的大纲"
+              "title": "三花智控-20260221-1714 的大纲"
             }
           }
         ]
@@ -184,11 +184,11 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "d3f1a45e6ac9bab4",
+  "active": "0905b7c22bfeb4a5",
   "lastOpenFiles": [
+    "对话备份/亨通光电-20260221-1453.md",
     "对话备份/三花智控-20260221-1714.md",
     "AGENTS.md",
-    "对话备份/亨通光电-20260221-1453.md",
     "对话备份"
   ]
 }

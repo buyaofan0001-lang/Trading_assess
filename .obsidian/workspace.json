@@ -184,8 +184,13 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "0905b7c22bfeb4a5",
+  "active": "d3f1a45e6ac9bab4",
   "lastOpenFiles": [
+    "industry_scoring/sample_industry_scores.csv",
+    "industry_scoring/README.md",
+    "industry_scoring/sample_stock_metrics.csv",
+    "industry_scoring/calc_industry_scores.py",
+    "industry_scoring",
     "复盘/2026-2-24.md",
     "对话备份/兆易创新.md",
     "复盘",

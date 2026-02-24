@@ -186,6 +186,12 @@
   },
   "active": "d3f1a45e6ac9bab4",
   "lastOpenFiles": [
+    "industry_scoring/daily_outputs",
+    "industry_scoring/__pycache__/daily_industry_ranking.cpython-312.pyc",
+    "industry_scoring/__pycache__/calc_industry_scores.cpython-312.pyc",
+    "industry_scoring/__pycache__",
+    "industry_scoring/run_daily_ranking.sh",
+    "industry_scoring/daily_industry_ranking.py",
     "industry_scoring/sample_industry_scores.csv",
     "industry_scoring/README.md",
     "industry_scoring/sample_stock_metrics.csv",
@@ -201,7 +207,6 @@
     "AGENTS.md",
     "对话备份/三花智控-20260221-1738.md",
     "对话备份/思源电气-20260222-1620.md",
-    "对话备份/三花智控-20260221-1714.md",
-    "对话备份"
+    "对话备份/三花智控-20260221-1714.md"
   ]
 }

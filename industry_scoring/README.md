@@ -52,3 +52,61 @@ python3 /Users/liuguan1/Documents/github/Trading_assess/industry_scoring/calc_in
 - `industry_prosperity_score`：行业景气总分
 - `pass_to_s2`：是否通过 S1（1=通过，0=不通过）
 
+## 5. 实时数据版（AkShare + TuShare）
+
+新增脚本：
+
+- `/Users/liuguan1/Documents/github/Trading_assess/industry_scoring/daily_industry_ranking.py`
+- `/Users/liuguan1/Documents/github/Trading_assess/industry_scoring/run_daily_ranking.sh`
+
+### 5.1 用法
+
+先设置 TuShare Token（建议）：
+
+```bash
+export TUSHARE_TOKEN="你的token"
+```
+
+运行当日行业排行榜（全行业）：
+
+```bash
+python3 /Users/liuguan1/Documents/github/Trading_assess/industry_scoring/daily_industry_ranking.py \
+  --date "$(date +%F)" \
+  --output-dir /Users/liuguan1/Documents/github/Trading_assess/industry_scoring/daily_outputs
+```
+
+仅跑指定行业：
+
+```bash
+python3 /Users/liuguan1/Documents/github/Trading_assess/industry_scoring/daily_industry_ranking.py \
+  --date 2026-02-24 \
+  --industries "存储芯片,电网设备,光模块" \
+  --output-dir /Users/liuguan1/Documents/github/Trading_assess/industry_scoring/daily_outputs
+```
+
+不使用 TuShare（仅 AkShare，F/O 会变成中性）：
+
+```bash
+python3 /Users/liuguan1/Documents/github/Trading_assess/industry_scoring/daily_industry_ranking.py \
+  --date "$(date +%F)" \
+  --disable-tushare
+```
+
+### 5.2 输出
+
+- 逐股指标：`daily_outputs/stock_metrics_<YYYY-MM-DD>.csv`
+- 行业排行榜：`daily_outputs/industry_scores_<YYYY-MM-DD>.csv`
+
+### 5.3 每日自动运行（cron 示例）
+
+打开定时任务：
+
+```bash
+crontab -e
+```
+
+加入一条（每个交易日 18:05 运行）：
+
+```bash
+5 18 * * 1-5 /Users/liuguan1/Documents/github/Trading_assess/industry_scoring/run_daily_ranking.sh >> /Users/liuguan1/Documents/github/Trading_assess/industry_scoring/daily_outputs/cron.log 2>&1
+```

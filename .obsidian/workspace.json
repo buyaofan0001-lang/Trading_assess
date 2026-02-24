@@ -186,10 +186,10 @@
   },
   "active": "d3f1a45e6ac9bab4",
   "lastOpenFiles": [
-    "industry_scoring/daily_outputs",
     "industry_scoring/__pycache__/daily_industry_ranking.cpython-312.pyc",
     "industry_scoring/__pycache__/calc_industry_scores.cpython-312.pyc",
     "industry_scoring/__pycache__",
+    "industry_scoring/daily_outputs",
     "industry_scoring/run_daily_ranking.sh",
     "industry_scoring/daily_industry_ranking.py",
     "industry_scoring/sample_industry_scores.csv",

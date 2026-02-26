@@ -1,0 +1,10 @@
+{"ts": "2026-02-26 14:23:41", "run_id": "20260226-142341", "event": "run_started"}
+{"ts": "2026-02-26 14:23:41", "run_id": "20260226-142341", "agent": "macro", "event": "succeeded", "attempt": 1}
+{"ts": "2026-02-26 14:23:41", "run_id": "20260226-142341", "agent": "bear", "event": "succeeded", "attempt": 1}
+{"ts": "2026-02-26 14:23:41", "run_id": "20260226-142341", "agent": "technical", "event": "succeeded", "attempt": 1}
+{"ts": "2026-02-26 14:23:41", "run_id": "20260226-142341", "event": "run_succeeded"}
+{"ts": "2026-02-26 14:23:53", "run_id": "20260226-142341", "event": "run_started"}
+{"ts": "2026-02-26 14:23:53", "run_id": "20260226-142341", "agent": "macro", "event": "resume_hit", "path": "/Users/liuguan1/Documents/github/Trading_assess/subagents/runs/20260226-142341/macro/output.json"}
+{"ts": "2026-02-26 14:23:53", "run_id": "20260226-142341", "agent": "bear", "event": "resume_hit", "path": "/Users/liuguan1/Documents/github/Trading_assess/subagents/runs/20260226-142341/bear/output.json"}
+{"ts": "2026-02-26 14:23:53", "run_id": "20260226-142341", "agent": "technical", "event": "resume_hit", "path": "/Users/liuguan1/Documents/github/Trading_assess/subagents/runs/20260226-142341/technical/output.json"}
+{"ts": "2026-02-26 14:23:53", "run_id": "20260226-142341", "event": "run_succeeded"}

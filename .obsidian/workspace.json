@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "复盘/2026-2-25.md",
+                "file": "对话备份/长电科技.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2026-2-25"
+              "title": "长电科技"
             }
           }
         ]
@@ -184,8 +184,18 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "0905b7c22bfeb4a5",
+  "active": "d3f1a45e6ac9bab4",
   "lastOpenFiles": [
+    "subagents/agent_runner.py",
+    "subagents/repair.py",
+    "subagents/validator.py",
+    "subagents/state_store.py",
+    "对话备份/兆易创新.md",
+    "对话备份/长电科技.md",
+    "subagents/空头对抗审计官.md",
+    "subagents/技术执行判定官.md",
+    "subagents/宏观行业研判官.md",
+    "复盘/2026-2-25.md",
     "subagents/prompts/09_archive_clerk.md",
     "subagents/prompts/08_dual_validator_executor.md",
     "subagents/prompts/07_technical_mapper.md",
@@ -200,15 +210,12 @@
     "subagents/README.md",
     "subagents",
     "复盘/2026-2-24.md",
-    "复盘/2026-2-25.md",
     "Pasted image 20260225184438.png",
     "Pasted image 20260225184619.png",
     "Pasted image 20260225190803.png",
     "Pasted image 20260225191101.png",
     "Pasted image 20260225191153.png",
     "复盘/空 1.md",
-    "对话备份/长电科技.md",
-    "对话备份/兆易创新.md",
     "对话备份/空.md",
     "AGENTS.md",
     "industry_scoring/README.md",
@@ -216,14 +223,9 @@
     "industry_scoring/__pycache__/calc_industry_scores.cpython-312.pyc",
     "industry_scoring/__pycache__",
     "industry_scoring/daily_outputs",
-    "industry_scoring/run_daily_ranking.sh",
-    "industry_scoring/daily_industry_ranking.py",
-    "industry_scoring/sample_industry_scores.csv",
     "对话备份/亨通光电-20260221-1453.md",
     "对话备份/三花智控-20260221-1725.md",
     "对话备份/思源电气-20260222-1611.md",
-    "对话备份/三花智控-20260221-1738.md",
-    "对话备份/思源电气-20260222-1620.md",
-    "对话备份/三花智控-20260221-1714.md"
+    "对话备份/三花智控-20260221-1738.md"
   ]
 }

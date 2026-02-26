@@ -186,11 +186,13 @@
   },
   "active": "0905b7c22bfeb4a5",
   "lastOpenFiles": [
+    "交易记录.xlsx",
+    "对话备份/思源电气-20260222-1611.md",
     "对话备份/兆易创新.md",
+    "对话备份/长电科技.md",
     "subagents/runs/20260226-142341/report.md",
     "交易记录模板.xlsx",
     "subagents/runs/20260226-142341/summary.md",
-    "对话备份/长电科技.md",
     "subagents/__pycache__/orchestrate_report.cpython-312.pyc",
     "subagents/__pycache__/validator.cpython-312.pyc",
     "subagents/__pycache__/state_store.cpython-312.pyc",
@@ -224,7 +226,6 @@
     "对话备份/空.md",
     "AGENTS.md",
     "industry_scoring/README.md",
-    "对话备份/亨通光电-20260221-1453.md",
-    "对话备份/三花智控-20260221-1725.md"
+    "对话备份/亨通光电-20260221-1453.md"
   ]
 }

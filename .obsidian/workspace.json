@@ -186,6 +186,8 @@
   },
   "active": "d3f1a45e6ac9bab4",
   "lastOpenFiles": [
+    "交易画像/交易画像-20260226.md",
+    "交易画像",
     "对话备份/空.md",
     "对话备份/长电科技.md",
     "交易记录.xlsx",
@@ -201,7 +203,6 @@
     "subagents/__pycache__/agent_runner.cpython-312.pyc",
     "subagents/__pycache__",
     "subagents/runs/state.db-journal",
-    "subagents/runs/20260226-142341/technical/output.json",
     "subagents/空头对抗审计官.md",
     "subagents/技术执行判定官.md",
     "subagents/宏观行业研判官.md",

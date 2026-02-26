@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "对话备份/长电科技.md",
+                "file": "AGENTS.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "长电科技"
+              "title": "AGENTS"
             }
           }
         ]
@@ -186,10 +186,10 @@
   },
   "active": "0905b7c22bfeb4a5",
   "lastOpenFiles": [
+    "对话备份/长电科技.md",
     "交易记录.xlsx",
     "对话备份/思源电气-20260222-1611.md",
     "对话备份/兆易创新.md",
-    "对话备份/长电科技.md",
     "subagents/runs/20260226-142341/report.md",
     "交易记录模板.xlsx",
     "subagents/runs/20260226-142341/summary.md",
@@ -201,7 +201,6 @@
     "subagents/__pycache__",
     "subagents/runs/state.db-journal",
     "subagents/runs/20260226-142341/technical/output.json",
-    "subagents/runs/20260226-142341/technical/attempt_1.json",
     "subagents/空头对抗审计官.md",
     "subagents/技术执行判定官.md",
     "subagents/宏观行业研判官.md",

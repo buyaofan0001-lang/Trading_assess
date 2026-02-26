@@ -1,0 +1,132 @@
+version: 1
+name: trading-assess-subagents
+owner: Trading_assess
+controller:
+  id: master_orchestrator
+  objective: "按 AGENTS.md 固定流程编排，并在保证证据质量前提下最大化并行效率"
+shared_contract:
+  input_fields:
+    - stock_code
+    - stock_name
+    - market
+    - plan_thesis
+    - holding_period
+    - catalysts
+    - trade_type
+    - chart_images
+  global_hard_rules:
+    - "仅做多，禁止做空/融券/反向交易"
+    - "关键结论必须双源交叉（一级+二级优先）"
+    - "无法确认的信息统一标注：未证实/待验证"
+    - "所有结论写明日期、来源、可访问性校验日期"
+    - "术语分层：事件层/技术层/因果层，禁止跨层推导"
+  evidence_fields:
+    - source_id
+    - title
+    - url
+    - publisher
+    - publish_date
+    - access_check_date
+    - level
+parallel_groups:
+  - id: G0
+    description: "预检阶段（串行）"
+    members: [intake_gatekeeper]
+  - id: G1
+    description: "信息收集阶段（可并行）"
+    members: [macro_radar, industry_researcher, sentiment_quant]
+  - id: G2
+    description: "论证阶段（半并行）"
+    members: [thesis_decomposer, bear_challenger, technical_mapper]
+  - id: G3
+    description: "决策与归档阶段（串行）"
+    members: [dual_validator_executor, archive_clerk]
+agents:
+  - id: intake_gatekeeper
+    stage: G0
+    depends_on: []
+    prompt: ./prompts/01_intake_gatekeeper.md
+    produces:
+      - normalized_input
+      - missing_inputs
+      - run_id
+      - scope_lock
+  - id: macro_radar
+    stage: G1
+    depends_on: [intake_gatekeeper]
+    prompt: ./prompts/02_macro_radar.md
+    produces:
+      - macro_risk_list
+      - macro_positive_list
+      - macro_sources
+  - id: industry_researcher
+    stage: G1
+    depends_on: [intake_gatekeeper]
+    prompt: ./prompts/03_industry_researcher.md
+    produces:
+      - policy_view
+      - prosperity_view
+      - value_space_view
+      - industry_sources
+  - id: sentiment_quant
+    stage: G1
+    depends_on: [intake_gatekeeper]
+    prompt: ./prompts/04_sentiment_quant.md
+    produces:
+      - sentiment_window
+      - sentiment_sample_size
+      - sentiment_distribution
+      - sentiment_sources
+  - id: thesis_decomposer
+    stage: G2
+    depends_on: [macro_radar, industry_researcher, sentiment_quant]
+    prompt: ./prompts/05_thesis_decomposer.md
+    produces:
+      - claim_list
+      - claim_evidence_map
+      - claim_status_matrix
+  - id: bear_challenger
+    stage: G2
+    depends_on: [thesis_decomposer]
+    prompt: ./prompts/06_bear_challenger.md
+    produces:
+      - bear_case_list
+      - bear_source_pack
+      - unresolved_conflicts
+  - id: technical_mapper
+    stage: G2
+    depends_on: [intake_gatekeeper]
+    prompt: ./prompts/07_technical_mapper.md
+    produces:
+      - latest_price
+      - supports_resistances
+      - fvg_ob_map
+      - pattern_status
+      - technical_invalidation
+  - id: dual_validator_executor
+    stage: G3
+    depends_on: [bear_challenger, technical_mapper]
+    prompt: ./prompts/08_dual_validator_executor.md
+    produces:
+      - logic_verdict
+      - technical_verdict
+      - falsification_triggers
+      - execution_and_fail_script
+  - id: archive_clerk
+    stage: G3
+    depends_on: [dual_validator_executor]
+    prompt: ./prompts/09_archive_clerk.md
+    produces:
+      - dialogue_backup_path
+      - review_archive_path
+      - append_status
+quality_gates:
+  - id: Q1
+    when: "after G1"
+    rule: "宏观/行业/情绪三块均有来源且可访问校验通过"
+  - id: Q2
+    when: "after G2"
+    rule: "至少 8 条利空且覆盖财务/行业景气/政策/公告"
+  - id: Q3
+    when: "before final"
+    rule: "逻辑与技术任一不成立则否定交易计划"

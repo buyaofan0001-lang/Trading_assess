@@ -18,6 +18,13 @@ from pathlib import Path
 from typing import Any, Dict, Iterable, List, Set
 
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+FUNDAMENTAL_KEYS = (
+    "收入结构",
+    "利润质量",
+    "现金流质量",
+    "估值与预期",
+    "催化财务映射",
+)
 
 
 class ValidationError(Exception):
@@ -144,6 +151,7 @@ def render_report(
     policy = require(industry, "政策风向")
     prosperity = require(industry, "行业景气度")
     upside = require(industry, "未来增值空间")
+    fundamental = require(macro, "基本面分析检查")
 
     bear_list = require(bear, "空头对抗")
     bear_rows = ensure_list(require(bear_list, "利空"), "空头对抗.利空")
@@ -171,6 +179,17 @@ def render_report(
         f"- 政策风向: {policy['结论']}（来源: {', '.join(policy['证据来源'])}）",
         f"- 行业景气度: {prosperity['结论']}（来源: {', '.join(prosperity['证据来源'])}）",
         f"- 未来增值空间: {upside['结论']}（来源: {', '.join(upside['证据来源'])}）",
+        "",
+        "### 基本面分析检查",
+    ]
+
+    for key in FUNDAMENTAL_KEYS:
+        node = fundamental[key]
+        lines.append(
+            f"- {key}: {node['结论']}（来源: {', '.join(node['证据来源'])}; 日期: {node['日期']}; 口径: {node['统计口径']}）"
+        )
+
+    lines += [
         "",
         "### 宏观清单（风险）",
         table_md(risks),
@@ -242,6 +261,9 @@ def validate_payloads(
 
     industry = require(macro, "行业深研")
     macro_sources = require(macro, "sources")
+    if not isinstance(macro_sources, dict):
+        raise ValidationError("macro.sources must be object")
+
     for k in ("政策风向", "行业景气度", "未来增值空间"):
         node = require(industry, k)
         ensure_non_empty_str(node.get("结论"), f"行业深研.{k}.结论")
@@ -252,8 +274,24 @@ def validate_payloads(
             if src_id not in macro_sources:
                 raise ValidationError(f"行业深研.{k} 引用了不存在的来源编号: {src_id}")
 
-    if not isinstance(macro_sources, dict):
-        raise ValidationError("macro.sources must be object")
+    fundamental = require(macro, "基本面分析检查")
+    if not isinstance(fundamental, dict):
+        raise ValidationError("基本面分析检查 must be object")
+    for key in FUNDAMENTAL_KEYS:
+        node = require(fundamental, key)
+        if not isinstance(node, dict):
+            raise ValidationError(f"基本面分析检查.{key} must be object")
+        ensure_non_empty_str(node.get("结论"), f"基本面分析检查.{key}.结论")
+        refs = ensure_list(node.get("证据来源"), f"基本面分析检查.{key}.证据来源")
+        if not refs:
+            raise ValidationError(f"基本面分析检查.{key}.证据来源 cannot be empty")
+        for src_id in refs:
+            if src_id not in macro_sources:
+                raise ValidationError(f"基本面分析检查.{key} 引用了不存在的来源编号: {src_id}")
+        value_date = ensure_non_empty_str(node.get("日期"), f"基本面分析检查.{key}.日期")
+        ensure_date(value_date, f"基本面分析检查.{key}.日期")
+        ensure_non_empty_str(node.get("统计口径"), f"基本面分析检查.{key}.统计口径")
+
     validate_sources(macro_sources, required_ids=risk_ids | pos_ids, label="macro.sources")
 
     bear_list = require(bear, "空头对抗")

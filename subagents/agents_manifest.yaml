@@ -26,18 +26,21 @@ agents:
       - "assumption_and_gap_log"
 
   宏观行业研判官:
-    role: "宏观扫雷 + 行业深研"
+    role: "宏观扫雷 + 行业深研 + 基本面分析检查"
     responsibilities:
       - "90天窗口输出宏观风险清单（>=8）"
       - "90天窗口输出宏观利好清单（>=8）"
       - "输出行业三维结论：政策风向/行业景气度/未来增值空间"
+      - "输出基本面分析检查：收入结构/利润质量/现金流质量/估值与预期/催化财务映射"
     required_inputs:
       - "标的所属申万一级行业"
       - "指数、政策、景气、美国同业动态数据"
+      - "公司财报与公告、估值与一致预期数据"
     outputs:
       - "macro_risks"
       - "macro_positives"
       - "industry_research"
+      - "fundamental_check"
       - "sources"
 
   空头对抗审计官:

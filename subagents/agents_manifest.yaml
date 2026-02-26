@@ -1,0 +1,75 @@
+version: "1.0"
+workflow_name: "四代理协同交易验证"
+workflow_steps:
+  - 总控守门官
+  - 宏观行业研判官
+  - 空头对抗审计官
+  - 技术执行判定官
+
+agents:
+  总控守门官:
+    role: "流程编排与证据合规守门"
+    responsibilities:
+      - "校验用户输入完整性并拆分任务"
+      - "强制执行仅做多、无证据不下结论"
+      - "合并各代理输出并统一生成最终三段式报告"
+      - "执行主体一致性、双源交叉、时间口径、可访问性校验"
+    required_inputs:
+      - "标的信息"
+      - "交易计划"
+      - "宏观行业研判结果"
+      - "空头对抗结果"
+      - "技术执行结果"
+    outputs:
+      - "final_report_md"
+      - "evidence_registry"
+      - "assumption_and_gap_log"
+
+  宏观行业研判官:
+    role: "宏观扫雷 + 行业深研"
+    responsibilities:
+      - "90天窗口输出宏观风险清单（>=8）"
+      - "90天窗口输出宏观利好清单（>=8）"
+      - "输出行业三维结论：政策风向/行业景气度/未来增值空间"
+    required_inputs:
+      - "标的所属申万一级行业"
+      - "指数、政策、景气、美国同业动态数据"
+    outputs:
+      - "macro_risks"
+      - "macro_positives"
+      - "industry_research"
+      - "sources"
+
+  空头对抗审计官:
+    role: "系统化利空挖掘与审计"
+    responsibilities:
+      - "覆盖财务/行业景气/政策/公司公告四类利空"
+      - "输出利空清单（>=8）并逐条绑定来源"
+      - "覆盖不足时返回补证项"
+    required_inputs:
+      - "财务与公告证据池"
+      - "宏观行业证据池"
+    outputs:
+      - "bear_cases"
+      - "coverage_gaps"
+      - "sources"
+
+  技术执行判定官:
+    role: "技术定位 + 执行失效剧本"
+    responsibilities:
+      - "输出最新报价、支撑/阻力、FVG、OB"
+      - "识别最明显形态并给出失败关键位"
+      - "输出技术成立/失效条件"
+      - "生成出场条件与无条件砍仓条件"
+    required_inputs:
+      - "行情数据"
+      - "K线图（高精度时必须）"
+    outputs:
+      - "latest_price"
+      - "support_levels"
+      - "resistance_levels"
+      - "fvg_zones"
+      - "ob_zones"
+      - "pattern_and_fail_level"
+      - "technical_validation"
+      - "execution_script"

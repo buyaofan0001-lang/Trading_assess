@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "对话备份/兆易创新.md",
+                "file": "复盘/2026-3-4.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "兆易创新"
+              "title": "2026-3-4"
             }
           }
         ]
@@ -196,15 +196,16 @@
   },
   "active": "0905b7c22bfeb4a5",
   "lastOpenFiles": [
+    "复盘/2026-2-27.md",
+    "复盘/2026-3-4.md",
+    "对话备份/兆易创新.md",
     "交易画像/交易画像-20260226.md",
     "对话备份/亨通光电-20260221-1453.md",
     "对话备份/空.md",
     "对话备份/思源电气-20260222-1611.md",
-    "对话备份/兆易创新.md",
     "复盘/2026-2-24.md",
     "复盘/2026-2-26.md",
     "复盘/2026-2-25.md",
-    "复盘/2026-2-27.md",
     "CLAUDE.md",
     "AGENTS.md",
     "交易画像",
@@ -231,7 +232,6 @@
     "subagents/prompts/04_sentiment_quant.md",
     "subagents/prompts/03_industry_researcher.md",
     "subagents/prompts/02_macro_radar.md",
-    "subagents/prompts/01_intake_gatekeeper.md",
     "Pasted image 20260225184438.png",
     "Pasted image 20260225184619.png",
     "Pasted image 20260225190803.png",

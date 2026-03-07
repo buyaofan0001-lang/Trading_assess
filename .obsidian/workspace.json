@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "复盘/复盘模板.md",
+                "file": "对话备份/2026全国两会纪要与投资影响-截至2026-03-08.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "复盘模板"
+              "title": "2026全国两会纪要与投资影响-截至2026-03-08"
             }
           }
         ]
@@ -196,12 +196,14 @@
   },
   "active": "0905b7c22bfeb4a5",
   "lastOpenFiles": [
+    "对话备份/兆易创新.md",
+    "复盘/复盘模板.md",
+    "对话备份/2026全国两会纪要与投资影响-截至2026-03-08.md",
+    "2026全国两会纪要与投资影响-截至2026-03-08.md",
     "复盘/2026-2-27.md",
     "复盘/2026-3-4.md",
-    "复盘/复盘模板.md",
     "对话备份/铜行业分析.md",
     "对话备份/空.md",
-    "对话备份/兆易创新.md",
     "AGENTS.md",
     "对话备份/长电科技.md",
     "对话备份/铜市场.md",
@@ -230,8 +232,6 @@
     "subagents/宏观行业研判官.md",
     "subagents/prompts/09_archive_clerk.md",
     "subagents/prompts/08_dual_validator_executor.md",
-    "subagents/prompts/07_technical_mapper.md",
-    "subagents/prompts/06_bear_challenger.md",
     "Pasted image 20260225184438.png",
     "Pasted image 20260225184619.png",
     "Pasted image 20260225190803.png",

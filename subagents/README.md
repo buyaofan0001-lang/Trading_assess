@@ -1,17 +1,17 @@
-# 四代理协同工作流（无情绪代理）
+# 四代理协同工作流（可复用）
 
-本目录实现了 4 个中文 subagent 的落地骨架：
+本目录提供可直接复用的 4 个中文 subagent：
 - `总控守门官`
 - `宏观行业研判官`
 - `空头对抗审计官`
 - `技术执行判定官`
 
 ## 目录说明
-- `agents_manifest.yaml`：4 个代理的职责、输入、输出定义。
-- `*.md`：各代理可复用提示词模板。
-- `contracts.md`：统一数据契约。
-- `orchestrate_report.py`：总控脚本，负责校验并渲染最终报告。
-- `examples/*.json`：最小可运行样例。
+- `agents_manifest.yaml`：流程顺序、门槛、模板路径。
+- `*.md`：各代理可复用提示词模板（可直接给 subagent 使用）。
+- `contracts.md`：统一数据契约（含三层结论矩阵）。
+- `orchestrate_report.py`：总控脚本，执行门槛校验并渲染最终报告。
+- `examples/*.json`：最小可运行样例与调试输入。
 
 ## 快速运行
 ```bash
@@ -34,6 +34,7 @@ python3 /Users/liuguan1/Documents/github/Trading_assess/subagents/orchestrate_re
 - 日期格式必须 `YYYY-MM-DD`。
 - `来源编号` 必须能在 `sources` 中找到。
 - 技术验证、逻辑证伪、技术失效、出场/砍仓条件不能为空。
+- 支撑/阻力兼容两种格式：`[10.5, 10.2]` 或 `[{"价格":10.5,"依据":"前低"}]`。
 
 ## 输出
 - `report_example.md`：三段式交易验证报告（事实与对抗 / 验证结论 / 执行与失效）。
@@ -41,3 +42,8 @@ python3 /Users/liuguan1/Documents/github/Trading_assess/subagents/orchestrate_re
 ## 说明
 - 当前实现是“编排与校验层”，不负责联网抓取。
 - 你可让各 subagent 先产出 JSON，再用总控脚本统一收口。
+
+## 复用建议
+1. 复制 `examples/plan.json` 生成本次任务输入。
+2. 按 `agents_manifest.yaml` 的顺序派发代理，并将输出写入 `subagents/outputs/`。
+3. 执行 `orchestrate_report.py` 自动校验并生成最终报告。

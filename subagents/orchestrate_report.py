@@ -134,6 +134,18 @@ def sources_md(sources: Dict[str, Any], used_ids: List[str]) -> str:
     return "\n".join(lines)
 
 
+def format_levels(levels: List[Any]) -> str:
+    rendered: List[str] = []
+    for item in levels:
+        if isinstance(item, dict):
+            price = item.get("价格")
+            reason = item.get("依据", "")
+            rendered.append(f"{price}（{reason}）" if reason else str(price))
+        else:
+            rendered.append(str(item))
+    return ", ".join(rendered)
+
+
 def render_report(
     plan: Dict[str, Any],
     macro: Dict[str, Any],
@@ -236,8 +248,8 @@ def render_report(
         "",
         "## 技术面附注",
         f"- 最新报价: {tech_part['latest_price']}",
-        f"- 支撑位: {', '.join(map(str, tech_part['support_levels']))}",
-        f"- 阻力位: {', '.join(map(str, tech_part['resistance_levels']))}",
+        f"- 支撑位: {format_levels(tech_part['support_levels'])}",
+        f"- 阻力位: {format_levels(tech_part['resistance_levels'])}",
         f"- FVG: {', '.join(tech_part['fvg_zones'])}",
         f"- OB: {', '.join(tech_part['ob_zones'])}",
         f"- 形态: {pattern.get('pattern', '') or '无模式关键位'}",
@@ -317,6 +329,15 @@ def validate_payloads(
     for key in ("latest_price", "support_levels", "resistance_levels", "fvg_zones", "ob_zones"):
         if key not in tech_part:
             raise ValidationError(f"技术面 missing key: {key}")
+    for side in ("support_levels", "resistance_levels"):
+        levels = ensure_list(tech_part.get(side), f"技术面.{side}")
+        if not levels:
+            raise ValidationError(f"技术面.{side} cannot be empty")
+        for idx, item in enumerate(levels, start=1):
+            if isinstance(item, dict):
+                if "价格" not in item:
+                    raise ValidationError(f"技术面.{side}[{idx}] 缺少价格")
+                ensure_non_empty_str(item.get("依据"), f"技术面.{side}[{idx}].依据")
 
     verify_part = require(technical, "验证")
     tech_verify = require(verify_part, "技术验证")

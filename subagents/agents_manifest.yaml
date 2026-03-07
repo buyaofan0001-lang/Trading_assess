@@ -1,78 +1,95 @@
-version: "1.0"
-workflow_name: "四代理协同交易验证"
+version: "2.0"
+workflow_name: "四代理协同交易验证（可复用版）"
+owner: "总控守门官"
+constraints:
+  - "仅做多"
+  - "无证据不结论"
+  - "关键结论必须双源交叉（一级+二级优先）"
+  - "任一验证维度不成立即否定交易计划"
+
 workflow_steps:
-  - 总控守门官
-  - 宏观行业研判官
-  - 空头对抗审计官
-  - 技术执行判定官
+  - step: 1
+    agent: 总控守门官
+    action: "校验输入完整性、拆分任务、定义证据门槛"
+  - step: 2
+    agent: 宏观行业研判官
+    action: "宏观扫雷+行业深研+基本面分析检查"
+  - step: 3
+    agent: 空头对抗审计官
+    action: "利空审计（财务/行业景气/政策/公司公告）"
+  - step: 4
+    agent: 技术执行判定官
+    action: "技术定位+验证条件+执行失效"
+  - step: 5
+    agent: 总控守门官
+    action: "结构化门槛校验+三段式报告输出+备份"
+
+gates:
+  macro_risk_min: 8
+  macro_positive_min: 8
+  bear_case_min: 8
+  required_bear_categories: ["财务", "行业景气", "政策", "公司公告"]
+  required_fundamental_dims: ["收入结构", "利润质量", "现金流质量", "估值与预期", "催化财务映射"]
+  required_fundamental_fields: ["结论", "证据来源", "日期", "统计口径"]
 
 agents:
   总控守门官:
-    role: "流程编排与证据合规守门"
-    responsibilities:
-      - "校验用户输入完整性并拆分任务"
-      - "强制执行仅做多、无证据不下结论"
-      - "合并各代理输出并统一生成最终三段式报告"
-      - "执行主体一致性、双源交叉、时间口径、可访问性校验"
-    required_inputs:
-      - "标的信息"
-      - "交易计划"
-      - "宏观行业研判结果"
-      - "空头对抗结果"
-      - "技术执行结果"
-    outputs:
+    role: "流程编排、证据合规校验、最终报告输出"
+    template: "/Users/liuguan1/Documents/github/Trading_assess/subagents/总控守门官.md"
+    input_contract:
+      - "plan.json"
+      - "macro_industry.json"
+      - "bear_case.json"
+      - "technical.json"
+    output_contract:
       - "final_report_md"
       - "evidence_registry"
-      - "assumption_and_gap_log"
+      - "invalid_or_unverified_log"
+    enforcement:
+      - "主体一致性校验（stockCode/orgId/announcementId）"
+      - "时间与口径校验（TTM/单季/累计）"
+      - "可访问性校验（非404/错误重定向）"
+      - "术语拆层（事件层/技术层/因果层）"
 
   宏观行业研判官:
-    role: "宏观扫雷 + 行业深研 + 基本面分析检查"
-    responsibilities:
-      - "90天窗口输出宏观风险清单（>=8）"
-      - "90天窗口输出宏观利好清单（>=8）"
-      - "输出行业三维结论：政策风向/行业景气度/未来增值空间"
-      - "输出基本面分析检查：收入结构/利润质量/现金流质量/估值与预期/催化财务映射"
+    role: "宏观扫雷+行业深研+基本面五维检查"
+    template: "/Users/liuguan1/Documents/github/Trading_assess/subagents/宏观行业研判官.md"
     required_inputs:
-      - "标的所属申万一级行业"
-      - "指数、政策、景气、美国同业动态数据"
-      - "公司财报与公告、估值与一致预期数据"
-    outputs:
-      - "macro_risks"
-      - "macro_positives"
-      - "industry_research"
-      - "fundamental_check"
+      - "标的代码、名称、市场"
+      - "申万一级行业"
+      - "入场逻辑、预期周期、关键催化、交易类型"
+    output_contract:
+      - "宏观清单"
+      - "行业深研"
+      - "基本面分析检查"
       - "sources"
 
   空头对抗审计官:
-    role: "系统化利空挖掘与审计"
-    responsibilities:
-      - "覆盖财务/行业景气/政策/公司公告四类利空"
-      - "输出利空清单（>=8）并逐条绑定来源"
-      - "覆盖不足时返回补证项"
+    role: "系统性利空核查与补证"
+    template: "/Users/liuguan1/Documents/github/Trading_assess/subagents/空头对抗审计官.md"
     required_inputs:
-      - "财务与公告证据池"
+      - "标的信息与交易主逻辑"
       - "宏观行业证据池"
-    outputs:
-      - "bear_cases"
+      - "财务与公告证据池"
+    output_contract:
+      - "空头对抗"
       - "coverage_gaps"
       - "sources"
 
   技术执行判定官:
-    role: "技术定位 + 执行失效剧本"
-    responsibilities:
-      - "输出最新报价、支撑/阻力、FVG、OB"
-      - "识别最明显形态并给出失败关键位"
-      - "输出技术成立/失效条件"
-      - "生成出场条件与无条件砍仓条件"
+    role: "技术验证与执行失效剧本"
+    template: "/Users/liuguan1/Documents/github/Trading_assess/subagents/技术执行判定官.md"
     required_inputs:
-      - "行情数据"
-      - "K线图（高精度时必须）"
-    outputs:
-      - "latest_price"
-      - "support_levels"
-      - "resistance_levels"
-      - "fvg_zones"
-      - "ob_zones"
-      - "pattern_and_fail_level"
-      - "technical_validation"
-      - "execution_script"
+      - "行情数据（最新报价时间戳）"
+      - "K线图（高精度模式必填）"
+      - "交易类型与持有周期"
+    output_contract:
+      - "技术面"
+      - "验证"
+      - "执行与失效"
+
+reusable_artifacts:
+  contracts: "/Users/liuguan1/Documents/github/Trading_assess/subagents/contracts.md"
+  orchestrator: "/Users/liuguan1/Documents/github/Trading_assess/subagents/orchestrate_report.py"
+  examples_dir: "/Users/liuguan1/Documents/github/Trading_assess/subagents/examples"
+  outputs_dir: "/Users/liuguan1/Documents/github/Trading_assess/subagents/outputs"

@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "复盘/2026-3-4.md",
+                "file": "对话备份/铜行业分析.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2026-3-4"
+              "title": "铜行业分析"
             }
           }
         ]
@@ -196,21 +196,23 @@
   },
   "active": "0905b7c22bfeb4a5",
   "lastOpenFiles": [
-    "复盘/2026-3-3.md",
-    "复盘/2026-3-4.md",
-    "复盘/2026-2-27.md",
-    "对话备份/兆易创新.md",
+    "对话备份/铜市场.md",
     "交易画像/交易画像-20260226.md",
-    "对话备份/亨通光电-20260221-1453.md",
+    "AGENTS.md",
+    "对话备份/兆易创新.md",
+    "对话备份/长电科技.md",
+    "对话备份/铜行业分析.md",
     "对话备份/空.md",
+    "CLAUDE.md",
+    "复盘/2026-3-4.md",
+    "复盘/2026-3-3.md",
+    "复盘/2026-2-27.md",
+    "对话备份/亨通光电-20260221-1453.md",
     "对话备份/思源电气-20260222-1611.md",
     "复盘/2026-2-24.md",
     "复盘/2026-2-26.md",
     "复盘/2026-2-25.md",
-    "CLAUDE.md",
-    "AGENTS.md",
     "交易画像",
-    "对话备份/长电科技.md",
     "交易记录.xlsx",
     "subagents/runs/20260226-142341/report.md",
     "交易记录模板.xlsx",
@@ -230,8 +232,6 @@
     "subagents/prompts/07_technical_mapper.md",
     "subagents/prompts/06_bear_challenger.md",
     "subagents/prompts/05_thesis_decomposer.md",
-    "subagents/prompts/04_sentiment_quant.md",
-    "subagents/prompts/03_industry_researcher.md",
     "Pasted image 20260225184438.png",
     "Pasted image 20260225184619.png",
     "Pasted image 20260225190803.png",

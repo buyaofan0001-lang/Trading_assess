@@ -194,8 +194,9 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "0905b7c22bfeb4a5",
+  "active": "d3f1a45e6ac9bab4",
   "lastOpenFiles": [
+    "memory.md",
     "对话备份/兆易创新.md",
     "复盘/复盘模板.md",
     "对话备份/2026全国两会纪要与投资影响-截至2026-03-08.md",
@@ -231,7 +232,6 @@
     "subagents/技术执行判定官.md",
     "subagents/宏观行业研判官.md",
     "subagents/prompts/09_archive_clerk.md",
-    "subagents/prompts/08_dual_validator_executor.md",
     "Pasted image 20260225184438.png",
     "Pasted image 20260225184619.png",
     "Pasted image 20260225190803.png",

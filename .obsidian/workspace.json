@@ -194,8 +194,14 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "0905b7c22bfeb4a5",
+  "active": "d3f1a45e6ac9bab4",
   "lastOpenFiles": [
+    "图库/Pasted image 20260225190803.png",
+    "图库/Pasted image 20260225184619.png",
+    "图库/Pasted image 20260225191153.png",
+    "图库/Pasted image 20260225184438.png",
+    "图库",
+    "未命名文件夹",
     "对话备份/铜行业分析.md",
     "对话备份/日常沟通.md",
     "对话备份/空.md",
@@ -229,9 +235,6 @@
     "subagents/__pycache__/validator.cpython-312.pyc",
     "subagents/__pycache__/state_store.cpython-312.pyc",
     "subagents/__pycache__/repair.cpython-312.pyc",
-    "subagents/__pycache__/agent_runner.cpython-312.pyc",
-    "subagents/__pycache__",
-    "subagents/空头对抗审计官.md",
     "Pasted image 20260225184438.png",
     "Pasted image 20260225184619.png",
     "Pasted image 20260225190803.png",

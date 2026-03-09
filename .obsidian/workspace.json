@@ -11,12 +11,14 @@
             "id": "0905b7c22bfeb4a5",
             "type": "leaf",
             "state": {
-              "type": "image",
+              "type": "markdown",
               "state": {
-                "file": "图库/Pasted image 20260225191101.png"
+                "file": "对话备份/长电科技.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-image",
-              "title": "Pasted image 20260225191101"
+              "icon": "lucide-file",
+              "title": "长电科技"
             }
           }
         ]
@@ -192,14 +194,17 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "d3f1a45e6ac9bab4",
+  "active": "0905b7c22bfeb4a5",
   "lastOpenFiles": [
+    "对话备份/铜行业分析.md",
+    "对话备份/长电科技.md",
+    "对话备份/兆易创新.md",
+    "图库/Pasted image 20260225191101.png",
     "复盘/2026-3-8.md",
     "对话备份/空.md",
     "对话备份/2026-3-8复盘聊天记录.md",
     "对话备份/思源电气-20260222-1611.md",
     "对话备份/亨通光电-20260221-1453.md",
-    "对话备份/铜行业分析.md",
     "对话备份/三花智控-20260221-1725.md",
     "对话备份/日常沟通.md",
     "图库/Pasted image 20260225190803.png",
@@ -213,12 +218,10 @@
     "盘前",
     "对话备份/2026全国两会纪要与投资影响-截至2026-03-08.md",
     "memory.md",
-    "对话备份/兆易创新.md",
     "2026全国两会纪要与投资影响-截至2026-03-08.md",
     "复盘/2026-2-27.md",
     "复盘/2026-3-4.md",
     "AGENTS.md",
-    "对话备份/长电科技.md",
     "对话备份/铜市场.md",
     "交易画像/交易画像-20260226.md",
     "CLAUDE.md",
@@ -228,7 +231,6 @@
     "复盘/2026-2-25.md",
     "交易画像",
     "交易记录.xlsx",
-    "subagents/runs/20260226-142341/report.md",
     "交易记录模板.xlsx",
     "subagents/__pycache__/orchestrate_report.cpython-312.pyc",
     "subagents/__pycache__/validator.cpython-312.pyc",
@@ -237,7 +239,6 @@
     "Pasted image 20260225184438.png",
     "Pasted image 20260225184619.png",
     "Pasted image 20260225190803.png",
-    "图库/Pasted image 20260225191101.png",
     "Pasted image 20260225191153.png"
   ]
 }

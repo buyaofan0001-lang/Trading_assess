@@ -1,2 +1,5 @@
 .obsidian/workspace.json
 conflict-files-obsidian-git.md
+
+# Tushare 自建接口 token（含密钥，禁止提交到 git）
+tushare_token.txt

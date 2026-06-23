@@ -28,16 +28,21 @@ Last Updated: 2026-06-19
 ## Current Holdings Snapshot
 
 - Snapshot status: provisional, not broker-live.
-- Last updated: 2026-06-19 ~14:30 Asia/Shanghai.
-- Source: user-provided 兴业证券 历史成交 screenshots (taken 2026-06-19 14:18, range 2026-06-12~06-19), 13 new fills (6-15/6-17/6-18) written into `交易记录.xlsx` rows 148-160. Current shares derived from last trusted broker 剩余 + applied trades, NOT raw cumulative sums (history has dirty/aggregated rows).
-- Live market check 2026-06-19 (TradingView): 亨通 600487 = 111.01 (日高116.66); 生益 600183 = 183.87 (日高187.35); 东山 002384 = 273.00 (日高277.6).
-- Higher-priority source needed: a current **holdings (持仓)** screenshot, not 成交 history — especially to resolve 东山精密 (see caveat).
+- Last updated: 2026-06-23 ~15:40 Asia/Shanghai (after today's fills).
+- Source: `交易记录.xlsx` rows 161-162 (2026-06-23 尾盘两笔, 录入时间均占位 14:56:16). Prior base = 06-19 snapshot. Current shares = prior + today's two trades.
+- Today (06-23) was an **AI-hardware/PCB-CCL chain selloff day** (close): 生益 -9.0%, 深南 -6.9%, 东山 -5.7%, 沪电 -4.7%, 风华 -3.8%, 光迅 -3.3% (tushare verified). 生益领跌全链。
+- Live close 2026-06-23 (tushare daily): 生益 600183 = 167.87; 东山 002384 = 255.02; 风华 000636 = 70.21.
+- Higher-priority source still needed: a current **holdings (持仓)** screenshot to lock cost basis (生益 avg cost across 多轮加减仓 unresolved).
 
 | Code | Name | Shares | Last supporting row | Last recorded action | Confidence |
 | --- | --- | ---: | ---: | --- | --- |
 | 600487 | 亨通光电 | 0（已清） | 156 | 2026-06-17 09:40:38 卖出 -400 @107.12，本轮(5-27建仓)全平，毛盈约+20,592(+10.3%) | High |
-| 600183 | 生益科技 | 700 | 159 | 2026-06-18 14:56:16 卖出 -300 @183.70 | Medium |
-| 002384 | 东山精密 | 600 | 160 | 2026-06-18 14:56:25 买入 200 @270.90 | High |
+| 600183 | 生益科技 | 400 | 161 | 2026-06-23 卖出 -300 @168.4（五日线破位减仓，留400博反弹） | High |
+| 002384 | 东山精密 | 600 | 160 | 2026-06-18 14:56:25 买入 200 @270.90（06-23未动，但实测当日已破5日线≈265.7） | High |
+| 000636 | 风华高科 | 600 | 162 | 2026-06-23 买入 600 @70.25（MLCC换仓新建，止损66.64，YTD+341%高位票） | High |
+
+- Risk-unit note (06-23): book = 生益(CCL) + 东山(PCB) + 风华(MLCC元器件) → **三票同属 AI硬件/电子元件链，集中度未因换仓下降**。今日全链同跌即为该集中度的代价。今年涨幅榜(movers_2026ytd.csv)亦显示领涨集中在元器件/玻纤/通信设备，与持仓高度重叠。
+- Event-layer flag (06-23): 用户将"NVDA压价"判为传言不实。核验：真实存在的是 **NVIDIA 评估 M8.5 中间规格(M9→M8.5/M8 降规格)**(DigiTimes 报道)，而生益核心卖点为"大陆唯一M9认证"。生益领跌全链与"M9稀缺溢价被M8.5削弱"吻合，非纯情绪回调。待 M8.5 是否落地证伪。
 
 - 东山精密 reconciliation RESOLVED (2026-06-19): user confirmed the May position was fully cleared on 5-27 @215.62. Root cause was a data error — row 130 was mis-recorded as 买入 400; corrected to 卖出 -400 (clearance). May round: bought 400 (rows 127/129), sold 400 (row 130) → flat; gross P&L ≈ +2,230 (+2.65%). Current 东山 = 600 (June buys only), now reconciles in raw cumulative sum too.
 - 亨通光电 fully exited: 6-09 holding 1800 sold down to 0 via rows 147(700@97.35)/150(400@97.84)/152(100@97.51)/154(200@98.51)/156(400@107.12). Note: after exit, 亨通 ran to 111-116 on 6-19. The earlier "1100 底仓 hold with failure level at 91.5" plan was NOT kept — position was fully liquidated by 6-17 instead.

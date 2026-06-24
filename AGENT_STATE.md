@@ -28,8 +28,8 @@ Last Updated: 2026-06-19
 ## Current Holdings Snapshot
 
 - Snapshot status: provisional, not broker-live.
-- Last updated: 2026-06-23 ~15:40 Asia/Shanghai (after today's fills).
-- Source: `交易记录.xlsx` rows 161-162 (2026-06-23 尾盘两笔, 录入时间均占位 14:56:16). Prior base = 06-19 snapshot. Current shares = prior + today's two trades.
+- Last updated: 2026-06-24 (after 06-24 三笔成交, rows 161-163). 仍需券商持仓截图锁定生益精确成本。
+- Source: `交易记录.xlsx` through row 163. 06-24 fills: 风华 +100 @73.49 (row 161, 向上加仓), 东山 -200 @256.24 (row 162), 生益 +300 @177.75 (row 163).
 - Today (06-23) was an **AI-hardware/PCB-CCL chain selloff day** (close): 生益 -9.0%, 深南 -6.9%, 东山 -5.7%, 沪电 -4.7%, 风华 -3.8%, 光迅 -3.3% (tushare verified). 生益领跌全链。
 - Live close 2026-06-23 (tushare daily): 生益 600183 = 167.87; 东山 002384 = 255.02; 风华 000636 = 70.21.
 - Higher-priority source still needed: a current **holdings (持仓)** screenshot to lock cost basis (生益 avg cost across 多轮加减仓 unresolved).
@@ -37,9 +37,9 @@ Last Updated: 2026-06-19
 | Code | Name | Shares | Last supporting row | Last recorded action | Confidence |
 | --- | --- | ---: | ---: | --- | --- |
 | 600487 | 亨通光电 | 0（已清） | 156 | 2026-06-17 09:40:38 卖出 -400 @107.12，本轮(5-27建仓)全平，毛盈约+20,592(+10.3%) | High |
-| 600183 | 生益科技 | 400 | 161 | 2026-06-23 卖出 -300 @168.4（五日线破位减仓，留400博反弹） | High |
-| 002384 | 东山精密 | 600 | 160 | 2026-06-18 14:56:25 买入 200 @270.90（06-23未动，但实测当日已破5日线≈265.7） | High |
-| 000636 | 风华高科 | 600 | 162 | 2026-06-23 买入 600 @70.25（MLCC换仓新建，止损66.64，YTD+341%高位票） | High |
+| 600183 | 生益科技 | 700 | 163 | 2026-06-24 买入 +300 @177.75（06-23减至400后回补；注:06-17 @190.86 那笔06-23砍168.4=-11.8%，破-8%硬止损，成本未锁定） | High |
+| 002384 | 东山精密 | 400 | 162 | 2026-06-24 卖出 -200 @256.24（减仓） | High |
+| 000636 | 风华高科 | 700 | 161 | 2026-06-24 买入 +100 @73.49（高于70.25首仓=向上加仓，方向对；记得上移止损） | High |
 
 - Risk-unit note (06-23): book = 生益(CCL) + 东山(PCB) + 风华(MLCC元器件) → **三票同属 AI硬件/电子元件链，集中度未因换仓下降**。今日全链同跌即为该集中度的代价。今年涨幅榜(movers_2026ytd.csv)亦显示领涨集中在元器件/玻纤/通信设备，与持仓高度重叠。
 - Event-layer flag (06-23): 用户将"NVDA压价"判为传言不实。核验：真实存在的是 **NVIDIA 评估 M8.5 中间规格(M9→M8.5/M8 降规格)**(DigiTimes 报道)，而生益核心卖点为"大陆唯一M9认证"。生益领跌全链与"M9稀缺溢价被M8.5削弱"吻合，非纯情绪回调。待 M8.5 是否落地证伪。

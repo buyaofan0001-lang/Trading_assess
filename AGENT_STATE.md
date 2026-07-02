@@ -1,6 +1,6 @@
 # AGENT_STATE.md - Shared Project State
 
-Last Updated: 2026-06-19
+Last Updated: 2026-07-02
 
 ## Project Snapshot
 
@@ -27,8 +27,8 @@ Last Updated: 2026-06-19
 
 ## Current Holdings Snapshot
 
-- Snapshot status: provisional, not broker-live.
-- Last updated: 2026-06-24 (after 06-24 三笔成交, rows 161-163). 仍需券商持仓截图锁定生益精确成本。
+- Snapshot status: stale/provisional, not broker-live. 2026-07-02 日记显示组合已变成“四只同风格股票、两只跌停、当日回撤约 7%”，并提到光迅科技持仓风险，但未提供券商持仓明细；当前精确持仓、成本和仓位占比必须以最新券商截图或交易记录复核为准。
+- Last updated: 2026-06-24 (after 06-24 三笔成交, rows 161-163). 仍需券商持仓截图锁定生益精确成本，并补充 06-24 之后所有新成交。
 - Source: `交易记录.xlsx` through row 163. 06-24 fills: 风华 +100 @73.49 (row 161, 向上加仓), 东山 -200 @256.24 (row 162), 生益 +300 @177.75 (row 163).
 - Today (06-23) was an **AI-hardware/PCB-CCL chain selloff day** (close): 生益 -9.0%, 深南 -6.9%, 东山 -5.7%, 沪电 -4.7%, 风华 -3.8%, 光迅 -3.3% (tushare verified). 生益领跌全链。
 - Live close 2026-06-23 (tushare daily): 生益 600183 = 167.87; 东山 002384 = 255.02; 风华 000636 = 70.21.
@@ -42,6 +42,7 @@ Last Updated: 2026-06-19
 | 000636 | 风华高科 | 700 | 161 | 2026-06-24 买入 +100 @73.49（高于70.25首仓=向上加仓，方向对；记得上移止损） | High |
 
 - Risk-unit note (06-23): book = 生益(CCL) + 东山(PCB) + 风华(MLCC元器件) → **三票同属 AI硬件/电子元件链，集中度未因换仓下降**。今日全链同跌即为该集中度的代价。今年涨幅榜(movers_2026ytd.csv)亦显示领涨集中在元器件/玻纤/通信设备，与持仓高度重叠。
+- 2026-07-02 diary flag: 用户明确复盘“分仓四只但风格相近、近期大多满仓、追高且未按纪律止损”导致单日约 7% 回撤。后续任何 AI硬件/CPO/算力链交易，必须先检查同主题总仓位、是否追高、是否已挂 -8% 硬止损/逻辑证伪条件；宏观或行业反证不能替代已触发的仓位风控。
 - Event-layer flag (06-23): 用户将"NVDA压价"判为传言不实。核验：真实存在的是 **NVIDIA 评估 M8.5 中间规格(M9→M8.5/M8 降规格)**(DigiTimes 报道)，而生益核心卖点为"大陆唯一M9认证"。生益领跌全链与"M9稀缺溢价被M8.5削弱"吻合，非纯情绪回调。待 M8.5 是否落地证伪。
 
 - 东山精密 reconciliation RESOLVED (2026-06-19): user confirmed the May position was fully cleared on 5-27 @215.62. Root cause was a data error — row 130 was mis-recorded as 买入 400; corrected to 卖出 -400 (clearance). May round: bought 400 (rows 127/129), sold 400 (row 130) → flat; gross P&L ≈ +2,230 (+2.65%). Current 东山 = 600 (June buys only), now reconciles in raw cumulative sum too.

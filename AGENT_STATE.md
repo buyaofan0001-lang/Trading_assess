@@ -12,7 +12,7 @@ Last Updated: 2026-07-15
 
 - Canonical entrypoints: `AGENTS.md` for durable trading-partner policy, `AGENT_STATE.md` for current shared state, `memory.md` for distilled long-term memory.
 - Important modules: `对话备份/` stores raw conversation evidence, `复盘/` stores review notes, `交易记录.xlsx` stores objective trade records, and `交易生活执行手册.md` is the current daily execution and recovery protocol.
-- Global research skill: `/Users/liuguan1/.codex/skills/buffett-investment-research` is installed for Buffett-style fundamental research (circle of competence, moat, management, capital allocation, balance-sheet resilience, owner earnings, and valuation discipline). Codex must be restarted before relying on automatic skill discovery.
+- Global research skills: `/Users/liuguan1/.codex/skills/buffett-investment-research` is installed for a dedicated Buffett-style memo; `/Users/liuguan1/.codex/skills/investor-council` is the locally built five-seat committee for Buffett, Munger, Howard Marks, Peter Lynch, and Li Lu frameworks. The committee separates fundamental research from position/technical execution, uses veto gates rather than averaged scores, and requires current primary-source evidence. Codex must be restarted before relying on automatic skill discovery.
 - Execution / runtime assumptions: assistants do not automatically hold every archived chat in context; they must load distilled memory first and retrieve raw archives by topic/date/stock when needed.
 
 ## Current Workflow Rules
@@ -52,7 +52,7 @@ Last Updated: 2026-07-15
 ## Current Baselines
 
 - Main command(s): inspect/edit spreadsheet artifacts through the bundled spreadsheet runtime when modifying `.xlsx` files.
-- Latest trusted result(s): the workbook contains 198 rows, but the latest user screenshot provides higher-priority transaction evidence through 2026-07-13 and has not yet been written back into the workbook. `交易生活执行手册.md` remains the default recovery protocol. The third-party `buffett-investment-research` skill was inspected and installed on 2026-07-15; its hard-coded SEC helper path was corrected for this machine.
+- Latest trusted result(s): the workbook contains 198 rows, but the latest user screenshot provides higher-priority transaction evidence through 2026-07-13 and has not yet been written back into the workbook. `交易生活执行手册.md` remains the default recovery protocol. The third-party `buffett-investment-research` skill was inspected and installed on 2026-07-15; its hard-coded SEC helper path was corrected for this machine. The local `investor-council` skill was created and passed `quick_validate` on 2026-07-15.
 - Known caveats: 2026-06-03 `生益科技` remains as the pre-existing aggregated row because the screenshot only showed a partial lower row, not enough to safely split every trade.
 
 ## Open Items

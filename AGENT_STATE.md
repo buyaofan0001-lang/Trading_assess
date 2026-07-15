@@ -28,14 +28,15 @@ Last Updated: 2026-07-15
 
 ## Current Holdings Snapshot
 
-- Snapshot status: **provisional, not broker-live**. `交易记录.xlsx` is now updated through 2026-07-15 (row 198). Exact cash level, position weights, and the conflicting 生益 position still require a current broker holdings screenshot.
-- Source: `交易记录.xlsx` through row 198 plus `日记/2026-7-15.md`. The table's latest non-zero `剩余仓位` implies 生益科技 400 shares and 长电科技 900 shares.
-- Reconciliation warning: 生益 row 189 shows `剩余仓位=400`, while its copied reflection text says “最终清仓离场”; the objective remaining-position field and the narrative conflict. Treat 400 shares as provisional until broker confirmation.
+- Snapshot status: **trade-screenshot authoritative for the listed transactions, but not a broker holdings snapshot**. The user-provided screenshot shows the latest listed trade as 2026-07-13; exact current cash, position weights, and any trades after that screenshot still need confirmation.
+- Higher-priority source: user screenshot `codex-clipboard-a71c8a5e-b39a-4155-9b39-af2b32216233.png`. Based on the screenshot plus reconciled prior rows, the provisional post-07-13 book is 长电科技 400 shares, 生益科技 0, and 588060 科创50ETF 100份. This assumes no later trades after the screenshot.
+- Workbook conflict: `交易记录.xlsx` rows 195-198 record four 2026-07-15 长电买入 totaling 500 shares, but those trades do not appear in the screenshot that the user described as all recent trades. Treat rows 195-198 as unverified and do not use them for current holdings until the user confirms.
 
 | Code | Name | Shares | Last supporting row | Last recorded action | Confidence |
 | --- | --- | ---: | ---: | --- | --- |
-| 600183 | 生益科技 | 400（待确认） | 189 | 2026-07-07 卖出 100 @155.90；表内剩余 400，但反思文字写“清仓” | Medium |
-| 600584 | 长电科技 | 900（表内） | 198 | 2026-07-15 14:54 买入 100 @93.00；本轮900股加权成交成本约99.85 | High for share count; cost excludes fees |
+| 600183 | 生益科技 | 0（截图已清） | screenshot + new row needed | 2026-07-13 13:10:43 卖出 400 @136.140，成交额 54,456 | High for screenshot transaction; workbook not yet patched |
+| 600584 | 长电科技 | 400（截图口径，待确认后续） | screenshot + 194 | 2026-07-13 09:44:17 买入 400 @104.130；7月1日另买 200 @106.800、7月3日卖700后归零 | Medium |
+| 588060 | 科创50ETF | 100份（截图新增） | screenshot only | 2026-07-10 13:51:22 买入 100 @1.377 | Medium |
 | 603986 | 兆易创新 | 0（表内已清） | 193 | 2026-07-13 09:37 卖出 100 @577.40 | High |
 | 600176 | 中国巨石 | 0（表内已清） | 190 | 2026-07-07 09:52 卖出 300 @62.76 | High |
 | 002281 | 光迅科技 | 0（表内已清） | 186 | 2026-07-03 15:00 卖出 200 @217.33 | High |
@@ -43,20 +44,20 @@ Last Updated: 2026-07-15
 | 002384 | 东山精密 | 0（表内已清） | 171 | 2026-06-29 10:17 卖出 300 @244.53 | High |
 | 000636 | 风华高科 | 0（表内已清） | 173 | 2026-06-29 14:54 卖出 200 @80.04 | High |
 
-- Risk-unit note (07-15): if the reconstructed book is accurate, 生益(CCL/PCB) + 长电(封测) remain one broad semiconductor/AI-hardware risk unit rather than genuine style diversification. Long电 alone has about 89,869 yuan of recorded cost in the current round.
-- Execution flag: on 07-15 the user added 500 长电 shares to a 400-share losing position (four buys at 97.97/96.00/97.23/93.00), increasing the position by 125% to average down. Three of the four buys occurred before 10:00. This directly violated the no-averaging-down and tail-entry rules while the diary already recognized panic and loss-chasing.
+- Risk-unit note (screenshot provisional): after the 07-13 生益 sell, the confirmed recent book is less concentrated than the prior ledger implied, but 长电 remains a semiconductor/AI-hardware exposure. The 588060 ETF is a separate index exposure, not proof of diversification.
+- Execution/data flag: the screenshot confirms the 07-13 生益 exit and exposes four ledger issues: missing 生益 -400, missing 07-01 长电 +200, missing 07-10 588060 +100, and 中天科技 sell-time mismatch (14:30:42 screenshot vs 14:50:00 workbook). Rows 195-198 (07-15 长电 buys) are currently unverified rather than confirmed trades.
 - Current psychological/behavioral flag: the 07-15 diary connects trading-for-living pressure, fixed rent/job uncertainty, urgency to recover losses, family recognition, and compulsive quote-checking with FOMO and repeated rule violations. Until the user is calmer and holdings are confirmed, default to risk containment and a no-new-position/cooling-off bias rather than searching for the next trade.
 
 ## Current Baselines
 
 - Main command(s): inspect/edit spreadsheet artifacts through the bundled spreadsheet runtime when modifying `.xlsx` files.
-- Latest trusted result(s): `交易记录.xlsx` contains 198 rows (header + 197 records) and is updated through row 198 / 2026-07-15. Latest diary is `日记/2026-7-15.md`. `交易生活执行手册.md` defines the 10-day recovery protocol and daily schedule starting 2026-07-16.
+- Latest trusted result(s): the workbook contains 198 rows, but the latest user screenshot provides higher-priority transaction evidence through 2026-07-13 and has not yet been written back into the workbook. `交易生活执行手册.md` remains the default recovery protocol.
 - Known caveats: 2026-06-03 `生益科技` remains as the pre-existing aggregated row because the screenshot only showed a partial lower row, not enough to safely split every trade.
 
 ## Open Items
 
 - Next memory task: continue consolidating July records after a broker holdings screenshot confirms the actual book and July drawdown magnitude.
-- Next high-priority work: obtain a current broker holdings screenshot; then write a specific risk plan for the existing 900-share 长电 position without further averaging down.
+- Next high-priority work: reconcile the four screenshot-vs-workbook differences before any xlsx edit; obtain a current broker holdings screenshot; then write a specific risk plan for the confirmed 400-share 长电 position.
 - Known risks: screenshot-cropped rows can hide time or amount; do not split aggregated historical rows unless every objective field is visible or otherwise provided.
 - Pending migration or cleanup: none.
 

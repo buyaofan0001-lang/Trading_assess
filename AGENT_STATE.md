@@ -53,12 +53,14 @@ Last Updated: 2026-07-15
 
 - Main command(s): inspect/edit spreadsheet artifacts through the bundled spreadsheet runtime when modifying `.xlsx` files.
 - Latest trusted result(s): the workbook contains 198 rows, but the latest user screenshot provides higher-priority transaction evidence through 2026-07-13 and has not yet been written back into the workbook. `交易生活执行手册.md` remains the default recovery protocol. On 2026-07-15, `investor-council` was upgraded from a standalone five-seat framework into the single orchestrator for all installed investment skills. Its dependency checker found all four upstream skills, passed installed/missing-path tests, and the upgraded skill passed Codex validation.
+- 2026-07-15 长电科技总控会审（信息截至收盘）：研究结论为 `Watchlist`，执行结论为 `Execution blocked`。公司先进封装和利润修复有公告级证据，但其为资本密集、强周期 OSAT，2025 年经营现金流 46.52 亿元低于长期资产现金支出 62.98 亿元；2026Q1 同口径仍为负自由现金流。7 月 15 日收盘 92.46 元、跌 9.97%，按 2026H1 业绩预告推算的 TTM PE 仍约 81-89 倍，安全边际不足。恢复期内长电不得继续加仓。
+- 长电双情景风险基线：若按截图口径为 400 股、成本 104.13 元，则 92.46 元对应约 -11.2%，原 -8% 硬止损位 95.80 元已失守；若 rows 195-198 最终确认、持仓为 900 股、成本约 99.85 元，则约 -7.4%，-8% 硬止损位约 91.86 元。上述仅用于纪律审计，最终动作仍需当前券商持仓截图确认。
 - Known caveats: 2026-06-03 `生益科技` remains as the pre-existing aggregated row because the screenshot only showed a partial lower row, not enough to safely split every trade.
 
 ## Open Items
 
 - Next memory task: continue consolidating July records after a broker holdings screenshot confirms the actual book and July drawdown magnitude.
-- Next high-priority work: reconcile the four screenshot-vs-workbook differences before any xlsx edit; obtain a current broker holdings screenshot; then write a specific risk plan for the confirmed 400-share 长电 position.
+- Next high-priority work: reconcile the four screenshot-vs-workbook differences before any xlsx edit; obtain a current broker holdings screenshot before 2026-07-16 open; then choose the correct branch of the documented 400-share/900-share 长电 risk plan. No further 长电 buy is permitted in either branch.
 - Known risks: screenshot-cropped rows can hide time or amount; do not split aggregated historical rows unless every objective field is visible or otherwise provided.
 - Pending migration or cleanup: none.
 

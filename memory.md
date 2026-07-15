@@ -291,6 +291,7 @@
 - 2026-06-09 持仓协作要求升级：用户要求每次聊天都要清楚最新持仓。后续交易相关回答必须先读取 `AGENT_STATE.md` 的持仓快照，必要时要求用户用最新截图/文字确认。
 - 2026-06-14 工具链升级：TradingView Desktop 已实证接入 CDP（端口 9222），可读盘、画趋势线与压力支撑、截图。断连用 `tv_launch` 重启；注意 Electron 单实例特性——带调试参数的新进程会秒退并交给已运行的无调试实例，必要时先杀光所有 TradingView 进程再启，`tv_health_check` 验证。技术结论须给触发位 + 失效位。
 - 2026-06-14 CLAUDE.md 重构 v2：旧版充斥已不存在的四代理脚手架死引用（`subagents/`、`orchestrate_report.py`、`contracts.md`、`agents_manifest.yaml`、`industry_scoring/`、`复盘记录/`），并错误引用 AGENTS.md 已删除的 `§14/§19/§19.3`。重构后确立「AGENTS.md(Soul)=权威，CLAUDE.md=Claude Code 操作层」：删除死引用；四代理降级为内化四维审视(宏观/空头/技术/总控)+ 仅在用户要完整评估时临时派 Agent 子代理；默认伙伴聊天、表格按需；新增 TradingView MCP 规范；补全持仓优先/五项前置检查/V1 执行规则/三层退出/每轮备份+记忆蒸馏。AGENTS.md、memory.md、AGENT_STATE.md 未改动。
+- 2026-07-15 用户希望把著名投资者的思维框架蒸馏成可调用 skills，首先安装了第三方 `buffett-investment-research`。后续选择类似技能时，优先要“证据、否决条件、估值纪律和可复盘流程”，不要只有大师口吻或人设。该技能用于公司质地与价值研究，不替代本仓库的持仓核对、技术失效位和执行风控。
 
 ## 时效性说明
 - 本文件主体整合范围已扩展至 2026-04-26，包含 `交易记录.xlsx` 与 `复盘/` 目录中的主要记录；2026-06-09 新增了记忆系统运行原则与协作要求升级；2026-06-14 新增 TradingView 工具链与 CLAUDE.md 重构 v2 记录。

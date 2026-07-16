@@ -46,12 +46,5 @@
     {"ticker": "^SOX", "name": "费城半导体", "layer": "半导体"},
     {"ticker": "SMH", "name": "SMH", "layer": "半导体ETF"},
     {"ticker": "SOXX", "name": "SOXX", "layer": "半导体ETF"}
-  ],
-  "recovery_checklist": [
-    "开盘后前30分钟不做主动买入",
-    "14:30前只观察，不临盘改条件单",
-    "今天不新增陌生标的、不补亏损仓",
-    "完成2小时非交易收入工作",
-    "收盘后记录事实、解释与明日验证点"
   ]
 }

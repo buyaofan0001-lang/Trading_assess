@@ -290,23 +290,6 @@ function renderFlows(flow) {
   renderBarList("#conceptFlow", flow.concepts);
 }
 
-function renderRecovery(recovery) {
-  const saved = JSON.parse(localStorage.getItem("trading-recovery-checks") || "{}");
-  $("#recoveryRule").textContent = recovery.rule;
-  $("#recoveryChecklist").innerHTML = recovery.checklist.map((item, index) => `<label class="check-item">
-    <input type="checkbox" data-check="${index}" ${saved[index] ? "checked" : ""}>
-    <span>${escapeHtml(item)}</span>
-  </label>`).join("");
-  const update = () => {
-    const values = {};
-    $$('[data-check]').forEach(input => { values[input.dataset.check] = input.checked; });
-    localStorage.setItem("trading-recovery-checks", JSON.stringify(values));
-    $("#checkProgress").textContent = `${Object.values(values).filter(Boolean).length} / ${recovery.checklist.length}`;
-  };
-  $$('[data-check]').forEach(input => input.addEventListener("change", update));
-  update();
-}
-
 function shanghaiDate() {
   const parts = Object.fromEntries(new Intl.DateTimeFormat("en-CA", {
     timeZone: "Asia/Shanghai",
@@ -494,7 +477,6 @@ function render(data) {
   renderGroups(data.peer_groups);
   renderUS(data.us);
   renderFlows(data.money_flow);
-  renderRecovery(data.recovery);
 }
 
 function shanghaiClock() {

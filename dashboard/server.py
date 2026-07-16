@@ -817,11 +817,6 @@ def build_dashboard(timeframe: str) -> dict[str, Any]:
         "peer_groups": groups,
         "us": us,
         "money_flow": flows,
-        "recovery": {
-            "title": "恢复期 · 第1阶段",
-            "rule": "不靠下一笔交易解决生活压力",
-            "checklist": CONFIG["recovery_checklist"],
-        },
     }
 
 

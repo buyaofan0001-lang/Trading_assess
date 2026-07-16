@@ -18,6 +18,9 @@ test("dashboard loads real data and primary interactions work", async ({ page })
   await expect(jcetCard.locator(".overseas-row")).toHaveCount(2);
   await expect(jcetCard.locator(".overseas-divider")).toContainText("不参与A股排名");
   await expect(jcetCard.locator(".overseas-chip")).toHaveCount(2);
+  await expect(page.locator('a[href="#overnight"]')).toHaveCount(0);
+  await expect(page.locator("#overnight")).toHaveCount(0);
+  await expect(page.locator(".nav-link")).toHaveCount(4);
   await expect(page.locator("#permissionCard")).toHaveClass(/red/);
   await expect(page.locator("#gate-title")).toContainText("停止主动买入");
   await expect(page.locator("#freshness")).toContainText("自动刷新");

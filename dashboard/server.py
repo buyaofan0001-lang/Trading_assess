@@ -649,8 +649,7 @@ def build_intraday_payload(force: bool = False) -> dict[str, Any]:
 
 def us_market(errors: list[str]) -> dict[str, Any]:
     tickers = list(dict.fromkeys(
-        [row["ticker"] for row in CONFIG["us_market"]]
-        + [row["ticker"] for holding in CONFIG["holdings"] for row in holding.get("us_map", [])]
+        row["ticker"] for holding in CONFIG["holdings"] for row in holding.get("us_map", [])
     ))
 
     def load() -> dict[str, Any]:
@@ -689,21 +688,17 @@ def us_market(errors: list[str]) -> dict[str, Any]:
         errors.append(f"美股批量行情：{exc}")
         raw = {}
 
-    market_rows = [{**item, **raw.get(item["ticker"], {})} for item in CONFIG["us_market"]]
     mapped = []
     for holding in CONFIG["holdings"]:
         peers = [{**item, **raw.get(item["ticker"], {})} for item in holding.get("us_map", [])]
         if peers:
             mapped.append({"holding": holding["name"], "peers": peers, "status": "候选映射 · 待确认"})
-    dates = [row.get("date") for row in market_rows if row.get("date")]
+    dates = [row.get("date") for group in mapped for row in group["peers"] if row.get("date")]
     market_date = max(dates) if dates else None
     return {
         "market_date": market_date,
-        "beijing_mapping": f"北京时间 {datetime.now().strftime('%Y-%m-%d')} 盘前参考" if market_date else "日期待确认",
         "source": "Yahoo Finance · 最近完整交易日",
-        "market": market_rows,
         "mapped_peers": mapped,
-        "rule": "隔夜美股只作环境映射，不计入A股当日同行排名",
     }
 
 

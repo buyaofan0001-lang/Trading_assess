@@ -244,24 +244,6 @@ function renderGroups(groups) {
   }).join("");
 }
 
-function renderUS(us) {
-  $("#usDate").textContent = us.market_date
-    ? `纽约市场日 ${us.market_date} · ${us.beijing_mapping}`
-    : "最近完整交易日暂未取到";
-  $("#usMarket").innerHTML = us.market.map(row => `<div class="tape-cell">
-    <div class="tape-layer">${escapeHtml(row.layer)}</div>
-    <div class="tape-name">${escapeHtml(row.name)} <span class="code">${escapeHtml(row.ticker)}</span></div>
-    <div class="tape-return ${tone(row.return)}">${fmtPct(row.return)}</div>
-  </div>`).join("");
-  $("#usMappings").innerHTML = us.mapped_peers.length
-    ? us.mapped_peers.map(group => `<div>
-        <div class="mapping-head"><strong>${escapeHtml(group.holding)} 海外映射</strong><span>${escapeHtml(group.status)}</span></div>
-        ${group.peers.map(row => `<div class="mapping-row"><span>${escapeHtml(row.name)} · ${escapeHtml(row.ticker)}</span><span class="mapping-role">${escapeHtml(row.role)}</span><span class="${tone(row.return)}">${fmtPct(row.return)}</span></div>`).join("")}
-      </div>`).join("")
-    : '<div class="empty-state" style="padding:24px">暂无已确认海外同行映射</div>';
-  $("#usRule").textContent = `${us.rule} · ${us.source}`;
-}
-
 function flowValue(row) {
   if (row.value === null || row.value === undefined) return "—";
   if (row.metric === "net_amount") return `${Number(row.value).toFixed(0)} 净额原值`;
@@ -475,7 +457,6 @@ function render(data) {
   renderMeta(data.meta);
   renderPermission(data);
   renderGroups(data.peer_groups);
-  renderUS(data.us);
   renderFlows(data.money_flow);
 }
 

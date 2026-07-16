@@ -39,12 +39,5 @@
       ],
       "us_map": []
     }
-  ],
-  "us_market": [
-    {"ticker": "^GSPC", "name": "标普500", "layer": "大盘"},
-    {"ticker": "^IXIC", "name": "纳斯达克", "layer": "大盘"},
-    {"ticker": "^SOX", "name": "费城半导体", "layer": "半导体"},
-    {"ticker": "SMH", "name": "SMH", "layer": "半导体ETF"},
-    {"ticker": "SOXX", "name": "SOXX", "layer": "半导体ETF"}
   ]
 }

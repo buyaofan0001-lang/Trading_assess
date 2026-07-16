@@ -10,6 +10,9 @@ test("dashboard loads real data and primary interactions work", async ({ page })
 
   await page.goto("http://127.0.0.1:8765");
   await expect(page.locator(".peer-card")).toHaveCount(2, { timeout: 120000 });
+  await expect(page.locator(".intraday-chart svg")).toHaveCount(2, { timeout: 30000 });
+  await expect(page.locator(".chart-series.holding polyline")).toHaveCount(2);
+  await expect(page.locator(".chart-legend-item")).toHaveCount(9);
   await expect(page.locator("#permissionCard")).toHaveClass(/red/);
   await expect(page.locator("#gate-title")).toContainText("停止主动买入");
   await expect(page.locator("#freshness")).toContainText("自动刷新");

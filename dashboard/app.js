@@ -93,7 +93,7 @@ function axisPct(value) {
 
 function renderIntradayChart(group) {
   const payload = state.intraday?.groups?.find(item => item.holding_ts_code === group.holding.ts_code);
-  const fallbackCount = Number(state.intraday?.meta?.fallback_count || 0);
+  const fallbackCount = (payload?.series || []).filter(item => item.source?.startsWith("Yahoo")).length;
   const sourceBase = state.intraday?.meta?.source || "正在连接当日分钟行情";
   const source = fallbackCount ? `${sourceBase} · ${fallbackCount}只快速回退` : sourceBase;
   const tradeDate = state.intraday?.meta?.trade_date || "";
@@ -175,7 +175,10 @@ function renderIntradayChart(group) {
     </span>`;
   }).join("");
   const missing = payload?.missing?.length ? ` · 缺失 ${payload.missing.join("、")}` : "";
-  const latestTime = usable.map(item => item.latest_time).filter(Boolean).sort().at(-1) || "—";
+  const latestTimes = usable.map(item => item.latest_time).filter(Boolean).sort();
+  const latestTime = latestTimes.length
+    ? latestTimes[0] === latestTimes.at(-1) ? latestTimes[0] : `${latestTimes[0]}–${latestTimes.at(-1)}`
+    : "—";
 
   return `<figure class="intraday-chart" aria-label="${escapeHtml(group.holding.name)}及同行当日相对昨收走势">
     <figcaption>

@@ -8,7 +8,7 @@ import pandas as pd
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
-from portfolio_sync import LedgerPortfolio, normalize_code, replay_positions, semantic_peer_rank  # noqa: E402
+from portfolio_sync import LedgerPortfolio, normalize_code, replay_positions, semantic_peer_rank, shared_business_phrases  # noqa: E402
 
 
 class PortfolioSyncTests(unittest.TestCase):
@@ -42,6 +42,7 @@ class PortfolioSyncTests(unittest.TestCase):
         peers = semantic_peer_rank(target, candidates, 2)
         self.assertEqual({peer["ts_code"] for peer in peers}, {"002185.SZ", "688362.SH"})
         self.assertTrue(all(peer["ai_reason"].startswith("共同业务语义：") for peer in peers))
+        self.assertIn("封装与测试", shared_business_phrases(target["main_business"], candidates[0]["main_business"]))
 
     def test_real_ledger_starts_from_confirmed_checkpoint(self):
         settings = json.loads((HERE / "config.json").read_text(encoding="utf-8"))

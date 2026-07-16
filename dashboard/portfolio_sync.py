@@ -29,7 +29,7 @@ REQUIRED_LEDGER_COLUMNS = {
     "证券代码", "证券名称", "买卖标志", "成交日期", "成交价格", "成交数量", "成交金额", "剩余仓位"
 }
 CODE_ALIASES = {"002208": "002028"}
-AI_ENGINE_VERSION = "local-semantic-ai-v1"
+AI_ENGINE_VERSION = "local-semantic-ai-v2"
 
 
 def finite(value: Any) -> float | None:
@@ -238,6 +238,26 @@ def text_features(value: Any) -> set[str]:
     }
 
 
+def shared_business_phrases(target_text: Any, candidate_text: Any) -> list[str]:
+    target = clean_text(target_text)
+    candidate = clean_text(candidate_text)
+    blocks = sorted(
+        SequenceMatcher(None, target, candidate).get_matching_blocks(),
+        key=lambda block: block.size,
+        reverse=True,
+    )
+    phrases = []
+    for block in blocks:
+        if block.size < 4:
+            continue
+        phrase = target[block.a:block.a + block.size]
+        if phrase and not any(phrase in existing or existing in phrase for existing in phrases):
+            phrases.append(phrase)
+        if len(phrases) == 2:
+            break
+    return phrases
+
+
 def semantic_peer_rank(target: dict[str, Any], candidates: list[dict[str, Any]], limit: int) -> list[dict[str, Any]]:
     target_text = target.get("main_business") or target.get("business_scope") or ""
     target_features = text_features(target_text)
@@ -260,18 +280,7 @@ def semantic_peer_rank(target: dict[str, Any], candidates: list[dict[str, Any]],
             score *= 0.72
         if score < 0.07:
             continue
-        phrases = sorted(
-            (feature for feature in intersection if len(feature) >= 4),
-            key=lambda feature: (len(feature), weights[feature]),
-            reverse=True,
-        )
-        selected = []
-        for phrase in phrases:
-            if any(phrase in existing or existing in phrase for existing in selected):
-                continue
-            selected.append(phrase)
-            if len(selected) == 2:
-                break
+        selected = shared_business_phrases(target_text, candidate.get("main_business") or candidate.get("business_scope") or "")
         ranked.append({
             "ts_code": candidate["ts_code"],
             "name": candidate["name"],
@@ -453,4 +462,3 @@ class AIPeerResolver:
 
     def resolve_all(self, holdings: list[dict[str, Any]]) -> list[dict[str, Any]]:
         return [self.resolve(holding) for holding in holdings]
-

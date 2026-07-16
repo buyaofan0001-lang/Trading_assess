@@ -34,7 +34,7 @@ REPO = HERE.parent
 sys.path.insert(0, str(REPO))
 
 from tushare_client import get_pro  # noqa: E402
-from portfolio_sync import AIPeerResolver, LedgerPortfolio  # noqa: E402
+from portfolio_sync import AI_ENGINE_VERSION, AIPeerResolver, LedgerPortfolio  # noqa: E402
 
 CONFIG = json.loads((HERE / "config.json").read_text(encoding="utf-8"))
 LEDGER = LedgerPortfolio(
@@ -138,7 +138,7 @@ def portfolio_snapshot(errors: list[str] | None = None) -> dict[str, Any]:
                 "cohort_status": "AI识别暂不可用",
                 "ai_peer_confidence": 0,
                 "ai_peer_reason": str(exc),
-                "ai_peer_engine": "local-semantic-ai-v1",
+                "ai_peer_engine": AI_ENGINE_VERSION,
                 "us_map": CONFIG.get("overseas_maps", {}).get(holding["ts_code"], []),
             })
     return payload

@@ -1,4 +1,5 @@
 const { test, expect } = require("@playwright/test");
+const dashboardUrl = process.env.DASHBOARD_URL || "http://127.0.0.1:8765";
 
 test.setTimeout(120000);
 
@@ -8,7 +9,7 @@ test("dashboard loads real data and primary interactions work", async ({ page })
     if (message.type() === "error") consoleErrors.push(message.text());
   });
 
-  await page.goto("http://127.0.0.1:8765");
+  await page.goto(dashboardUrl);
   await expect(page.locator(".peer-card")).toHaveCount(2, { timeout: 120000 });
   await expect(page.locator(".intraday-chart svg")).toHaveCount(2, { timeout: 30000 });
   await expect(page.locator(".chart-series.holding polyline")).toHaveCount(2);
@@ -26,7 +27,7 @@ test("dashboard loads real data and primary interactions work", async ({ page })
   await expect(page.locator(".nav-link")).toHaveCount(4);
   await expect(page.locator("#permissionCard")).toHaveClass(/red/);
   await expect(page.locator("#gate-title")).toContainText("停止主动买入");
-  await expect(page.locator("#freshness")).toContainText("自动刷新");
+  await expect(page.locator("#freshness")).toContainText("数据已更新");
 
   await expect(page.locator('[data-timeframe="5d"]')).toHaveAttribute("data-ready", "true", { timeout: 120000 });
   const switchStarted = Date.now();
@@ -70,7 +71,7 @@ test("journal editor marks changes and reports a successful save", async ({ page
       }),
     });
   });
-  await page.goto("http://127.0.0.1:8765/#journal");
+  await page.goto(`${dashboardUrl}/#journal`);
   await expect(page.locator('[data-journal-date="2026-07-15"]')).toHaveCount(1);
   expect(await page.locator(".journal-entry").count()).toBeGreaterThanOrEqual(6);
   await page.locator("#journalDate").fill("2099-12-31");
@@ -86,7 +87,7 @@ test("journal editor marks changes and reports a successful save", async ({ page
 
 test("market-hours timer automatically requests a fresh dashboard", async ({ page }) => {
   await page.clock.install({ time: new Date("2026-07-16T05:00:00Z") });
-  await page.goto("http://127.0.0.1:8765");
+  await page.goto(dashboardUrl);
   await expect(page.locator(".peer-card")).toHaveCount(2, { timeout: 120000 });
   const automaticResponse = page.waitForResponse(response => response.url().includes("/api/dashboard") && response.ok());
   await page.clock.fastForward(31_000);
@@ -96,7 +97,7 @@ test("market-hours timer automatically requests a fresh dashboard", async ({ pag
 
 test("mobile layout does not overflow horizontally", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto("http://127.0.0.1:8765");
+  await page.goto(dashboardUrl);
   await expect(page.locator(".peer-card")).toHaveCount(2, { timeout: 120000 });
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1);
   expect(overflow).toBe(false);

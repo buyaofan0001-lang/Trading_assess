@@ -882,7 +882,7 @@ async function loadDashboard({ showToast = false, force = false, background = fa
     const payload = await response.json();
     if (!response.ok) throw new Error(payload.error || `HTTP ${response.status}`);
     render(payload);
-    void loadIntraday({ force });
+    await loadIntraday({ force });
     void prefetchTimeframes();
     if (showToast) toast(payload.meta.partial ? "已刷新，部分数据存在缺口" : "数据已刷新");
   } catch (error) {
@@ -973,9 +973,18 @@ window.addEventListener("hashchange", updateActiveNavigation);
 
 state.countdownTimer = window.setInterval(updateFreshnessText, 1000);
 updateTimeframeReadyStates();
-void loadJournalIndex();
-void loadReportIndex();
-loadDashboard();
-schedulePortfolioPoll();
-scheduleReportPoll();
-updateActiveNavigation();
+
+async function initializeDashboard() {
+  await Promise.allSettled([
+    loadJournalIndex(),
+    loadReportIndex(),
+    loadDashboard(),
+  ]);
+  const hashTarget = window.location.hash ? $(window.location.hash) : null;
+  if (hashTarget) hashTarget.scrollIntoView({ block: "start" });
+  window.requestAnimationFrame(updateActiveNavigation);
+  schedulePortfolioPoll();
+  scheduleReportPoll();
+}
+
+void initializeDashboard();

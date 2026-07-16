@@ -35,7 +35,46 @@ test("dashboard loads real data and primary interactions work", async ({ page })
 
   await page.locator('[data-check="0"]').check();
   await expect(page.locator("#checkProgress")).toContainText("1 / 5");
+  await expect(page.locator(".journal-entry")).toHaveCount(6);
+  await page.locator('[data-journal-date="2026-07-15"]').click();
+  await expect(page.locator("#journalFilename")).toContainText("2026-7-15.md");
+  await expect(page.locator("#journalContent")).not.toHaveValue("");
   expect(consoleErrors).toEqual([]);
+});
+
+test("journal editor marks changes and reports a successful save", async ({ page }) => {
+  await page.route("**/api/journal", async route => {
+    if (route.request().method() !== "POST") {
+      await route.continue();
+      return;
+    }
+    const body = route.request().postDataJSON();
+    await route.fulfill({
+      status: 201,
+      contentType: "application/json",
+      body: JSON.stringify({
+        date: body.date,
+        filename: `${body.date}.md`,
+        modified_at: "2026-07-16T15:30:00+08:00",
+        chars: body.content.length,
+        excerpt: body.content,
+        content: body.content,
+        exists: true,
+        created: true,
+      }),
+    });
+  });
+  await page.goto("http://127.0.0.1:8765/#journal");
+  await expect(page.locator(".journal-entry")).toHaveCount(6);
+  await page.locator("#journalDate").fill("2099-12-31");
+  await page.locator("#journalDate").dispatchEvent("change");
+  await expect(page.locator("#journalFilename")).toContainText("2099-12-31.md");
+  await page.locator("#journalContent").fill("用于验证保存反馈，不写入真实日记目录。");
+  await expect(page.locator("#journalStatus")).toContainText("未保存");
+  await expect(page.locator("#journalSave")).toBeEnabled();
+  await page.locator("#journalSave").click();
+  await expect(page.locator("#journalStatus")).toContainText("已保存");
+  await expect(page.locator('[data-journal-date="2099-12-31"]')).toHaveCount(1);
 });
 
 test("market-hours timer automatically requests a fresh dashboard", async ({ page }) => {

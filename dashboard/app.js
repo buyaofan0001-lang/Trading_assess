@@ -42,10 +42,12 @@ function renderPermission(data) {
   $("#allowedList").innerHTML = permission.allowed.map(item => `<li>${escapeHtml(item)}</li>`).join("");
   $("#blockedList").innerHTML = permission.blocked.map(item => `<li>${escapeHtml(item)}</li>`).join("");
   $("#nextDecision").textContent = permission.next_decision;
+  const positions = (data.holdings_status.positions || []).map(position => `
+    <div class="${tone(position.pnl_pct)}">${escapeHtml(position.name)} ${escapeHtml(position.shares_display)} · 成本 ${fmtNumber(position.avg_cost, 3)} · 浮动 ${fmtPct(position.pnl_pct)} / ${fmtNumber(position.pnl_amount, 0)}元</div>`).join("");
   $("#holdingTruth").innerHTML = `
     <div>${escapeHtml(data.holdings_status.confirmed)}</div>
-    <div class="danger">${escapeHtml(data.holdings_status.unresolved)}</div>
-    <div>组合盈亏：未启用，直到仓位核对完成</div>`;
+    ${data.holdings_status.unresolved ? `<div class="danger">${escapeHtml(data.holdings_status.unresolved)}</div>` : ""}
+    ${positions}`;
 }
 
 function memberRow(row, isHolding) {
@@ -65,7 +67,7 @@ function renderGroups(groups) {
       <div class="peer-card-head">
         <div>
           <div class="holding-title"><h3>${escapeHtml(group.holding.name)}</h3><span class="code">${escapeHtml(group.holding.ts_code)}</span></div>
-          <div class="cohort-note">${escapeHtml(group.benchmark)} · ${escapeHtml(group.cohort_type)} · ${escapeHtml(group.holding.shares_display)}</div>
+          <div class="cohort-note">${escapeHtml(group.benchmark)} · ${escapeHtml(group.cohort_type)} · ${escapeHtml(group.holding.shares_display)} · 成本 ${fmtNumber(group.holding.avg_cost, 3)} · 浮动 <span class="${tone(group.holding.pnl_pct)}">${fmtPct(group.holding.pnl_pct)}</span></div>
         </div>
         <div class="metric"><span class="label">强弱结论</span><span class="value"><span class="strength-badge ${strengthClass}">${escapeHtml(group.strength)}</span></span></div>
         <div class="metric"><span class="label">超额收益</span><span class="value ${tone(group.excess)}">${fmtPct(group.excess)}</span></div>

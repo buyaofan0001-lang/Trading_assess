@@ -255,8 +255,22 @@ def assess_group(holding: dict[str, Any], timeframe: str, errors: list[str]) -> 
     else:
         matrix = "同行承压 · 持仓更弱"
 
+    avg_cost = finite(holding.get("avg_cost"))
+    shares = finite(holding.get("shares"))
+    current_price = finite(holding_row.get("price"))
+    pnl_pct = current_price / avg_cost - 1 if current_price is not None and avg_cost else None
+    pnl_amount = (current_price - avg_cost) * shares if current_price is not None and avg_cost and shares else None
     return {
-        "holding": {**holding_row, "shares": holding.get("shares"), "shares_display": holding["shares_display"]},
+        "holding": {
+            **holding_row,
+            "shares": holding.get("shares"),
+            "shares_display": holding["shares_display"],
+            "avg_cost": avg_cost,
+            "total_cost": finite(holding.get("total_cost")),
+            "pnl_pct": pnl_pct,
+            "pnl_amount": pnl_amount,
+            "confidence": holding.get("confidence"),
+        },
         "peers": peer_rows,
         "cohort_type": holding["cohort_type"],
         "benchmark": holding["benchmark"],
@@ -369,13 +383,26 @@ def money_flow(errors: list[str]) -> dict[str, Any]:
         return {"trade_date": None, "industries": [], "concepts": [], "source": "盘后数据暂不可用", "realtime": False}
 
 
-def permission_card(errors: list[str]) -> dict[str, Any]:
-    holdings_conflict = any(item.get("shares") is None for item in CONFIG["holdings"])
-    level = "red" if holdings_conflict else "yellow"
+def permission_card(errors: list[str], groups: list[dict[str, Any]]) -> dict[str, Any]:
+    longdian = next((group["holding"] for group in groups if group["holding"]["ts_code"] == "600584.SH"), None)
+    loss = finite((longdian or {}).get("pnl_pct"))
+    hard_stop = next(
+        (finite(item.get("hard_stop_pct")) for item in CONFIG["holdings"] if item["ts_code"] == "600584.SH"),
+        None,
+    )
+    stop_breached = loss is not None and hard_stop is not None and loss <= -hard_stop
+    level = "red"
+    if stop_breached:
+        reason = (
+            f"长电科技900股已确认，当前相对99.854元成本约{loss * 100:.1f}%，"
+            f"已低于-{hard_stop * 100:.0f}%规则线；恢复期规则同时生效。"
+        )
+    else:
+        reason = "长电科技900股已确认；恢复期前5个交易日仍在执行。"
     return {
         "level": level,
-        "label": "停止主动买入" if level == "red" else "只允许计划内动作",
-        "reason": "长电科技实际持仓仍有 400 / 900 股冲突；恢复期规则同时生效。" if holdings_conflict else "恢复期前5个交易日仍在执行。",
+        "label": "停止主动买入",
+        "reason": reason,
         "allowed": ["核对券商持仓", "执行既定止损/减仓", "收盘后复盘"],
         "blocked": ["新增标的", "补亏损仓", "盘中临时改条件"],
         "next_decision": "14:30–14:55，仅处理事先写好的计划",
@@ -390,6 +417,19 @@ def build_dashboard(timeframe: str) -> dict[str, Any]:
     groups = [assess_group(holding, timeframe, errors) for holding in CONFIG["holdings"]]
     us = us_market(errors)
     flows = money_flow(errors)
+    position_items = [
+        {
+            "name": group["holding"]["name"],
+            "ts_code": group["holding"]["ts_code"],
+            "shares_display": group["holding"]["shares_display"],
+            "avg_cost": group["holding"]["avg_cost"],
+            "price": group["holding"]["price"],
+            "pnl_pct": group["holding"]["pnl_pct"],
+            "pnl_amount": group["holding"]["pnl_amount"],
+            "source": group["holding"]["confidence"],
+        }
+        for group in groups
+    ]
     return {
         "meta": {
             "generated_at": iso_now(),
@@ -398,11 +438,12 @@ def build_dashboard(timeframe: str) -> dict[str, Any]:
             "errors": errors,
             "truth_note": "价格按单代码轮询；不同股票快照可能相差数秒。资金流为盘后口径。",
         },
-        "permission": permission_card(errors),
+        "permission": permission_card(errors, groups),
         "holdings_status": {
-            "confirmed": "科创50ETF 100份",
-            "unresolved": "长电科技 400 / 900 股待券商持仓截图确认",
-            "portfolio_pnl_enabled": False,
+            "confirmed": "长电科技900股 · 科创50ETF 100份",
+            "unresolved": None,
+            "portfolio_pnl_enabled": True,
+            "positions": position_items,
         },
         "peer_groups": groups,
         "us": us,

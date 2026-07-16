@@ -79,7 +79,8 @@ def a_quote(ts_code: str) -> dict[str, Any]:
                 pre_close = finite(row.get("pre_close"))
                 amount = finite(row.get("amount"))
                 volume = finite(row.get("vol"))
-                vwap = amount / volume if amount is not None and volume else None
+                # fund_daily: amount is thousand yuan; vol is hands (100 shares).
+                vwap = amount * 10 / volume if amount is not None and volume else None
                 return {
                     "ts_code": ts_code,
                     "name": ts_code,
@@ -102,7 +103,8 @@ def a_quote(ts_code: str) -> dict[str, Any]:
         pre_close = finite(row.get("pre_close"))
         amount = finite(row.get("amount"))
         volume = finite(row.get("vol"))
-        vwap = amount / volume if amount is not None and volume else None
+        # rt_k: amount is yuan; vol is hands (100 shares).
+        vwap = amount / (volume * 100) if amount is not None and volume else None
         return {
             "ts_code": ts_code,
             "name": str(row.get("name") or ts_code),
@@ -187,8 +189,8 @@ def turnover_intensity(ts_code: str, amount: float | None) -> float | None:
         if df is None or df.empty:
             return None
         circ_mv = finite(df.sort_values("trade_date").iloc[-1].get("circ_mv"))
-        # Tushare amount and circ_mv are both in thousand yuan.
-        return amount / circ_mv if circ_mv else None
+        # rt_k amount is yuan; daily_basic circ_mv is thousand yuan.
+        return amount / (circ_mv * 1000) if circ_mv else None
 
     return CACHE.get(f"turnover:{ts_code}", 1800, load)
 

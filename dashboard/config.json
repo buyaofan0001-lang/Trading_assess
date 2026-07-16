@@ -1,43 +1,15 @@
 {
-  "holdings": [
-    {
-      "ts_code": "600584.SH",
-      "name": "长电科技",
-      "shares": 900,
-      "shares_display": "900 股",
-      "avg_cost": 99.854444,
-      "total_cost": 89869,
-      "hard_stop_pct": 0.08,
-      "confidence": "用户本轮确认 + Excel rows 194–198",
-      "cohort_type": "直接同行候选",
-      "benchmark": "半导体封测",
-      "peers": [
-        {"ts_code": "002156.SZ", "name": "通富微电"},
-        {"ts_code": "002185.SZ", "name": "华天科技"},
-        {"ts_code": "688362.SH", "name": "甬矽电子"},
-        {"ts_code": "688352.SH", "name": "颀中科技"}
-      ],
-      "us_map": [
-        {"ticker": "AMKR", "name": "Amkor", "role": "海外封测同行"},
-        {"ticker": "ASX", "name": "ASE Technology", "role": "海外封测同行"}
-      ]
-    },
-    {
-      "ts_code": "588060.SH",
-      "name": "科创50ETF",
-      "shares": 100,
-      "shares_display": "100 份",
-      "avg_cost": 1.377,
-      "total_cost": 137.7,
-      "confidence": "截图口径",
-      "cohort_type": "同指数产品候选",
-      "benchmark": "科创50",
-      "peers": [
-        {"ts_code": "588000.SH", "name": "科创50ETF"},
-        {"ts_code": "588080.SH", "name": "科创板50ETF"},
-        {"ts_code": "588090.SH", "name": "科创板ETF"}
-      ],
-      "us_map": []
-    }
-  ]
+  "ledger_path": "../交易记录.xlsx",
+  "position_seed": "position_seed.json",
+  "peer_library": "peer_library.json",
+  "peer_universe_cache": ".cache/ai_peer_universe.json",
+  "peer_count": 4,
+  "peer_universe_cache_hours": 24,
+  "default_hard_stop_pct": 0.08,
+  "overseas_maps": {
+    "600584.SH": [
+      {"ticker": "AMKR", "name": "Amkor", "role": "海外封测同行"},
+      {"ticker": "ASX", "name": "ASE Technology", "role": "海外封测同行"}
+    ]
+  }
 }

@@ -7,5 +7,7 @@ tushare_token.txt
 # 交易看板本地测试产物
 dashboard/node_modules/
 dashboard/__pycache__/
+dashboard/.cache/
 test-results/
 playwright-report/
+.tmp/

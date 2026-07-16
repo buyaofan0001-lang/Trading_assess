@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "sheet": "交易记录",
+  "checkpoint_excel_row": 198,
+  "checkpoint_data_rows": 197,
+  "history_digest": "7edf9bcd86df96e75154b835c288f9c72913c9f894bc794440aec4e1a8d67c9a",
+  "confirmed_at": "2026-07-16T16:08:00+08:00",
+  "reason": "历史表存在已知漏单和错误剩余仓位；以用户确认快照为起点，只重放之后新增成交。",
+  "positions": [
+    {
+      "ts_code": "600584.SH",
+      "name": "长电科技",
+      "shares": 900,
+      "avg_cost": 99.854444,
+      "total_cost": 89869,
+      "hard_stop_pct": 0.08,
+      "source": "用户确认 + Excel rows 194–198"
+    },
+    {
+      "ts_code": "588060.SH",
+      "name": "科创50ETF",
+      "shares": 100,
+      "avg_cost": 1.377,
+      "total_cost": 137.7,
+      "hard_stop_pct": 0.08,
+      "source": "券商成交截图基准"
+    }
+  ]
+}

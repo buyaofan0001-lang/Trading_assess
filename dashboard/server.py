@@ -34,8 +34,20 @@ REPO = HERE.parent
 sys.path.insert(0, str(REPO))
 
 from tushare_client import get_pro  # noqa: E402
+from portfolio_sync import AIPeerResolver, LedgerPortfolio  # noqa: E402
 
 CONFIG = json.loads((HERE / "config.json").read_text(encoding="utf-8"))
+LEDGER = LedgerPortfolio(
+    (HERE / CONFIG["ledger_path"]).resolve(),
+    (HERE / CONFIG["position_seed"]).resolve(),
+    CONFIG,
+)
+AI_PEERS = AIPeerResolver(
+    CONFIG,
+    (HERE / CONFIG["peer_library"]).resolve(),
+    (HERE / CONFIG["peer_universe_cache"]).resolve(),
+    get_pro,
+)
 PERIOD_DAYS = {"1d": 1, "5d": 5, "20d": 20}
 INTRADAY_TTL_SECONDS = 60
 JOURNAL_DIR = REPO / "日记"
@@ -108,6 +120,28 @@ def finite(value: Any) -> float | None:
 
 def iso_now() -> str:
     return datetime.now().astimezone().isoformat(timespec="seconds")
+
+
+def portfolio_snapshot(errors: list[str] | None = None) -> dict[str, Any]:
+    """Load the latest Excel-backed portfolio and attach AI-generated peers."""
+    payload = LEDGER.load()
+    try:
+        payload["holdings"] = AI_PEERS.resolve_all(payload["holdings"])
+    except Exception as exc:
+        if errors is not None:
+            errors.append(f"AI同行识别：{exc}")
+        for holding in payload["holdings"]:
+            holding.update({
+                "peers": [],
+                "benchmark": "AI同行数据暂不可用",
+                "cohort_type": "AI自动同行",
+                "cohort_status": "AI识别暂不可用",
+                "ai_peer_confidence": 0,
+                "ai_peer_reason": str(exc),
+                "ai_peer_engine": "local-semantic-ai-v1",
+                "us_map": CONFIG.get("overseas_maps", {}).get(holding["ts_code"], []),
+            })
+    return payload
 
 
 def validate_journal_date(value: Any) -> str:
@@ -415,6 +449,7 @@ def score_group(
             "shares_display": holding["shares_display"],
             "avg_cost": avg_cost,
             "total_cost": finite(holding.get("total_cost")),
+            "hard_stop_pct": finite(holding.get("hard_stop_pct")),
             "pnl_pct": pnl_pct,
             "pnl_amount": pnl_amount,
             "confidence": holding.get("confidence"),
@@ -422,7 +457,10 @@ def score_group(
         "peers": peer_rows,
         "cohort_type": holding["cohort_type"],
         "benchmark": holding["benchmark"],
-        "cohort_status": "候选名单 · 需用户确认后锁定",
+        "cohort_status": holding.get("cohort_status", "AI自动认定"),
+        "ai_peer_confidence": holding.get("ai_peer_confidence"),
+        "ai_peer_reason": holding.get("ai_peer_reason"),
+        "ai_peer_engine": holding.get("ai_peer_engine"),
         "peer_median": peer_median,
         "excess": excess,
         "rank": rank,
@@ -433,14 +471,16 @@ def score_group(
     }
 
 
-def build_groups(timeframe: str, errors: list[str]) -> list[dict[str, Any]]:
+def build_groups(timeframe: str, errors: list[str], holdings: list[dict[str, Any]]) -> list[dict[str, Any]]:
     """Fetch every unique cohort member concurrently, then score groups locally."""
     items: dict[str, dict[str, Any]] = {}
-    for holding in CONFIG["holdings"]:
+    for holding in holdings:
         items[holding["ts_code"]] = holding
         for peer in holding["peers"]:
             items[peer["ts_code"]] = peer
 
+    if not items:
+        return []
     snapshots: dict[str, dict[str, Any]] = {}
     with ThreadPoolExecutor(max_workers=min(6, len(items)), thread_name_prefix="quotes") as executor:
         futures = {
@@ -470,7 +510,7 @@ def build_groups(timeframe: str, errors: list[str]) -> list[dict[str, Any]]:
             snapshots[holding["ts_code"]],
             [snapshots[peer["ts_code"]] for peer in holding["peers"]],
         )
-        for holding in CONFIG["holdings"]
+        for holding in holdings
     ]
 
 
@@ -603,8 +643,10 @@ def intraday_series(
 def build_intraday_payload(force: bool = False) -> dict[str, Any]:
     started = time.perf_counter()
     trade_date = datetime.now().strftime("%Y-%m-%d")
+    portfolio = portfolio_snapshot()
+    holdings = portfolio["holdings"]
     items: dict[str, dict[str, Any]] = {}
-    for holding in CONFIG["holdings"]:
+    for holding in holdings:
         items[holding["ts_code"]] = holding
         for peer in holding["peers"]:
             items[peer["ts_code"]] = peer
@@ -612,11 +654,12 @@ def build_intraday_payload(force: bool = False) -> dict[str, Any]:
     series: dict[str, dict[str, Any]] = {}
     errors: list[str] = []
     try:
-        fallback = yahoo_intraday_fallback(list(items.values()), trade_date)
+        fallback = yahoo_intraday_fallback(list(items.values()), trade_date) if items else {}
     except Exception as exc:
         fallback = {}
         errors.append(f"Yahoo批量回退：{exc}")
-    trigger_eastmoney_refresh(list(items.values()), trade_date, force=force)
+    if items:
+        trigger_eastmoney_refresh(list(items.values()), trade_date, force=force)
     for ts_code, item in items.items():
         try:
             series[ts_code] = intraday_series(item, trade_date, fallback.get(ts_code))
@@ -624,7 +667,7 @@ def build_intraday_payload(force: bool = False) -> dict[str, Any]:
             errors.append(f"{ts_code}：{exc}")
 
     groups = []
-    for holding in CONFIG["holdings"]:
+    for holding in holdings:
         member_codes = [holding["ts_code"], *[peer["ts_code"] for peer in holding["peers"]]]
         groups.append({
             "holding_ts_code": holding["ts_code"],
@@ -642,17 +685,20 @@ def build_intraday_payload(force: bool = False) -> dict[str, Any]:
             "primary_refreshing": INTRADAY_REFRESHING,
             "primary_errors": list(INTRADAY_PRIMARY_ERRORS),
             "elapsed_ms": round((time.perf_counter() - started) * 1000),
+            "portfolio_version": portfolio["meta"]["portfolio_version"],
         },
         "groups": groups,
     }
 
 
-def us_market(errors: list[str]) -> dict[str, Any]:
+def us_market(errors: list[str], holdings: list[dict[str, Any]]) -> dict[str, Any]:
     tickers = list(dict.fromkeys(
-        row["ticker"] for holding in CONFIG["holdings"] for row in holding.get("us_map", [])
+        row["ticker"] for holding in holdings for row in holding.get("us_map", [])
     ))
 
     def load() -> dict[str, Any]:
+        if not tickers:
+            return {}
         frame = yf.download(
             tickers=tickers,
             period="10d",
@@ -689,7 +735,7 @@ def us_market(errors: list[str]) -> dict[str, Any]:
         raw = {}
 
     mapped = []
-    for holding in CONFIG["holdings"]:
+    for holding in holdings:
         peers = [{**item, **raw.get(item["ticker"], {})} for item in holding.get("us_map", [])]
         if peers:
             mapped.append({"holding": holding["name"], "peers": peers, "status": "候选映射 · 待确认"})
@@ -741,21 +787,24 @@ def money_flow(errors: list[str]) -> dict[str, Any]:
 
 
 def permission_card(errors: list[str], groups: list[dict[str, Any]]) -> dict[str, Any]:
-    longdian = next((group["holding"] for group in groups if group["holding"]["ts_code"] == "600584.SH"), None)
-    loss = finite((longdian or {}).get("pnl_pct"))
-    hard_stop = next(
-        (finite(item.get("hard_stop_pct")) for item in CONFIG["holdings"] if item["ts_code"] == "600584.SH"),
-        None,
-    )
-    stop_breached = loss is not None and hard_stop is not None and loss <= -hard_stop
+    breaches = []
+    for group in groups:
+        holding = group["holding"]
+        loss = finite(holding.get("pnl_pct"))
+        hard_stop = finite(holding.get("hard_stop_pct")) or finite(CONFIG.get("default_hard_stop_pct", 0.08))
+        if loss is not None and hard_stop is not None and loss <= -hard_stop:
+            breaches.append((holding, loss, hard_stop))
     level = "red"
-    if stop_breached:
+    if breaches:
+        holding, loss, hard_stop = min(breaches, key=lambda item: item[1])
         reason = (
-            f"长电科技900股已确认，当前相对99.854元成本约{loss * 100:.1f}%，"
+            f"{holding['name']}{holding['shares_display']}由Excel同步，当前相对{holding['avg_cost']:.3f}元成本约{loss * 100:.1f}%，"
             f"已低于-{hard_stop * 100:.0f}%规则线；恢复期规则同时生效。"
         )
+    elif groups:
+        reason = f"交易记录.xlsx 已同步{len(groups)}个持仓；恢复期前5个交易日仍在执行。"
     else:
-        reason = "长电科技900股已确认；恢复期前5个交易日仍在执行。"
+        reason = "交易记录.xlsx 当前无持仓；恢复期规则仍在执行。"
     return {
         "level": level,
         "label": "停止主动买入",
@@ -773,9 +822,11 @@ def build_dashboard(timeframe: str) -> dict[str, Any]:
     started = time.perf_counter()
     errors: list[str] = []
     get_pro()  # initialize the shared client before worker threads use it
+    portfolio = portfolio_snapshot(errors)
+    holdings = portfolio["holdings"]
     with ThreadPoolExecutor(max_workers=3, thread_name_prefix="sections") as executor:
-        groups_future = executor.submit(build_groups, timeframe, errors)
-        us_future = executor.submit(us_market, errors)
+        groups_future = executor.submit(build_groups, timeframe, errors, holdings)
+        us_future = executor.submit(us_market, errors, holdings)
         flows_future = executor.submit(money_flow, errors)
         groups = groups_future.result()
         us = us_future.result()
@@ -801,13 +852,16 @@ def build_dashboard(timeframe: str) -> dict[str, Any]:
             "errors": errors,
             "elapsed_ms": round((time.perf_counter() - started) * 1000),
             "truth_note": "价格按单代码轮询；不同股票快照可能相差数秒。资金流为盘后口径。",
+            "portfolio_version": portfolio["meta"]["portfolio_version"],
+            "ledger": portfolio["meta"],
         },
         "permission": permission_card(errors, groups),
         "holdings_status": {
-            "confirmed": "长电科技900股 · 科创50ETF 100份",
-            "unresolved": None,
+            "confirmed": " · ".join(f"{item['name']}{item['shares_display']}" for item in holdings) if holdings else "当前无持仓",
+            "unresolved": "；".join(portfolio["meta"].get("warnings", [])) or None,
             "portfolio_pnl_enabled": True,
             "positions": position_items,
+            "sync": portfolio["meta"],
         },
         "peer_groups": groups,
         "us": us,
@@ -821,7 +875,8 @@ def build_peer_payload(timeframe: str) -> dict[str, Any]:
     started = time.perf_counter()
     errors: list[str] = []
     get_pro()
-    groups = build_groups(timeframe, errors)
+    portfolio = portfolio_snapshot(errors)
+    groups = build_groups(timeframe, errors, portfolio["holdings"])
     return {
         "meta": {
             "generated_at": iso_now(),
@@ -829,8 +884,18 @@ def build_peer_payload(timeframe: str) -> dict[str, Any]:
             "partial": bool(errors),
             "errors": errors,
             "elapsed_ms": round((time.perf_counter() - started) * 1000),
+            "portfolio_version": portfolio["meta"]["portfolio_version"],
         },
         "peer_groups": groups,
+    }
+
+
+def build_portfolio_payload() -> dict[str, Any]:
+    errors: list[str] = []
+    portfolio = portfolio_snapshot(errors)
+    return {
+        "meta": {**portfolio["meta"], "errors": errors, "partial": bool(errors)},
+        "holdings": portfolio["holdings"],
     }
 
 
@@ -852,6 +917,12 @@ class DashboardHandler(SimpleHTTPRequestHandler):
                 self.send_json(get_journal(date))
             except ValueError as exc:
                 self.send_json({"error": str(exc)}, HTTPStatus.BAD_REQUEST)
+            except Exception as exc:
+                self.send_json({"error": str(exc)}, HTTPStatus.INTERNAL_SERVER_ERROR)
+            return
+        if parsed.path == "/api/portfolio":
+            try:
+                self.send_json(build_portfolio_payload())
             except Exception as exc:
                 self.send_json({"error": str(exc)}, HTTPStatus.INTERNAL_SERVER_ERROR)
             return

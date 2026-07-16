@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>守门台 · 交易控制看板</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!--
+    V1 assumptions and design reasoning:
+    1. The dashboard's primary job is to stop bad trades before it celebrates good ones.
+    2. Holdings are not treated as exact until the 400/900-share conflict is resolved.
+    3. A-share peer strength and prior-session US context remain visually and mathematically separate.
+    4. The visual system is a calm, high-density operations desk: warm graphite, paper-white text,
+       restrained signal colors, editorial headings, and monospaced market numbers.
+  -->
+  <div class="shell">
+    <aside class="rail" aria-label="看板导航">
+      <div class="brand">
+        <div class="brand-mark">守</div>
+        <div>
+          <div class="brand-name">守门台</div>
+          <div class="brand-en">Trading Control</div>
+        </div>
+      </div>
+
+      <nav>
+        <a class="nav-link active" href="#gate"><span>01</span> 今日权限</a>
+        <a class="nav-link" href="#arena"><span>02</span> 同行擂台</a>
+        <a class="nav-link" href="#overnight"><span>03</span> 隔夜映射</a>
+        <a class="nav-link" href="#flows"><span>04</span> 资金去向</a>
+        <a class="nav-link" href="#recovery"><span>05</span> 生活恢复</a>
+      </nav>
+
+      <div class="rail-foot">
+        <div class="rail-label">系统原则</div>
+        <p>事实先于解释<br>条件先于动作<br>生存先于收益</p>
+      </div>
+    </aside>
+
+    <main>
+      <header class="topbar">
+        <div>
+          <div class="eyebrow">2026 · PERSONAL TRADING OS</div>
+          <h1>今天，先决定什么不能做。</h1>
+        </div>
+        <div class="top-actions">
+          <div id="freshness" class="freshness" aria-live="polite">
+            <span class="pulse"></span>
+            <span>正在连接数据</span>
+          </div>
+          <button id="refreshButton" class="button button-primary" type="button">刷新数据</button>
+        </div>
+      </header>
+
+      <section id="gate" class="gate-section" aria-labelledby="gate-title">
+        <div id="permissionCard" class="permission-card loading">
+          <div class="permission-copy">
+            <div class="section-kicker">TODAY'S PERMISSION</div>
+            <h2 id="gate-title">正在核验交易权限</h2>
+            <p id="permissionReason">读取持仓、恢复期规则与数据状态。</p>
+          </div>
+          <div class="permission-state">
+            <span id="permissionDot" class="permission-dot"></span>
+            <span id="permissionLabel">核验中</span>
+          </div>
+        </div>
+
+        <div class="gate-grid">
+          <article class="panel compact-panel">
+            <div class="panel-label">允许动作</div>
+            <ul id="allowedList" class="rule-list"></ul>
+          </article>
+          <article class="panel compact-panel">
+            <div class="panel-label">禁止动作</div>
+            <ul id="blockedList" class="rule-list blocked-list"></ul>
+          </article>
+          <article class="panel compact-panel timing-panel">
+            <div class="panel-label">下一决策窗口</div>
+            <div id="nextDecision" class="decision-time">—</div>
+            <p>窗口开放不等于必须交易。</p>
+          </article>
+          <article class="panel compact-panel">
+            <div class="panel-label">持仓真相</div>
+            <div id="holdingTruth" class="truth-lines"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="arena" class="content-section" aria-labelledby="arena-title">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">RELATIVE STRENGTH ARENA</div>
+            <h2 id="arena-title">持仓同行擂台</h2>
+            <p>看持仓是否真正跑赢同类。价格与排名定方向，成交强度只做确认。</p>
+          </div>
+          <div class="segmented" role="group" aria-label="选择比较周期">
+            <button type="button" data-timeframe="1d" class="active">1日</button>
+            <button type="button" data-timeframe="5d">5日</button>
+            <button type="button" data-timeframe="20d">20日</button>
+          </div>
+        </div>
+        <div id="peerGroups" class="peer-groups">
+          <div class="skeleton large"></div>
+          <div class="skeleton large"></div>
+        </div>
+      </section>
+
+      <section id="overnight" class="content-section" aria-labelledby="overnight-title">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">OVERNIGHT MAP · NEW YORK → BEIJING</div>
+            <h2 id="overnight-title">隔夜美股映射</h2>
+            <p id="usDate">加载最近完整交易日…</p>
+          </div>
+          <div class="source-tag">Yahoo Finance</div>
+        </div>
+        <div class="overnight-layout">
+          <div id="usMarket" class="market-tape"></div>
+          <div id="usMappings" class="mapping-list"></div>
+        </div>
+        <div id="usRule" class="footnote"></div>
+      </section>
+
+      <section id="flows" class="content-section" aria-labelledby="flows-title">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">POST-CLOSE CAPITAL FLOW</div>
+            <h2 id="flows-title">板块资金去向</h2>
+            <p id="flowDate">当前接口为盘后日频，不伪装成实时资金流。</p>
+          </div>
+          <div class="source-tag warning">盘后更新</div>
+        </div>
+        <div class="flow-grid">
+          <article class="panel">
+            <div class="panel-title-row"><h3>行业净流入前列</h3><span>THS口径</span></div>
+            <div id="industryFlow" class="bar-list"></div>
+          </article>
+          <article class="panel">
+            <div class="panel-title-row"><h3>概念净流入前列</h3><span>THS口径</span></div>
+            <div id="conceptFlow" class="bar-list"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="recovery" class="content-section recovery-section" aria-labelledby="recovery-title">
+        <div class="section-head">
+          <div>
+            <div class="section-kicker">LIFE BEFORE LEVERAGE</div>
+            <h2 id="recovery-title">交易生活恢复清单</h2>
+            <p>把可控的日常完成，再把注意力交给市场。</p>
+          </div>
+          <div id="checkProgress" class="progress-number">0 / 5</div>
+        </div>
+        <div class="recovery-layout">
+          <div id="recoveryChecklist" class="check-list"></div>
+          <blockquote id="recoveryRule">不靠下一笔交易解决生活压力。</blockquote>
+        </div>
+      </section>
+
+      <footer>
+        <span>守门台 V1 · 决策辅助，不连接券商下单</span>
+        <span id="truthNote">等待数据口径说明</span>
+      </footer>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>

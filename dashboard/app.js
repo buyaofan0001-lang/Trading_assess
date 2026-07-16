@@ -6,6 +6,9 @@ const state = {
   data: null,
   timeframeCache: new Map(),
   timeframeRequests: new Map(),
+  intraday: null,
+  intradayError: null,
+  intradayLoading: false,
   refreshTimer: null,
   countdownTimer: null,
   nextRefreshAt: null,
@@ -72,6 +75,103 @@ function memberRow(row, isHolding) {
   </tr>`;
 }
 
+const CHART_COLORS = ["#d6a65f", "#7eb0ad", "#85b879", "#c58d78", "#a49cc4"];
+
+function sessionPosition(time) {
+  const [hour, minute] = String(time).split(":").map(Number);
+  const clock = hour * 60 + minute;
+  if (!Number.isFinite(clock)) return null;
+  if (clock >= 9 * 60 + 30 && clock <= 11 * 60 + 30) return clock - (9 * 60 + 30);
+  if (clock >= 13 * 60 && clock <= 15 * 60) return 135 + clock - 13 * 60;
+  return null;
+}
+
+function axisPct(value) {
+  const pct = Number(value) * 100;
+  return `${pct > 0 ? "+" : ""}${pct.toFixed(Math.abs(pct) >= 10 ? 1 : 2)}%`;
+}
+
+function renderIntradayChart(group) {
+  const payload = state.intraday?.groups?.find(item => item.holding_ts_code === group.holding.ts_code);
+  const source = state.intraday?.meta?.source || "正在连接当日分钟行情";
+  const tradeDate = state.intraday?.meta?.trade_date || "";
+  const series = payload?.series || [];
+  const usable = series.map((item, index) => ({
+    ...item,
+    color: CHART_COLORS[index % CHART_COLORS.length],
+    points: (item.points || []).map(point => ({
+      ...point,
+      position: sessionPosition(point.time),
+      value: Number(point.return),
+    })).filter(point => point.position !== null && Number.isFinite(point.value)),
+  })).filter(item => item.points.length);
+
+  if (!usable.length) {
+    const message = state.intradayError
+      ? `分钟行情暂不可用：${state.intradayError}`
+      : state.intradayLoading ? "正在加载当日分钟线…" : "今天尚无可用分钟行情";
+    return `<figure class="intraday-chart intraday-empty" aria-label="${escapeHtml(group.holding.name)}当日走势">
+      <figcaption><div><span class="chart-title">当日价格变化</span><span class="chart-subtitle">相对昨收</span></div><span class="chart-source">${escapeHtml(source)}</span></figcaption>
+      <div class="intraday-empty-copy">${escapeHtml(message)}</div>
+    </figure>`;
+  }
+
+  const width = 1120;
+  const height = 258;
+  const pad = { left: 57, right: 22, top: 18, bottom: 36 };
+  const innerWidth = width - pad.left - pad.right;
+  const innerHeight = height - pad.top - pad.bottom;
+  const values = usable.flatMap(item => item.points.map(point => point.value));
+  const maxAbs = Math.max(0.01, ...values.map(value => Math.abs(value))) * 1.08;
+  const x = position => pad.left + position / 255 * innerWidth;
+  const y = value => pad.top + (maxAbs - value) / (maxAbs * 2) * innerHeight;
+  const yTicks = [-maxAbs, -maxAbs / 2, 0, maxAbs / 2, maxAbs];
+  const xTicks = [
+    [0, "09:30"], [60, "10:30"], [120, "11:30"],
+    [135, "13:00"], [195, "14:00"], [255, "15:00"],
+  ];
+  const grid = yTicks.map(value => `<g>
+    <line x1="${pad.left}" y1="${y(value).toFixed(2)}" x2="${width - pad.right}" y2="${y(value).toFixed(2)}" class="chart-grid${Math.abs(value) < 1e-10 ? " zero" : ""}" />
+    <text x="${pad.left - 10}" y="${(y(value) + 3).toFixed(2)}" text-anchor="end" class="chart-axis-label">${axisPct(value)}</text>
+  </g>`).join("");
+  const axes = xTicks.map(([position, label]) => `<g>
+    <line x1="${x(position).toFixed(2)}" y1="${pad.top}" x2="${x(position).toFixed(2)}" y2="${height - pad.bottom}" class="chart-grid vertical" />
+    <text x="${x(position).toFixed(2)}" y="${height - 13}" text-anchor="middle" class="chart-axis-label">${label}</text>
+  </g>`).join("");
+  const lines = usable.map(item => {
+    const holding = item.ts_code === group.holding.ts_code;
+    const points = item.points.map(point => `${x(point.position).toFixed(2)},${y(point.value).toFixed(2)}`).join(" ");
+    const latest = item.points[item.points.length - 1];
+    return `<g class="chart-series${holding ? " holding" : ""}">
+      <polyline points="${points}" fill="none" stroke="${item.color}" stroke-width="${holding ? 3.2 : 1.8}" vector-effect="non-scaling-stroke" />
+      <circle cx="${x(latest.position).toFixed(2)}" cy="${y(latest.value).toFixed(2)}" r="${holding ? 4 : 3}" fill="${item.color}"><title>${escapeHtml(item.name)} ${escapeHtml(latest.time)} ${axisPct(latest.value)}</title></circle>
+    </g>`;
+  }).join("");
+  const legend = usable.map(item => {
+    const latest = item.points[item.points.length - 1];
+    const holding = item.ts_code === group.holding.ts_code;
+    return `<span class="chart-legend-item${holding ? " holding" : ""}">
+      <i style="--series-color:${item.color}"></i><span>${escapeHtml(item.name)}</span><b class="${tone(latest.value)}">${fmtPct(latest.value)}</b>
+    </span>`;
+  }).join("");
+  const missing = payload?.missing?.length ? ` · 缺失 ${payload.missing.join("、")}` : "";
+  const latestTime = usable.map(item => item.latest_time).filter(Boolean).sort().at(-1) || "—";
+
+  return `<figure class="intraday-chart" aria-label="${escapeHtml(group.holding.name)}及同行当日相对昨收走势">
+    <figcaption>
+      <div><span class="chart-title">当日价格变化</span><span class="chart-subtitle">相对昨收 · 持仓高亮</span></div>
+      <span class="chart-source">${escapeHtml(tradeDate)} ${escapeHtml(latestTime)} · ${escapeHtml(source)}${escapeHtml(missing)}</span>
+    </figcaption>
+    <div class="chart-legend">${legend}</div>
+    <div class="chart-scroll">
+      <svg viewBox="0 0 ${width} ${height}" role="img" aria-label="日内涨跌幅折线图">
+        <rect x="${x(120).toFixed(2)}" y="${pad.top}" width="${(x(135) - x(120)).toFixed(2)}" height="${innerHeight}" class="lunch-band" />
+        ${grid}${axes}${lines}
+      </svg>
+    </div>
+  </figure>`;
+}
+
 function renderGroups(groups) {
   $("#peerGroups").innerHTML = groups.map(group => {
     const strengthClass = group.strength === "强" ? "strong" : group.strength === "弱" ? "weak" : "";
@@ -86,6 +186,7 @@ function renderGroups(groups) {
         <div class="metric"><span class="label">同行中位数</span><span class="value ${tone(group.peer_median)}">${fmtPct(group.peer_median)}</span></div>
         <div class="metric"><span class="label">组内排名</span><span class="value">${group.rank ?? "—"} / ${group.member_count || "—"}</span></div>
       </div>
+      ${renderIntradayChart(group)}
       <table class="peer-table">
         <thead><tr><th>成员</th><th>现价</th><th>${state.timeframe.toUpperCase()}收益</th><th>价格/均价</th><th>成交额/流通市值</th></tr></thead>
         <tbody>${memberRow(group.holding, true)}${group.peers.map(row => memberRow(row, false)).join("")}</tbody>
@@ -270,6 +371,25 @@ async function prefetchTimeframes() {
   }
 }
 
+async function loadIntraday({ force = false } = {}) {
+  if (state.intradayLoading) return;
+  state.intradayLoading = true;
+  state.intradayError = null;
+  try {
+    const response = await fetch(`/api/intraday${force ? "?force=1" : ""}`, { cache: "no-store" });
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.error || `HTTP ${response.status}`);
+    state.intraday = payload;
+  } catch (error) {
+    console.warn("分钟行情加载失败", error);
+    state.intradayError = error.message;
+  } finally {
+    state.intradayLoading = false;
+    const groups = state.timeframeCache.get(state.timeframe) || state.data?.peer_groups;
+    if (groups) renderGroups(groups);
+  }
+}
+
 async function switchTimeframe(timeframe) {
   if (timeframe === state.timeframe) return;
   state.timeframe = timeframe;
@@ -304,6 +424,7 @@ async function loadDashboard({ showToast = false, force = false, background = fa
     const payload = await response.json();
     if (!response.ok) throw new Error(payload.error || `HTTP ${response.status}`);
     render(payload);
+    void loadIntraday({ force });
     void prefetchTimeframes();
     if (showToast) toast(payload.meta.partial ? "已刷新，部分数据存在缺口" : "数据已刷新");
   } catch (error) {

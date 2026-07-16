@@ -75,6 +75,21 @@ function memberRow(row, isHolding) {
   </tr>`;
 }
 
+function overseasRows(group) {
+  const mapping = state.data?.us?.mapped_peers?.find(item => item.holding === group.holding.name);
+  if (!mapping?.peers?.length) return "";
+  const marketDate = state.data?.us?.market_date || "日期待确认";
+  return `<tr class="overseas-divider">
+    <td colspan="5"><span>隔夜海外同行</span><small>纽约市场日 ${escapeHtml(marketDate)} · 仅作跨市场参照，不参与A股排名</small></td>
+  </tr>${mapping.peers.map(row => `<tr class="overseas-row">
+    <td><span class="member-name">${escapeHtml(row.name)}</span><span class="code"> ${escapeHtml(row.ticker)}</span><span class="overseas-chip">隔夜</span></td>
+    <td>${fmtNumber(row.close)}</td>
+    <td class="${tone(row.return)}">${fmtPct(row.return)}</td>
+    <td class="neutral">—</td>
+    <td class="neutral">—</td>
+  </tr>`).join("")}`;
+}
+
 const CHART_COLORS = ["#d6a65f", "#7eb0ad", "#85b879", "#c58d78", "#a49cc4"];
 
 function sessionPosition(time) {
@@ -211,8 +226,8 @@ function renderGroups(groups) {
       </div>
       ${renderIntradayChart(group)}
       <table class="peer-table">
-        <thead><tr><th>成员</th><th>现价</th><th>${state.timeframe.toUpperCase()}收益</th><th>价格/均价</th><th>成交额/流通市值</th></tr></thead>
-        <tbody>${memberRow(group.holding, true)}${group.peers.map(row => memberRow(row, false)).join("")}</tbody>
+        <thead><tr><th>成员</th><th>价格/收盘</th><th>${state.timeframe.toUpperCase()}收益 / 隔夜</th><th>价格/均价</th><th>成交额/流通市值</th></tr></thead>
+        <tbody>${memberRow(group.holding, true)}${group.peers.map(row => memberRow(row, false)).join("")}${overseasRows(group)}</tbody>
       </table>
       <div class="peer-card-foot"><span>${escapeHtml(group.matrix)}</span><span>${escapeHtml(group.cohort_status)}</span></div>
     </article>`;

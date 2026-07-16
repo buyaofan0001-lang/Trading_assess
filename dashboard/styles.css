@@ -167,8 +167,14 @@ h3 { font-size: 14px; font-weight: 500; }
 .peer-table tr:last-child td { border-bottom: 0; }
 .peer-table tr.holding-row { background: #20231d; }
 .peer-table tr.holding-row td:first-child { box-shadow: inset 3px 0 0 var(--amber); }
+.peer-table tr.overseas-divider td { padding: 9px 16px; border-top: 1px solid var(--line-strong); background: #1b1f19; text-align: left; }
+.overseas-divider span { color: var(--cyan); font: 9px var(--mono); letter-spacing: .1em; }
+.overseas-divider small { margin-left: 12px; color: var(--faint); font: 9px var(--mono); }
+.peer-table tr.overseas-row { background: #141814; }
+.peer-table tr.overseas-row td { color: var(--muted); }
 .member-name { font-family: var(--sans); font-size: 12px; }
 .holding-chip { margin-left: 8px; color: var(--amber); font: 8px var(--mono); letter-spacing: .08em; }
+.overseas-chip { margin-left: 8px; padding: 2px 5px; color: var(--cyan); border: 1px solid #355654; font: 8px var(--mono); letter-spacing: .08em; }
 .positive { color: var(--green) !important; }
 .negative { color: var(--red) !important; }
 .neutral { color: var(--muted) !important; }
@@ -253,6 +259,7 @@ footer { display: flex; justify-content: space-between; gap: 30px; padding: 25px
   .intraday-chart { padding-inline: 14px; }
   .intraday-chart figcaption { align-items: flex-start; flex-direction: column; gap: 5px; }
   .chart-source { text-align: left; }
+  .overseas-divider small { display: block; margin: 4px 0 0; line-height: 1.45; }
   .peer-table th:nth-child(4), .peer-table td:nth-child(4), .peer-table th:nth-child(5), .peer-table td:nth-child(5) { display: none; }
   .peer-table th:first-child, .peer-table td:first-child { width: 45%; }
   footer { flex-direction: column; }

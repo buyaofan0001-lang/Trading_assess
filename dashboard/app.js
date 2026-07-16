@@ -1,5 +1,6 @@
 const LIVE_REFRESH_MS = 30_000;
 const POST_CLOSE_REFRESH_MS = 5 * 60_000;
+const PORTFOLIO_POLL_MS = 15_000;
 const state = {
   timeframe: "1d",
   loading: false,
@@ -10,6 +11,7 @@ const state = {
   intradayError: null,
   intradayLoading: false,
   refreshTimer: null,
+  portfolioPollTimer: null,
   countdownTimer: null,
   nextRefreshAt: null,
   lastMeta: null,
@@ -476,7 +478,7 @@ function render(data) {
   renderFlows(data.money_flow);
   const ledger = data.meta?.ledger;
   $("#portfolioSyncStatus").textContent = ledger
-    ? `Excel已同步 · ${ledger.total_data_rows}行 · AI同行${data.peer_groups.length}组`
+    ? `Excel已同步 · ${ledger.total_data_rows}行 · AI同行${data.peer_groups.length}组 · 15秒监控`
     : "等待交易记录同步";
 }
 
@@ -533,6 +535,29 @@ function scheduleAutoRefresh() {
     state.refreshTimer = window.setTimeout(() => loadDashboard({ background: true }), interval);
   }
   updateFreshnessText();
+}
+
+function schedulePortfolioPoll(delay = PORTFOLIO_POLL_MS) {
+  window.clearTimeout(state.portfolioPollTimer);
+  state.portfolioPollTimer = null;
+  if (document.hidden) return;
+  state.portfolioPollTimer = window.setTimeout(pollPortfolioVersion, delay);
+}
+
+async function pollPortfolioVersion() {
+  try {
+    const response = await fetch("/api/portfolio", { cache: "no-store" });
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.error || `HTTP ${response.status}`);
+    const version = payload.meta?.portfolio_version;
+    if (state.portfolioVersion && version && version !== state.portfolioVersion) {
+      await loadDashboard({ background: true });
+    }
+  } catch (error) {
+    console.warn("Excel持仓版本检查失败", error);
+  } finally {
+    schedulePortfolioPoll();
+  }
 }
 
 function updateTimeframeReadyStates() {
@@ -672,8 +697,10 @@ window.addEventListener("beforeunload", event => {
 document.addEventListener("visibilitychange", () => {
   if (document.hidden) {
     scheduleAutoRefresh();
+    schedulePortfolioPoll();
   } else if (state.data) {
     void loadDashboard({ background: true });
+    schedulePortfolioPoll();
   }
 });
 
@@ -702,4 +729,5 @@ state.countdownTimer = window.setInterval(updateFreshnessText, 1000);
 updateTimeframeReadyStates();
 void loadJournalIndex();
 loadDashboard();
+schedulePortfolioPoll();
 updateActiveNavigation();

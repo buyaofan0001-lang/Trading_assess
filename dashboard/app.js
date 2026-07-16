@@ -1,4 +1,16 @@
-const state = { timeframe: "1d", loading: false, data: null };
+const LIVE_REFRESH_MS = 30_000;
+const POST_CLOSE_REFRESH_MS = 5 * 60_000;
+const state = {
+  timeframe: "1d",
+  loading: false,
+  data: null,
+  timeframeCache: new Map(),
+  timeframeRequests: new Map(),
+  refreshTimer: null,
+  countdownTimer: null,
+  nextRefreshAt: null,
+  lastMeta: null,
+};
 
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
@@ -147,16 +159,21 @@ function renderRecovery(recovery) {
 }
 
 function renderMeta(meta) {
+  state.lastMeta = meta;
   const fresh = $("#freshness");
   fresh.className = `freshness ${meta.partial ? "error" : "ok"}`;
-  const time = new Date(meta.generated_at).toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
-  fresh.querySelector("span:last-child").textContent = `${meta.partial ? "部分数据可用" : "数据已更新"} · ${time}`;
+  updateFreshnessText();
   $("#truthNote").textContent = meta.truth_note;
   if (meta.errors?.length) console.warn("Dashboard data gaps:", meta.errors);
 }
 
 function render(data) {
   state.data = data;
+  for (const timeframe of [...state.timeframeCache.keys()]) {
+    if (timeframe !== state.timeframe) state.timeframeCache.delete(timeframe);
+  }
+  state.timeframeCache.set(state.timeframe, data.peer_groups);
+  updateTimeframeReadyStates();
   renderMeta(data.meta);
   renderPermission(data);
   renderGroups(data.peer_groups);
@@ -165,17 +182,129 @@ function render(data) {
   renderRecovery(data.recovery);
 }
 
-async function loadDashboard(showToast = false) {
+function shanghaiClock() {
+  const formatter = new Intl.DateTimeFormat("en-GB", {
+    timeZone: "Asia/Shanghai",
+    weekday: "short",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23",
+  });
+  const parts = Object.fromEntries(formatter.formatToParts(new Date()).map(part => [part.type, part.value]));
+  return {
+    weekday: parts.weekday,
+    minutes: Number(parts.hour) * 60 + Number(parts.minute),
+  };
+}
+
+function refreshIntervalForNow() {
+  const { weekday, minutes } = shanghaiClock();
+  if (!["Mon", "Tue", "Wed", "Thu", "Fri"].includes(weekday)) return null;
+  const live = (minutes >= 9 * 60 + 15 && minutes <= 11 * 60 + 35)
+    || (minutes >= 12 * 60 + 55 && minutes <= 15 * 60 + 5);
+  if (live) return LIVE_REFRESH_MS;
+  if (minutes > 15 * 60 + 5 && minutes <= 16 * 60 + 30) return POST_CLOSE_REFRESH_MS;
+  return null;
+}
+
+function updateFreshnessText() {
+  if (!state.lastMeta) return;
+  const fresh = $("#freshness");
+  const time = new Date(state.lastMeta.generated_at).toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit", second: "2-digit" });
+  const base = `${state.lastMeta.partial ? "部分数据可用" : "数据已更新"} · ${time}`;
+  if (document.hidden) {
+    fresh.querySelector("span:last-child").textContent = `${base} · 后台暂停`;
+    return;
+  }
+  const interval = refreshIntervalForNow();
+  if (!interval || !state.nextRefreshAt) {
+    fresh.querySelector("span:last-child").textContent = `${base} · 非交易时段暂停`;
+    return;
+  }
+  const seconds = Math.max(0, Math.ceil((state.nextRefreshAt - Date.now()) / 1000));
+  fresh.querySelector("span:last-child").textContent = `${base} · 自动刷新 ${seconds}s`;
+}
+
+function scheduleAutoRefresh() {
+  window.clearTimeout(state.refreshTimer);
+  state.refreshTimer = null;
+  state.nextRefreshAt = null;
+  const interval = document.hidden ? null : refreshIntervalForNow();
+  if (interval) {
+    state.nextRefreshAt = Date.now() + interval;
+    state.refreshTimer = window.setTimeout(() => loadDashboard({ background: true }), interval);
+  }
+  updateFreshnessText();
+}
+
+function updateTimeframeReadyStates() {
+  $$('[data-timeframe]').forEach(button => {
+    button.dataset.ready = state.timeframeCache.has(button.dataset.timeframe) ? "true" : "false";
+  });
+}
+
+async function fetchPeerTimeframe(timeframe) {
+  if (state.timeframeCache.has(timeframe)) return state.timeframeCache.get(timeframe);
+  if (state.timeframeRequests.has(timeframe)) return state.timeframeRequests.get(timeframe);
+  const request = fetch(`/api/peer-groups?timeframe=${encodeURIComponent(timeframe)}`, { cache: "no-store" })
+    .then(async response => {
+      const payload = await response.json();
+      if (!response.ok) throw new Error(payload.error || `HTTP ${response.status}`);
+      state.timeframeCache.set(timeframe, payload.peer_groups);
+      updateTimeframeReadyStates();
+      return payload.peer_groups;
+    })
+    .finally(() => state.timeframeRequests.delete(timeframe));
+  state.timeframeRequests.set(timeframe, request);
+  return request;
+}
+
+async function prefetchTimeframes() {
+  for (const timeframe of ["5d", "20d", "1d"]) {
+    if (timeframe === state.timeframe || state.timeframeCache.has(timeframe)) continue;
+    try {
+      await fetchPeerTimeframe(timeframe);
+    } catch (error) {
+      console.warn(`预热${timeframe}失败`, error);
+    }
+  }
+}
+
+async function switchTimeframe(timeframe) {
+  if (timeframe === state.timeframe) return;
+  state.timeframe = timeframe;
+  $$('[data-timeframe]').forEach(item => item.classList.toggle("active", item.dataset.timeframe === timeframe));
+  const groups = state.timeframeCache.get(timeframe);
+  if (groups) {
+    renderGroups(groups);
+    return;
+  }
+  $("#peerGroups").setAttribute("aria-busy", "true");
+  try {
+    const loaded = await fetchPeerTimeframe(timeframe);
+    if (state.timeframe === timeframe) renderGroups(loaded);
+  } catch (error) {
+    console.error(error);
+    toast(`${timeframe.toUpperCase()}数据加载失败：${error.message}`);
+  } finally {
+    $("#peerGroups").removeAttribute("aria-busy");
+  }
+}
+
+async function loadDashboard({ showToast = false, force = false, background = false } = {}) {
   if (state.loading) return;
   state.loading = true;
   const button = $("#refreshButton");
-  button.disabled = true;
-  button.textContent = "更新中…";
+  if (!background) {
+    button.disabled = true;
+    button.textContent = "更新中…";
+  }
   try {
-    const response = await fetch(`/api/dashboard?timeframe=${encodeURIComponent(state.timeframe)}`, { cache: "no-store" });
+    const response = await fetch(`/api/dashboard?timeframe=${encodeURIComponent(state.timeframe)}${force ? "&force=1" : ""}`, { cache: "no-store" });
     const payload = await response.json();
     if (!response.ok) throw new Error(payload.error || `HTTP ${response.status}`);
     render(payload);
+    void prefetchTimeframes();
     if (showToast) toast(payload.meta.partial ? "已刷新，部分数据存在缺口" : "数据已刷新");
   } catch (error) {
     console.error(error);
@@ -185,18 +314,24 @@ async function loadDashboard(showToast = false) {
     toast(`数据连接失败：${error.message}`);
   } finally {
     state.loading = false;
-    button.disabled = false;
-    button.textContent = "刷新数据";
+    if (!background) {
+      button.disabled = false;
+      button.textContent = "刷新数据";
+    }
+    scheduleAutoRefresh();
   }
 }
 
-$("#refreshButton").addEventListener("click", () => loadDashboard(true));
-$$('[data-timeframe]').forEach(button => button.addEventListener("click", () => {
-  if (button.dataset.timeframe === state.timeframe) return;
-  state.timeframe = button.dataset.timeframe;
-  $$('[data-timeframe]').forEach(item => item.classList.toggle("active", item === button));
-  loadDashboard(false);
-}));
+$("#refreshButton").addEventListener("click", () => loadDashboard({ showToast: true, force: true }));
+$$('[data-timeframe]').forEach(button => button.addEventListener("click", () => switchTimeframe(button.dataset.timeframe)));
+
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) {
+    scheduleAutoRefresh();
+  } else if (state.data) {
+    void loadDashboard({ background: true });
+  }
+});
 
 const sections = $$('main section[id]');
 const navLinks = $$('.nav-link');
@@ -207,4 +342,6 @@ const observer = new IntersectionObserver(entries => {
 }, { rootMargin: "-20% 0px -65% 0px", threshold: [0, .2, .6] });
 sections.forEach(section => observer.observe(section));
 
-loadDashboard(false);
+state.countdownTimer = window.setInterval(updateFreshnessText, 1000);
+updateTimeframeReadyStates();
+loadDashboard();

@@ -123,7 +123,10 @@ h3 { font-size: 14px; font-weight: 500; }
 .segmented { display: flex; border: 1px solid var(--line); padding: 3px; }
 .segmented button { border: 0; background: transparent; color: var(--muted); padding: 7px 13px; cursor: pointer; font: 11px var(--mono); }
 .segmented button.active { color: var(--bg); background: var(--text); }
+.segmented button[data-ready="true"]::after { content: ""; display: inline-block; width: 4px; height: 4px; margin-left: 6px; border-radius: 50%; background: var(--green); vertical-align: middle; }
+.segmented button.active::after { background: var(--bg); }
 .peer-groups { display: grid; gap: 16px; }
+.peer-groups[aria-busy="true"] { opacity: .62; transition: opacity .16s ease; }
 .peer-card { border: 1px solid var(--line); background: var(--surface); }
 .peer-card-head { display: grid; grid-template-columns: 1.25fr repeat(4, minmax(90px,.55fr)); align-items: center; gap: 14px; padding: 20px 22px; border-bottom: 1px solid var(--line); }
 .holding-title { display: flex; align-items: baseline; gap: 10px; }

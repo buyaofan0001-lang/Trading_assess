@@ -101,7 +101,7 @@ function renderUS(us) {
 
 function flowValue(row) {
   if (row.value === null || row.value === undefined) return "—";
-  if (row.metric === "net_amount") return `${Number(row.value).toFixed(0)} 万元`;
+  if (row.metric === "net_amount") return `${Number(row.value).toFixed(0)} 净额原值`;
   return `${Number(row.value).toFixed(2)}%`;
 }
 

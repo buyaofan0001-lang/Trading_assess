@@ -72,6 +72,30 @@ def a_quote(ts_code: str) -> dict[str, Any]:
     def load() -> dict[str, Any]:
         df = get_pro().rt_k(ts_code=ts_code)
         if df is None or df.empty:
+            if ts_code.startswith(("5", "1")):
+                daily = fund_history(ts_code)
+                row = daily.iloc[-1].to_dict()
+                close = finite(row.get("close"))
+                pre_close = finite(row.get("pre_close"))
+                amount = finite(row.get("amount"))
+                volume = finite(row.get("vol"))
+                vwap = amount / volume if amount is not None and volume else None
+                return {
+                    "ts_code": ts_code,
+                    "name": ts_code,
+                    "price": close,
+                    "pre_close": pre_close,
+                    "return": (close / pre_close - 1) if close is not None and pre_close else None,
+                    "open": finite(row.get("open")),
+                    "high": finite(row.get("high")),
+                    "low": finite(row.get("low")),
+                    "volume": volume,
+                    "amount": amount,
+                    "vwap": vwap,
+                    "vs_vwap": (close / vwap - 1) if close is not None and vwap else None,
+                    "market_date": str(row.get("trade_date") or ""),
+                    "source": f"Tushare fund_daily · 最近收盘 {row.get('trade_date', '')}",
+                }
             raise RuntimeError(f"{ts_code} 无实时快照")
         row = df.iloc[0].to_dict()
         close = finite(row.get("close"))
@@ -98,7 +122,22 @@ def a_quote(ts_code: str) -> dict[str, Any]:
     return CACHE.get(f"rt:{ts_code}", 25, load)
 
 
+def fund_history(ts_code: str) -> pd.DataFrame:
+    def load() -> pd.DataFrame:
+        end = datetime.now().strftime("%Y%m%d")
+        start = (datetime.now() - timedelta(days=80)).strftime("%Y%m%d")
+        df = get_pro().fund_daily(ts_code=ts_code, start_date=start, end_date=end)
+        if df is None or df.empty:
+            raise RuntimeError(f"{ts_code} 无基金日线历史")
+        return df.sort_values("trade_date").reset_index(drop=True)
+
+    return CACHE.get(f"fund_daily:{ts_code}", 1800, load)
+
+
 def history(ts_code: str) -> pd.DataFrame:
+    if ts_code.startswith(("5", "1")):
+        return fund_history(ts_code)
+
     def load() -> pd.DataFrame:
         end = datetime.now().strftime("%Y%m%d")
         start = (datetime.now() - timedelta(days=80)).strftime("%Y%m%d")
@@ -133,7 +172,7 @@ def period_return(ts_code: str, days: int, live: dict[str, Any] | None) -> float
 
 def turnover_intensity(ts_code: str, amount: float | None) -> float | None:
     """Current traded amount as a percentage of the latest circulating market value."""
-    if amount is None:
+    if amount is None or ts_code.startswith(("5", "1")):
         return None
 
     def load() -> float | None:

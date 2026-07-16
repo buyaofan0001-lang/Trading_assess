@@ -603,6 +603,7 @@ function renderReport(kind, payload) {
   elements.body.classList.remove("report-loading");
   elements.body.innerHTML = markdownToHtml(report.content) || '<div class="report-empty">报告内容为空。</div>';
   renderReportList(kind);
+  window.requestAnimationFrame(updateActiveNavigation);
 }
 
 async function loadReport(kind, date, { force = false } = {}) {

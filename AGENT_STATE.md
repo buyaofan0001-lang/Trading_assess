@@ -62,6 +62,7 @@ Last Updated: 2026-07-16
 
 ## Open Items
 
+- Data entitlement pending: user requested `rt_min` on 2026-07-16. The configured self-hosted endpoint currently returns “请联系管理员添加此权限” for `rt_min` and `rt_min_daily`; its administrator must enable both permissions (and preferably batch `rt_k`) before dashboard minute-data work can proceed. Official Tushare purchases may not automatically propagate to the self-hosted relay, so confirm account/token binding first.
 - Next memory task: continue consolidating July records after a broker holdings screenshot confirms the actual book and July drawdown magnitude.
 - Next high-priority work: reconcile the four screenshot-vs-workbook differences before any xlsx edit; obtain a current broker holdings screenshot before 2026-07-16 open; then choose the correct branch of the documented 400-share/900-share 长电 risk plan. No further 长电 buy is permitted in either branch.
 - Known risks: screenshot-cropped rows can hide time or amount; do not split aggregated historical rows unless every objective field is visible or otherwise provided.

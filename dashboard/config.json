@@ -1,0 +1,52 @@
+{
+  "holdings": [
+    {
+      "ts_code": "600584.SH",
+      "name": "长电科技",
+      "shares": null,
+      "shares_display": "400 / 900 待核对",
+      "confidence": "冲突",
+      "cohort_type": "直接同行候选",
+      "benchmark": "半导体封测",
+      "peers": [
+        {"ts_code": "002156.SZ", "name": "通富微电"},
+        {"ts_code": "002185.SZ", "name": "华天科技"},
+        {"ts_code": "688362.SH", "name": "甬矽电子"},
+        {"ts_code": "688352.SH", "name": "颀中科技"}
+      ],
+      "us_map": [
+        {"ticker": "AMKR", "name": "Amkor", "role": "海外封测同行"},
+        {"ticker": "ASX", "name": "ASE Technology", "role": "海外封测同行"}
+      ]
+    },
+    {
+      "ts_code": "588060.SH",
+      "name": "科创50ETF",
+      "shares": 100,
+      "shares_display": "100 份",
+      "confidence": "截图口径",
+      "cohort_type": "同指数产品候选",
+      "benchmark": "科创50",
+      "peers": [
+        {"ts_code": "588000.SH", "name": "科创50ETF"},
+        {"ts_code": "588080.SH", "name": "科创板50ETF"},
+        {"ts_code": "588090.SH", "name": "科创板ETF"}
+      ],
+      "us_map": []
+    }
+  ],
+  "us_market": [
+    {"ticker": "^GSPC", "name": "标普500", "layer": "大盘"},
+    {"ticker": "^IXIC", "name": "纳斯达克", "layer": "大盘"},
+    {"ticker": "^SOX", "name": "费城半导体", "layer": "半导体"},
+    {"ticker": "SMH", "name": "SMH", "layer": "半导体ETF"},
+    {"ticker": "SOXX", "name": "SOXX", "layer": "半导体ETF"}
+  ],
+  "recovery_checklist": [
+    "开盘后前30分钟不做主动买入",
+    "14:30前只观察，不临盘改条件单",
+    "今天不新增陌生标的、不补亏损仓",
+    "完成2小时非交易收入工作",
+    "收盘后记录事实、解释与明日验证点"
+  ]
+}

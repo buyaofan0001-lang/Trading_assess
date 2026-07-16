@@ -1,7 +1,9 @@
 import json
 from pathlib import Path
 import sys
+import tempfile
 import unittest
+from unittest.mock import patch
 
 import pandas as pd
 
@@ -55,6 +57,32 @@ class PortfolioSyncTests(unittest.TestCase):
         self.assertEqual(shares, {"588060.SH": 100, "600584.SH": 900})
         self.assertEqual(portfolio["meta"]["replayed_rows"], 0)
         self.assertFalse(portfolio["meta"]["history_changed"])
+
+    def test_file_change_rebuilds_portfolio_without_restarting_engine(self):
+        first = pd.DataFrame([{
+            "证券代码": 600584, "证券名称": "长电科技", "买卖标志": "买入", "成交日期": 20260717,
+            "成交价格": 90, "成交数量": 100, "成交金额": 9000, "剩余仓位": 100,
+        }])
+        second = pd.DataFrame([
+            *first.to_dict("records"),
+            {"证券代码": 600584, "证券名称": "长电科技", "买卖标志": "卖出", "成交日期": 20260718, "成交价格": 88, "成交数量": -100, "成交金额": 8800, "剩余仓位": 0},
+            {"证券代码": "002028", "证券名称": "思源电气", "买卖标志": "买入", "成交日期": 20260718, "成交价格": 80, "成交数量": 200, "成交金额": 16000, "剩余仓位": 200},
+        ])
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            ledger_path = root / "ledger.xlsx"
+            seed_path = root / "seed.json"
+            ledger_path.write_text("v1", encoding="utf-8")
+            seed_path.write_text(json.dumps({"sheet": "交易记录", "checkpoint_data_rows": 0, "positions": []}), encoding="utf-8")
+            engine = LedgerPortfolio(ledger_path, seed_path, {"default_hard_stop_pct": 0.08})
+            with patch("portfolio_sync.pd.read_excel", return_value=first):
+                before = engine.load()
+            ledger_path.write_text("version-two", encoding="utf-8")
+            with patch("portfolio_sync.pd.read_excel", return_value=second):
+                after = engine.load()
+            self.assertEqual([item["ts_code"] for item in before["holdings"]], ["600584.SH"])
+            self.assertEqual([item["ts_code"] for item in after["holdings"]], ["002028.SZ"])
+            self.assertNotEqual(before["meta"]["portfolio_version"], after["meta"]["portfolio_version"])
 
 
 if __name__ == "__main__":

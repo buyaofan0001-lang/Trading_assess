@@ -533,9 +533,25 @@ class AIPeerResolver:
             "fetched_at": datetime.now().astimezone().isoformat(timespec="seconds"),
         }
 
-    def _candidate_overseas_symbols(self) -> list[str]:
+    def _candidate_overseas_symbols(self, target: dict[str, Any]) -> list[str]:
+        target_industry = str(target.get("industry") or "").strip()
+        if not target_industry:
+            return []
+        probe = yf.EquityQuery("eq", ["region", "us"])
+        peer_groups = list(probe.valid_values.get("peer_group", []))
+        exact = next((value for value in peer_groups if value.lower() == target_industry.lower()), None)
+        if exact:
+            peer_group = exact
+        else:
+            ranked_groups = sorted(
+                ((SequenceMatcher(None, target_industry.lower(), value.lower()).ratio(), value) for value in peer_groups),
+                reverse=True,
+            )
+            if not ranked_groups or ranked_groups[0][0] < 0.52:
+                return []
+            peer_group = ranked_groups[0][1]
         query = yf.EquityQuery("and", [
-            yf.EquityQuery("eq", ["peer_group", "Semiconductors"]),
+            yf.EquityQuery("eq", ["peer_group", peer_group]),
             yf.EquityQuery("eq", ["region", "us"]),
         ])
         result = yf.screen(
@@ -565,7 +581,7 @@ class AIPeerResolver:
             return []
 
         try:
-            symbols = self._candidate_overseas_symbols()
+            symbols = self._candidate_overseas_symbols(target)
         except Exception:
             symbols = [ticker for ticker in profiles if ticker != target_ticker and "." not in ticker]
         missing = [symbol for symbol in symbols if symbol not in profiles]

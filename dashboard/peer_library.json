@@ -1,7 +1,7 @@
 {
   "version": 1,
   "engine": "local-semantic-ai-v4",
-  "updated_at": "2026-07-16T16:59:28+08:00",
+  "updated_at": "2026-07-16T17:05:42+08:00",
   "entries": {
     "588060.SH": {
       "peers": [
@@ -36,7 +36,7 @@
       "reason": "同一业绩基准：上证科创板50成份指数收益率×100%",
       "overseas_peers": [],
       "engine": "local-semantic-ai-v4",
-      "generated_at": "2026-07-16T16:59:23+08:00"
+      "generated_at": "2026-07-16T17:05:41+08:00"
     },
     "600584.SH": {
       "peers": [
@@ -86,7 +86,7 @@
         }
       ],
       "engine": "local-semantic-ai-v4",
-      "generated_at": "2026-07-16T16:59:28+08:00"
+      "generated_at": "2026-07-16T17:05:42+08:00"
     }
   }
 }

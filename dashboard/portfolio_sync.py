@@ -9,6 +9,7 @@ reintroduce closed positions.
 from __future__ import annotations
 
 from collections import Counter
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from copy import deepcopy
 from datetime import datetime
 from difflib import SequenceMatcher
@@ -23,13 +24,27 @@ import threading
 from typing import Any, Callable
 
 import pandas as pd
+import yfinance as yf
 
 
 REQUIRED_LEDGER_COLUMNS = {
     "证券代码", "证券名称", "买卖标志", "成交日期", "成交价格", "成交数量", "成交金额", "剩余仓位"
 }
 CODE_ALIASES = {"002208": "002028"}
-AI_ENGINE_VERSION = "local-semantic-ai-v3"
+AI_ENGINE_VERSION = "local-semantic-ai-v4"
+
+ENGLISH_STOPWORDS = {
+    "and", "the", "for", "with", "its", "that", "this", "from", "into", "through",
+    "company", "also", "other", "various", "including", "provides", "offers", "products",
+    "services", "solutions", "technology", "technologies", "business", "customers", "worldwide",
+    "internationally", "limited", "inc", "corporation", "group", "co", "ltd", "based",
+    "used", "such", "well", "across", "primarily", "operates", "segments", "segment",
+}
+DOMAIN_TERMS = {
+    "assembly", "backend", "bumping", "burn-in", "characterization", "chip", "drop-shipment",
+    "ems", "final-test", "flip-chip", "integrated-circuit", "interconnect", "mems", "packaging",
+    "probe", "semiconductor", "testing", "turnkey", "wafer", "wirebond",
+}
 
 
 def finite(value: Any) -> float | None:
@@ -300,6 +315,59 @@ def normalize_benchmark(value: Any) -> str:
     return re.sub(r"收益率(?:×?100%)?$", "", text)
 
 
+def english_features(value: Any) -> set[str]:
+    words = [
+        word for word in re.findall(r"[a-z0-9]+(?:-[a-z0-9]+)?", str(value or "").lower())
+        if len(word) > 2 and word not in ENGLISH_STOPWORDS
+    ]
+    features = set(words)
+    features.update(f"{left}-{right}" for left, right in zip(words, words[1:]))
+    return features
+
+
+def global_semantic_peer_rank(
+    target_summary: str,
+    candidates: list[dict[str, Any]],
+    limit: int,
+) -> list[dict[str, Any]]:
+    """Rank overseas companies only by shared business-description semantics."""
+    target_features = english_features(target_summary)
+    feature_sets = [target_features] + [english_features(row.get("summary")) for row in candidates]
+    frequencies = Counter(feature for features in feature_sets for feature in features)
+    total_documents = len(feature_sets)
+    weights = {
+        feature: math.log((total_documents + 1) / (count + 1)) + 1
+        for feature, count in frequencies.items()
+    }
+    target_weight = sum(weights.get(feature, 1.0) for feature in target_features) or 1.0
+    ranked = []
+    for candidate, features in zip(candidates, feature_sets[1:]):
+        intersection = target_features & features
+        shared_domains = sorted(
+            (feature for feature in intersection if feature in DOMAIN_TERMS),
+            key=lambda feature: weights.get(feature, 1.0),
+            reverse=True,
+        )
+        intersection_weight = sum(weights.get(feature, 1.0) for feature in intersection)
+        candidate_weight = sum(weights.get(feature, 1.0) for feature in features) or 1.0
+        domain_bonus = min(len(shared_domains) * 0.035, 0.21)
+        score = 0.52 * intersection_weight / candidate_weight
+        score += 0.28 * intersection_weight / target_weight
+        score += domain_bonus
+        if len(shared_domains) < 2 or score < 0.16:
+            continue
+        labels = [feature.replace("-", " ") for feature in shared_domains[:4]]
+        ranked.append({
+            "ticker": candidate["ticker"],
+            "name": candidate.get("name") or candidate["ticker"],
+            "role": "AI海外直接同行",
+            "ai_score": round(score, 4),
+            "ai_reason": "英文业务语义共同指向：" + "、".join(labels),
+        })
+    ranked.sort(key=lambda item: item["ai_score"], reverse=True)
+    return ranked[:limit]
+
+
 class AIPeerResolver:
     def __init__(
         self,
@@ -314,6 +382,7 @@ class AIPeerResolver:
         self.pro_factory = pro_factory
         self._lock = threading.Lock()
         self._universe: dict[str, Any] | None = None
+        self.yahoo_cache_path = universe_cache_path.parent / "yahoo_peer_profiles.json"
 
     def _load_library(self) -> dict[str, Any]:
         if not self.library_path.exists():
@@ -436,6 +505,92 @@ class AIPeerResolver:
             "reason": peers[0]["ai_reason"] if peers else "未找到足够相似的上市基金",
         }
 
+    @staticmethod
+    def _yahoo_ticker(ts_code: str) -> str:
+        code, exchange = ts_code.split(".")
+        return f"{code}.SS" if exchange == "SH" else f"{code}.SZ"
+
+    def _load_yahoo_profile_cache(self) -> dict[str, Any]:
+        if not self.yahoo_cache_path.exists():
+            return {"version": 1, "profiles": {}}
+        try:
+            return json.loads(self.yahoo_cache_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            return {"version": 1, "profiles": {}}
+
+    @staticmethod
+    def _fetch_yahoo_profile(ticker: str) -> dict[str, Any] | None:
+        info = yf.Ticker(ticker).get_info()
+        summary = str(info.get("longBusinessSummary") or "").strip()
+        if not summary:
+            return None
+        return {
+            "ticker": ticker,
+            "name": info.get("shortName") or info.get("longName") or ticker,
+            "summary": summary,
+            "industry": info.get("industry"),
+            "country": info.get("country"),
+            "fetched_at": datetime.now().astimezone().isoformat(timespec="seconds"),
+        }
+
+    def _candidate_overseas_symbols(self) -> list[str]:
+        query = yf.EquityQuery("and", [
+            yf.EquityQuery("eq", ["peer_group", "Semiconductors"]),
+            yf.EquityQuery("eq", ["region", "us"]),
+        ])
+        result = yf.screen(
+            query,
+            size=int(self.settings.get("overseas_candidate_count", 60)),
+            sortField="intradaymarketcap",
+            sortAsc=False,
+        )
+        symbols = []
+        for row in result.get("quotes", []):
+            symbol = str(row.get("symbol") or "").strip()
+            if symbol and symbol not in symbols:
+                symbols.append(symbol)
+        return symbols
+
+    def _resolve_overseas_stock(self, holding: dict[str, Any]) -> list[dict[str, Any]]:
+        """Discover overseas peers without a manual ticker allow-list."""
+        cache = self._load_yahoo_profile_cache()
+        profiles = cache.setdefault("profiles", {})
+        target_ticker = self._yahoo_ticker(holding["ts_code"])
+        target = profiles.get(target_ticker)
+        if not target:
+            target = self._fetch_yahoo_profile(target_ticker)
+            if target:
+                profiles[target_ticker] = target
+        if not target:
+            return []
+
+        try:
+            symbols = self._candidate_overseas_symbols()
+        except Exception:
+            symbols = [ticker for ticker in profiles if ticker != target_ticker and "." not in ticker]
+        missing = [symbol for symbol in symbols if symbol not in profiles]
+        workers = max(1, min(int(self.settings.get("overseas_profile_workers", 6)), 8))
+        if missing:
+            with ThreadPoolExecutor(max_workers=workers) as executor:
+                futures = {executor.submit(self._fetch_yahoo_profile, ticker): ticker for ticker in missing}
+                for future in as_completed(futures):
+                    ticker = futures[future]
+                    try:
+                        profile = future.result()
+                    except Exception:
+                        profile = None
+                    if profile:
+                        profiles[ticker] = profile
+            cache["updated_at"] = datetime.now().astimezone().isoformat(timespec="seconds")
+            atomic_json_write(self.yahoo_cache_path, cache)
+
+        candidates = [profiles[ticker] for ticker in symbols if ticker in profiles]
+        return global_semantic_peer_rank(
+            target["summary"],
+            candidates,
+            int(self.settings.get("overseas_peer_count", 2)),
+        )
+
     def resolve(self, holding: dict[str, Any]) -> dict[str, Any]:
         with self._lock:
             universe = self._get_universe()
@@ -443,6 +598,7 @@ class AIPeerResolver:
             entry = library["entries"].get(holding["ts_code"])
             if not entry:
                 entry = self._resolve_fund(holding, universe) if is_fund(holding["ts_code"]) else self._resolve_stock(holding, universe)
+                entry["overseas_peers"] = [] if is_fund(holding["ts_code"]) else self._resolve_overseas_stock(holding)
                 entry.update({
                     "engine": AI_ENGINE_VERSION,
                     "generated_at": datetime.now().astimezone().isoformat(timespec="seconds"),
@@ -460,8 +616,7 @@ class AIPeerResolver:
                 "ai_peer_reason": entry.get("reason") or "本地语义模型自动判定",
                 "ai_peer_engine": entry.get("engine") or AI_ENGINE_VERSION,
             })
-            overseas = self.settings.get("overseas_maps", {}).get(holding["ts_code"], [])
-            enriched["us_map"] = overseas
+            enriched["us_map"] = entry.get("overseas_peers", [])
             return enriched
 
     def resolve_all(self, holdings: list[dict[str, Any]]) -> list[dict[str, Any]]:

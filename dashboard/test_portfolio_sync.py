@@ -10,7 +10,10 @@ import pandas as pd
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
-from portfolio_sync import LedgerPortfolio, normalize_code, replay_positions, semantic_peer_rank, shared_business_phrases  # noqa: E402
+from portfolio_sync import (  # noqa: E402
+    LedgerPortfolio, global_semantic_peer_rank, normalize_code, replay_positions,
+    semantic_peer_rank, shared_business_phrases,
+)
 
 
 class PortfolioSyncTests(unittest.TestCase):
@@ -45,6 +48,16 @@ class PortfolioSyncTests(unittest.TestCase):
         self.assertEqual({peer["ts_code"] for peer in peers}, {"002185.SZ", "688362.SH"})
         self.assertTrue(all(peer["ai_reason"].startswith("共同业务语义：") for peer in peers))
         self.assertIn("封装与测试", shared_business_phrases(target["main_business"], candidates[0]["main_business"]))
+
+    def test_global_semantic_model_rejects_generic_chip_company(self):
+        target = "integrated circuit back-end services including wafer probing, assembly, packaging and final testing"
+        candidates = [
+            {"ticker": "PACK", "name": "Packaging Peer", "summary": "outsourced semiconductor assembly, wafer probe, packaging and final test services"},
+            {"ticker": "DESIGN", "name": "Chip Designer", "summary": "designs processors and graphics chips for gaming computers"},
+        ]
+        peers = global_semantic_peer_rank(target, candidates, 2)
+        self.assertEqual([peer["ticker"] for peer in peers], ["PACK"])
+        self.assertIn("英文业务语义", peers[0]["ai_reason"])
 
     def test_real_ledger_starts_from_confirmed_checkpoint(self):
         settings = json.loads((HERE / "config.json").read_text(encoding="utf-8"))

@@ -139,7 +139,7 @@ def portfolio_snapshot(errors: list[str] | None = None) -> dict[str, Any]:
                 "ai_peer_confidence": 0,
                 "ai_peer_reason": str(exc),
                 "ai_peer_engine": AI_ENGINE_VERSION,
-                "us_map": CONFIG.get("overseas_maps", {}).get(holding["ts_code"], []),
+                "us_map": [],
             })
     return payload
 

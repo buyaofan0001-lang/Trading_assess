@@ -5,11 +5,9 @@
   "peer_universe_cache": ".cache/ai_peer_universe.json",
   "peer_count": 4,
   "peer_universe_cache_hours": 24,
+  "overseas_candidate_count": 60,
+  "overseas_peer_count": 2,
+  "overseas_profile_workers": 6,
   "default_hard_stop_pct": 0.08,
-  "overseas_maps": {
-    "600584.SH": [
-      {"ticker": "AMKR", "name": "Amkor", "role": "海外封测同行"},
-      {"ticker": "ASX", "name": "ASE Technology", "role": "海外封测同行"}
-    ]
-  }
+  "overseas_profile_cache_days": 7
 }

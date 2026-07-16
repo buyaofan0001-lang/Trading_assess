@@ -1,0 +1,10 @@
+{
+  "name": "trading-control-dashboard-tests",
+  "private": true,
+  "scripts": {
+    "test": "playwright test dashboard.spec.js --reporter=line --workers=1"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.61.1"
+  }
+}

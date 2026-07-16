@@ -24,3 +24,16 @@ python3 dashboard/server.py
 ## 可配置项
 
 编辑 `dashboard/config.json` 可调整持仓、同行候选、美股映射与每日清单。Token 仍由根目录 `tushare_client.py` 统一初始化，不写入看板源码。
+
+## 浏览器验收
+
+首次运行：
+
+```bash
+cd dashboard
+npm install
+npx playwright install chromium
+npm test
+```
+
+测试覆盖真实数据加载、红灯权限、5日切换、刷新、清单勾选、控制台错误和390px窄屏溢出。

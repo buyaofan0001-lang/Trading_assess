@@ -23,6 +23,7 @@ from typing import Any, Callable
 from urllib.parse import parse_qs, urlparse
 
 import pandas as pd
+import akshare as ak
 import yfinance as yf
 
 HERE = Path(__file__).resolve().parent
@@ -33,6 +34,7 @@ from tushare_client import get_pro  # noqa: E402
 
 CONFIG = json.loads((HERE / "config.json").read_text(encoding="utf-8"))
 PERIOD_DAYS = {"1d": 1, "5d": 5, "20d": 20}
+INTRADAY_TTL_SECONDS = 25
 
 
 class TTLCache:
@@ -248,6 +250,7 @@ def member_snapshot(item: dict[str, Any], timeframe: str, errors: list[str]) -> 
         "ts_code": ts_code,
         "name": item.get("name") or (live or {}).get("name") or ts_code,
         "price": finite((live or {}).get("price")),
+        "pre_close": finite((live or {}).get("pre_close")),
         "return": ret,
         "vs_vwap": finite((live or {}).get("vs_vwap")),
         "turnover_intensity": intensity,
@@ -343,6 +346,7 @@ def build_groups(timeframe: str, errors: list[str]) -> list[dict[str, Any]]:
                     "ts_code": ts_code,
                     "name": items[ts_code].get("name") or ts_code,
                     "price": None,
+                    "pre_close": None,
                     "return": None,
                     "vs_vwap": None,
                     "turnover_intensity": None,
@@ -357,6 +361,104 @@ def build_groups(timeframe: str, errors: list[str]) -> list[dict[str, Any]]:
         )
         for holding in CONFIG["holdings"]
     ]
+
+
+def intraday_series(item: dict[str, Any], trade_date: str) -> dict[str, Any]:
+    """Fetch today's one-minute bars and normalize them against the previous close."""
+
+    ts_code = item["ts_code"]
+
+    def load() -> dict[str, Any]:
+        start = f"{trade_date} 09:30:00"
+        end = f"{trade_date} 15:00:00"
+        frame = ak.stock_zh_a_hist_min_em(
+            symbol=ts_code.split(".")[0],
+            period="1",
+            start_date=start,
+            end_date=end,
+            adjust="",
+        )
+        if frame is None or frame.empty:
+            raise RuntimeError(f"{trade_date} 无分钟行情")
+        required = {"时间", "收盘"}
+        if not required.issubset(frame.columns):
+            raise RuntimeError(f"分钟行情字段缺失：{sorted(required - set(frame.columns))}")
+
+        quote = a_quote(ts_code)
+        pre_close = finite(quote.get("pre_close"))
+        if pre_close is None or pre_close <= 0:
+            raise RuntimeError("缺少昨收，无法计算可比涨跌幅")
+
+        points = []
+        for _, row in frame.iterrows():
+            price = finite(row.get("收盘"))
+            if price is None:
+                continue
+            stamp = pd.to_datetime(row.get("时间"), errors="coerce")
+            if pd.isna(stamp):
+                continue
+            points.append({
+                "time": stamp.strftime("%H:%M"),
+                "price": price,
+                "return": price / pre_close - 1,
+            })
+        if not points:
+            raise RuntimeError("分钟行情没有有效价格点")
+        return {
+            "ts_code": ts_code,
+            "name": item.get("name") or quote.get("name") or ts_code,
+            "pre_close": pre_close,
+            "points": points,
+            "latest_time": points[-1]["time"],
+            "latest_return": points[-1]["return"],
+        }
+
+    compact_date = trade_date.replace("-", "")
+    return CACHE.get(f"intraday:{ts_code}:{compact_date}", INTRADAY_TTL_SECONDS, load)
+
+
+def build_intraday_payload() -> dict[str, Any]:
+    started = time.perf_counter()
+    trade_date = datetime.now().strftime("%Y-%m-%d")
+    items: dict[str, dict[str, Any]] = {}
+    for holding in CONFIG["holdings"]:
+        items[holding["ts_code"]] = holding
+        for peer in holding["peers"]:
+            items[peer["ts_code"]] = peer
+
+    series: dict[str, dict[str, Any]] = {}
+    errors: list[str] = []
+    with ThreadPoolExecutor(max_workers=min(4, len(items)), thread_name_prefix="intraday") as executor:
+        futures = {
+            executor.submit(intraday_series, item, trade_date): ts_code
+            for ts_code, item in items.items()
+        }
+        for future in as_completed(futures):
+            ts_code = futures[future]
+            try:
+                series[ts_code] = future.result()
+            except Exception as exc:
+                errors.append(f"{ts_code}：{exc}")
+
+    groups = []
+    for holding in CONFIG["holdings"]:
+        member_codes = [holding["ts_code"], *[peer["ts_code"] for peer in holding["peers"]]]
+        groups.append({
+            "holding_ts_code": holding["ts_code"],
+            "series": [series[code] for code in member_codes if code in series],
+            "missing": [code for code in member_codes if code not in series],
+        })
+    return {
+        "meta": {
+            "generated_at": iso_now(),
+            "trade_date": trade_date,
+            "source": "AkShare / 东方财富 · 1分钟不复权行情",
+            "partial": bool(errors),
+            "errors": errors,
+            "elapsed_ms": round((time.perf_counter() - started) * 1000),
+        },
+        "groups": groups,
+    }
 
 
 def us_market(errors: list[str]) -> dict[str, Any]:
@@ -562,13 +664,19 @@ class DashboardHandler(SimpleHTTPRequestHandler):
 
     def do_GET(self) -> None:  # noqa: N802
         parsed = urlparse(self.path)
-        if parsed.path in {"/api/dashboard", "/api/peer-groups"}:
+        if parsed.path in {"/api/dashboard", "/api/peer-groups", "/api/intraday"}:
             timeframe = parse_qs(parsed.query).get("timeframe", ["1d"])[0]
             force = parse_qs(parsed.query).get("force", ["0"])[0] == "1"
             try:
                 if force:
                     CACHE.invalidate_prefix("rt:")
-                payload = build_dashboard(timeframe) if parsed.path == "/api/dashboard" else build_peer_payload(timeframe)
+                    CACHE.invalidate_prefix("intraday:")
+                if parsed.path == "/api/dashboard":
+                    payload = build_dashboard(timeframe)
+                elif parsed.path == "/api/peer-groups":
+                    payload = build_peer_payload(timeframe)
+                else:
+                    payload = build_intraday_payload()
                 body = json.dumps(payload, ensure_ascii=False, allow_nan=False).encode("utf-8")
                 self.send_response(HTTPStatus.OK)
             except Exception as exc:

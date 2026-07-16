@@ -13,6 +13,7 @@ const state = {
   countdownTimer: null,
   nextRefreshAt: null,
   lastMeta: null,
+  portfolioVersion: null,
   journal: {
     entries: [],
     date: null,
@@ -72,12 +73,13 @@ function renderPermission(data) {
   $("#holdingTruth").innerHTML = `
     <div>${escapeHtml(data.holdings_status.confirmed)}</div>
     ${data.holdings_status.unresolved ? `<div class="danger">${escapeHtml(data.holdings_status.unresolved)}</div>` : ""}
-    ${positions}`;
+    ${positions}
+    <div class="truth-source">Excel自动同步 · 新增成交 ${Number(data.holdings_status.sync?.replayed_rows || 0)} 行 · ${escapeHtml(data.holdings_status.sync?.modified_at || "等待文件时间")}</div>`;
 }
 
 function memberRow(row, isHolding) {
   return `<tr class="${isHolding ? "holding-row" : ""}">
-    <td><span class="member-name">${escapeHtml(row.name)}</span><span class="code"> ${escapeHtml(row.ts_code)}</span>${isHolding ? '<span class="holding-chip">持仓</span>' : ""}</td>
+    <td><span class="member-name">${escapeHtml(row.name)}</span><span class="code"> ${escapeHtml(row.ts_code)}</span>${isHolding ? '<span class="holding-chip">持仓</span>' : ""}${row.ai_reason ? `<small class="peer-ai-evidence">${escapeHtml(row.ai_reason)}</small>` : ""}</td>
     <td>${fmtNumber(row.price)}</td>
     <td class="${tone(row.return)}">${fmtPct(row.return)}</td>
     <td class="${tone(row.vs_vwap)}">${fmtPct(row.vs_vwap)}</td>
@@ -221,6 +223,10 @@ function renderIntradayChart(group) {
 }
 
 function renderGroups(groups) {
+  if (!groups.length) {
+    $("#peerGroups").innerHTML = '<div class="empty-state">交易记录.xlsx 当前没有可展示持仓。</div>';
+    return;
+  }
   $("#peerGroups").innerHTML = groups.map(group => {
     const strengthClass = group.strength === "强" ? "strong" : group.strength === "弱" ? "weak" : "";
     return `<article class="peer-card">
@@ -239,7 +245,8 @@ function renderGroups(groups) {
         <thead><tr><th>成员</th><th>价格/收盘</th><th>${state.timeframe.toUpperCase()}收益 / 隔夜</th><th>价格/均价</th><th>成交额/流通市值</th></tr></thead>
         <tbody>${memberRow(group.holding, true)}${group.peers.map(row => memberRow(row, false)).join("")}${overseasRows(group)}</tbody>
       </table>
-      <div class="peer-card-foot"><span>${escapeHtml(group.matrix)}</span><span>${escapeHtml(group.cohort_status)}</span></div>
+      <div class="peer-ai-note"><strong>${escapeHtml(group.cohort_status)}</strong><span>${escapeHtml(group.ai_peer_reason || "本地语义模型自动判定")}</span></div>
+      <div class="peer-card-foot"><span>${escapeHtml(group.matrix)}</span><span>${escapeHtml(group.ai_peer_engine || "local-semantic-ai-v1")}</span></div>
     </article>`;
   }).join("");
 }
@@ -448,6 +455,15 @@ function renderMeta(meta) {
 }
 
 function render(data) {
+  const nextPortfolioVersion = data.meta?.portfolio_version || null;
+  if (state.portfolioVersion && nextPortfolioVersion && state.portfolioVersion !== nextPortfolioVersion) {
+    state.timeframeCache.clear();
+    state.timeframeRequests.clear();
+    state.intraday = null;
+    state.intradayError = null;
+    toast("检测到交易记录变化，已重建持仓与AI同行篮子");
+  }
+  state.portfolioVersion = nextPortfolioVersion;
   state.data = data;
   for (const timeframe of [...state.timeframeCache.keys()]) {
     if (timeframe !== state.timeframe) state.timeframeCache.delete(timeframe);
@@ -458,6 +474,10 @@ function render(data) {
   renderPermission(data);
   renderGroups(data.peer_groups);
   renderFlows(data.money_flow);
+  const ledger = data.meta?.ledger;
+  $("#portfolioSyncStatus").textContent = ledger
+    ? `Excel已同步 · ${ledger.total_data_rows}行 · AI同行${data.peer_groups.length}组`
+    : "等待交易记录同步";
 }
 
 function shanghaiClock() {
@@ -528,7 +548,9 @@ async function fetchPeerTimeframe(timeframe) {
     .then(async response => {
       const payload = await response.json();
       if (!response.ok) throw new Error(payload.error || `HTTP ${response.status}`);
-      state.timeframeCache.set(timeframe, payload.peer_groups);
+      if (!state.portfolioVersion || payload.meta?.portfolio_version === state.portfolioVersion) {
+        state.timeframeCache.set(timeframe, payload.peer_groups);
+      }
       updateTimeframeReadyStates();
       return payload.peer_groups;
     })

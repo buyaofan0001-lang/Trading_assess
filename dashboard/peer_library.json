@@ -1,6 +1,75 @@
 {
   "version": 1,
   "engine": "local-semantic-ai-v1",
-  "updated_at": null,
-  "entries": {}
+  "updated_at": "2026-07-16T16:31:54+08:00",
+  "entries": {
+    "588060.SH": {
+      "peers": [
+        {
+          "ts_code": "589150.SH",
+          "name": "平安上证科创板50成份ETF",
+          "ai_score": 1.0,
+          "ai_reason": "同一业绩基准：上证科创板50成份指数收益率×100%"
+        },
+        {
+          "ts_code": "589850.SH",
+          "name": "东财上证科创板50成份ETF",
+          "ai_score": 1.0,
+          "ai_reason": "同一业绩基准：上证科创板50成份指数收益率×100%"
+        },
+        {
+          "ts_code": "588940.SH",
+          "name": "富国上证科创板50成份ETF",
+          "ai_score": 1.0,
+          "ai_reason": "同一业绩基准：上证科创板50成份指数收益率×100%"
+        },
+        {
+          "ts_code": "588040.SH",
+          "name": "鹏华上证科创板50成份ETF",
+          "ai_score": 1.0,
+          "ai_reason": "同一业绩基准：上证科创板50成份指数收益率×100%"
+        }
+      ],
+      "benchmark": "上证科创板50成份指数收益率×100%",
+      "cohort_type": "AI自动同指数产品",
+      "confidence": 96,
+      "reason": "同一业绩基准：上证科创板50成份指数收益率×100%",
+      "engine": "local-semantic-ai-v1",
+      "generated_at": "2026-07-16T16:31:54+08:00"
+    },
+    "600584.SH": {
+      "peers": [
+        {
+          "ts_code": "301348.SZ",
+          "name": "蓝箭电子",
+          "ai_score": 0.4407,
+          "ai_reason": "共同业务语义：体封装测试、导体封装测"
+        },
+        {
+          "ts_code": "002185.SZ",
+          "name": "华天科技",
+          "ai_score": 0.3541,
+          "ai_reason": "共同业务语义：封装与测试、的封装与测"
+        },
+        {
+          "ts_code": "603005.SH",
+          "name": "晶方科技",
+          "ai_score": 0.2417,
+          "ai_reason": "共同业务语义：封装测试、集成电路"
+        },
+        {
+          "ts_code": "688216.SH",
+          "name": "气派科技",
+          "ai_score": 0.2417,
+          "ai_reason": "共同业务语义：封装测试、集成电路"
+        }
+      ],
+      "benchmark": "半导体",
+      "cohort_type": "AI自动直接同行",
+      "confidence": 84,
+      "reason": "同属半导体；业务文本共同指向体封装测试、导体封装测、封装与测试",
+      "engine": "local-semantic-ai-v1",
+      "generated_at": "2026-07-16T16:31:54+08:00"
+    }
+  }
 }

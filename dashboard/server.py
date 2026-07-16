@@ -400,6 +400,8 @@ def member_snapshot(item: dict[str, Any], timeframe: str, errors: list[str]) -> 
         "vs_vwap": finite((live or {}).get("vs_vwap")),
         "turnover_intensity": intensity,
         "source": (live or {}).get("source", "Tushare 日线"),
+        "ai_score": item.get("ai_score"),
+        "ai_reason": item.get("ai_reason"),
     }
 
 

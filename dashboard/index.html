@@ -97,10 +97,13 @@
             <h2 id="arena-title">持仓同行擂台</h2>
             <p>看持仓是否真正跑赢同类。价格与排名定方向，成交强度只做确认。</p>
           </div>
-          <div class="segmented" role="group" aria-label="选择比较周期">
-            <button type="button" data-timeframe="1d" class="active">1日</button>
-            <button type="button" data-timeframe="5d">5日</button>
-            <button type="button" data-timeframe="20d">20日</button>
+          <div class="arena-controls">
+            <div id="portfolioSyncStatus" class="portfolio-sync-status">正在同步交易记录.xlsx…</div>
+            <div class="segmented" role="group" aria-label="选择比较周期">
+              <button type="button" data-timeframe="1d" class="active">1日</button>
+              <button type="button" data-timeframe="5d">5日</button>
+              <button type="button" data-timeframe="20d">20日</button>
+            </div>
           </div>
         </div>
         <div id="peerGroups" class="peer-groups">
@@ -177,7 +180,7 @@
       </section>
 
       <footer>
-        <span>守门台 V1.6 · 决策辅助，不连接券商下单</span>
+        <span>守门台 V1.7 · Excel持仓自动同步 · AI同行自动认定</span>
         <span id="truthNote">等待数据口径说明</span>
       </footer>
     </main>

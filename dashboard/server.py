@@ -34,7 +34,7 @@ from tushare_client import get_pro  # noqa: E402
 
 CONFIG = json.loads((HERE / "config.json").read_text(encoding="utf-8"))
 PERIOD_DAYS = {"1d": 1, "5d": 5, "20d": 20}
-INTRADAY_TTL_SECONDS = 25
+INTRADAY_TTL_SECONDS = 60
 
 
 class TTLCache:
@@ -78,6 +78,11 @@ class TTLCache:
 
 CACHE = TTLCache()
 TUSHARE_SLOTS = threading.BoundedSemaphore(3)
+INTRADAY_PRIMARY_LOCK = threading.Lock()
+INTRADAY_PRIMARY: dict[str, dict[str, dict[str, Any]]] = {}
+INTRADAY_REFRESHING = False
+INTRADAY_LAST_STARTED = 0.0
+INTRADAY_PRIMARY_ERRORS: list[str] = []
 
 
 def tushare_call(method: Callable[..., Any], **kwargs: Any) -> Any:
@@ -409,80 +414,118 @@ def yahoo_intraday_fallback(items: list[dict[str, Any]], trade_date: str) -> dic
     return CACHE.get(f"intraday:yahoo:{compact_date}", INTRADAY_TTL_SECONDS, load)
 
 
+def eastmoney_intraday_points(item: dict[str, Any], trade_date: str) -> list[dict[str, Any]]:
+    ts_code = item["ts_code"]
+    endpoint = ak.fund_etf_hist_min_em if ts_code.startswith(("5", "1")) else ak.stock_zh_a_hist_min_em
+    frame = endpoint(
+        symbol=ts_code.split(".")[0],
+        period="1",
+        start_date=f"{trade_date} 09:30:00",
+        end_date=f"{trade_date} 15:00:00",
+        adjust="",
+    )
+    if frame is None or frame.empty:
+        raise RuntimeError(f"{trade_date} 无分钟行情")
+    required = {"时间", "收盘"}
+    if not required.issubset(frame.columns):
+        raise RuntimeError(f"分钟行情字段缺失：{sorted(required - set(frame.columns))}")
+    points = []
+    for _, row in frame.iterrows():
+        price = finite(row.get("收盘"))
+        stamp = pd.to_datetime(row.get("时间"), errors="coerce")
+        if price is not None and not pd.isna(stamp):
+            points.append({"time": stamp.strftime("%H:%M"), "price": price})
+    if not points:
+        raise RuntimeError("分钟行情没有有效价格点")
+    return points
+
+
+def trigger_eastmoney_refresh(items: list[dict[str, Any]], trade_date: str, force: bool = False) -> None:
+    """Refresh slower primary bars in the background without blocking the page."""
+
+    global INTRADAY_REFRESHING, INTRADAY_LAST_STARTED, INTRADAY_PRIMARY_ERRORS
+    now = time.time()
+    with INTRADAY_PRIMARY_LOCK:
+        if INTRADAY_REFRESHING or (not force and now - INTRADAY_LAST_STARTED < INTRADAY_TTL_SECONDS):
+            return
+        INTRADAY_REFRESHING = True
+        INTRADAY_LAST_STARTED = now
+
+    def worker() -> None:
+        global INTRADAY_REFRESHING, INTRADAY_PRIMARY_ERRORS
+        errors = []
+        for item in items:
+            try:
+                points = eastmoney_intraday_points(item, trade_date)
+                with INTRADAY_PRIMARY_LOCK:
+                    INTRADAY_PRIMARY.setdefault(trade_date, {})[item["ts_code"]] = {
+                        "points": points,
+                        "source": "AkShare / 东方财富 · 1分钟不复权",
+                    }
+            except Exception as exc:
+                errors.append(f"{item['ts_code']}：{exc}")
+        with INTRADAY_PRIMARY_LOCK:
+            INTRADAY_PRIMARY_ERRORS = errors
+            INTRADAY_REFRESHING = False
+
+    threading.Thread(target=worker, name="eastmoney-intraday-refresh", daemon=True).start()
+
+
 def intraday_series(
     item: dict[str, Any],
     trade_date: str,
     fallback_points: list[dict[str, Any]] | None,
 ) -> dict[str, Any]:
-    """Fetch today's one-minute bars and normalize them against the previous close."""
+    """Return immediately from cached primary data or the single-request fallback."""
 
     ts_code = item["ts_code"]
+    quote = a_quote(ts_code)
+    pre_close = finite(quote.get("pre_close"))
+    if pre_close is None or pre_close <= 0:
+        raise RuntimeError("缺少昨收，无法计算可比涨跌幅")
 
-    def load() -> dict[str, Any]:
-        quote = a_quote(ts_code)
-        pre_close = finite(quote.get("pre_close"))
-        if pre_close is None or pre_close <= 0:
-            raise RuntimeError("缺少昨收，无法计算可比涨跌幅")
+    with INTRADAY_PRIMARY_LOCK:
+        primary = INTRADAY_PRIMARY.get(trade_date, {}).get(ts_code)
+    raw_points = list((primary or {}).get("points") or fallback_points or [])
+    source = (primary or {}).get("source") or "Yahoo Finance · 1分钟快速回退"
+    if not raw_points:
+        raise RuntimeError(f"{trade_date} 无分钟行情")
 
-        raw_points: list[dict[str, Any]] = []
-        source = "AkShare / 东方财富 · 1分钟不复权"
-        primary_error: Exception | None = None
-        try:
-            start = f"{trade_date} 09:30:00"
-            end = f"{trade_date} 15:00:00"
-            endpoint = ak.fund_etf_hist_min_em if ts_code.startswith(("5", "1")) else ak.stock_zh_a_hist_min_em
-            frame = endpoint(
-                symbol=ts_code.split(".")[0],
-                period="1",
-                start_date=start,
-                end_date=end,
-                adjust="",
-            )
-            if frame is None or frame.empty:
-                raise RuntimeError(f"{trade_date} 无分钟行情")
-            required = {"时间", "收盘"}
-            if not required.issubset(frame.columns):
-                raise RuntimeError(f"分钟行情字段缺失：{sorted(required - set(frame.columns))}")
-            for _, row in frame.iterrows():
-                price = finite(row.get("收盘"))
-                stamp = pd.to_datetime(row.get("时间"), errors="coerce")
-                if price is not None and not pd.isna(stamp):
-                    raw_points.append({"time": stamp.strftime("%H:%M"), "price": price})
-        except Exception as exc:
-            primary_error = exc
+    # Stock rt_k is fresher than delayed fallback bars. ETFs use their minute source,
+    # because fund_daily is not a live quote.
+    current_price = finite(quote.get("price"))
+    now = datetime.now()
+    minute = now.hour * 60 + now.minute
+    if (
+        not ts_code.startswith(("5", "1"))
+        and current_price is not None
+        and (570 <= minute <= 690 or 780 <= minute <= 900)
+    ):
+        current_time = now.strftime("%H:%M")
+        if raw_points[-1]["time"] < current_time:
+            raw_points.append({"time": current_time, "price": current_price})
+            source += " + Tushare rt_k当前点"
 
-        if not raw_points and fallback_points:
-            raw_points = fallback_points
-            source = "Yahoo Finance · 1分钟回退"
-        if not raw_points:
-            detail = f"；主源错误：{primary_error}" if primary_error else ""
-            raise RuntimeError(f"{trade_date} 无分钟行情{detail}")
-
-        points = [
-            {
-                "time": point["time"],
-                "price": point["price"],
-                "return": point["price"] / pre_close - 1,
-            }
-            for point in raw_points
-        ]
-        if not points:
-            raise RuntimeError("分钟行情没有有效价格点")
-        return {
-            "ts_code": ts_code,
-            "name": item.get("name") or quote.get("name") or ts_code,
-            "pre_close": pre_close,
-            "points": points,
-            "latest_time": points[-1]["time"],
-            "latest_return": points[-1]["return"],
-            "source": source,
+    points = [
+        {
+            "time": point["time"],
+            "price": point["price"],
+            "return": point["price"] / pre_close - 1,
         }
+        for point in raw_points
+    ]
+    return {
+        "ts_code": ts_code,
+        "name": item.get("name") or quote.get("name") or ts_code,
+        "pre_close": pre_close,
+        "points": points,
+        "latest_time": points[-1]["time"],
+        "latest_return": points[-1]["return"],
+        "source": source,
+    }
 
-    compact_date = trade_date.replace("-", "")
-    return CACHE.get(f"intraday:{ts_code}:{compact_date}", INTRADAY_TTL_SECONDS, load)
 
-
-def build_intraday_payload() -> dict[str, Any]:
+def build_intraday_payload(force: bool = False) -> dict[str, Any]:
     started = time.perf_counter()
     trade_date = datetime.now().strftime("%Y-%m-%d")
     items: dict[str, dict[str, Any]] = {}
@@ -498,7 +541,7 @@ def build_intraday_payload() -> dict[str, Any]:
     except Exception as exc:
         fallback = {}
         errors.append(f"Yahoo批量回退：{exc}")
-    # Eastmoney's minute endpoint is sensitive to bursts, so keep primary calls serial.
+    trigger_eastmoney_refresh(list(items.values()), trade_date, force=force)
     for ts_code, item in items.items():
         try:
             series[ts_code] = intraday_series(item, trade_date, fallback.get(ts_code))
@@ -517,10 +560,12 @@ def build_intraday_payload() -> dict[str, Any]:
         "meta": {
             "generated_at": iso_now(),
             "trade_date": trade_date,
-            "source": "东方财富1分钟优先 · Yahoo Finance分钟线回退",
+            "source": "东方财富后台补齐 · Yahoo Finance快速回退 · 股票末点用Tushare rt_k",
             "partial": bool(errors),
             "errors": errors,
             "fallback_count": sum(row.get("source", "").startswith("Yahoo") for row in series.values()),
+            "primary_refreshing": INTRADAY_REFRESHING,
+            "primary_errors": list(INTRADAY_PRIMARY_ERRORS),
             "elapsed_ms": round((time.perf_counter() - started) * 1000),
         },
         "groups": groups,
@@ -742,7 +787,7 @@ class DashboardHandler(SimpleHTTPRequestHandler):
                 elif parsed.path == "/api/peer-groups":
                     payload = build_peer_payload(timeframe)
                 else:
-                    payload = build_intraday_payload()
+                    payload = build_intraday_payload(force=force)
                 body = json.dumps(payload, ensure_ascii=False, allow_nan=False).encode("utf-8")
                 self.send_response(HTTPStatus.OK)
             except Exception as exc:

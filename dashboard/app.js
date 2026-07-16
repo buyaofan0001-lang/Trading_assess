@@ -93,7 +93,9 @@ function axisPct(value) {
 
 function renderIntradayChart(group) {
   const payload = state.intraday?.groups?.find(item => item.holding_ts_code === group.holding.ts_code);
-  const source = state.intraday?.meta?.source || "正在连接当日分钟行情";
+  const fallbackCount = Number(state.intraday?.meta?.fallback_count || 0);
+  const sourceBase = state.intraday?.meta?.source || "正在连接当日分钟行情";
+  const source = fallbackCount ? `${sourceBase} · ${fallbackCount}只快速回退` : sourceBase;
   const tradeDate = state.intraday?.meta?.trade_date || "";
   const series = payload?.series || [];
   const usable = series.map((item, index) => ({
@@ -150,7 +152,7 @@ function renderIntradayChart(group) {
   const legend = usable.map(item => {
     const latest = item.points[item.points.length - 1];
     const holding = item.ts_code === group.holding.ts_code;
-    return `<span class="chart-legend-item${holding ? " holding" : ""}">
+    return `<span class="chart-legend-item${holding ? " holding" : ""}" title="${escapeHtml(item.source || "")}">
       <i style="--series-color:${item.color}"></i><span>${escapeHtml(item.name)}</span><b class="${tone(latest.value)}">${fmtPct(latest.value)}</b>
     </span>`;
   }).join("");

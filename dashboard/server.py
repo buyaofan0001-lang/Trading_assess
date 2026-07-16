@@ -75,6 +75,13 @@ class TTLCache:
 
 
 CACHE = TTLCache()
+TUSHARE_SLOTS = threading.BoundedSemaphore(3)
+
+
+def tushare_call(method: Callable[..., Any], **kwargs: Any) -> Any:
+    """Respect the self-hosted endpoint's small concurrent-connection limit."""
+    with TUSHARE_SLOTS:
+        return method(**kwargs)
 
 
 def finite(value: Any) -> float | None:
@@ -93,33 +100,33 @@ def a_quote(ts_code: str) -> dict[str, Any]:
     """Get one current A-share snapshot; batch permission is not assumed."""
 
     def load() -> dict[str, Any]:
-        df = get_pro().rt_k(ts_code=ts_code)
+        if ts_code.startswith(("5", "1")):
+            daily = fund_history(ts_code)
+            row = daily.iloc[-1].to_dict()
+            close = finite(row.get("close"))
+            pre_close = finite(row.get("pre_close"))
+            amount = finite(row.get("amount"))
+            volume = finite(row.get("vol"))
+            # fund_daily: amount is thousand yuan; vol is hands (100 shares).
+            vwap = amount * 10 / volume if amount is not None and volume else None
+            return {
+                "ts_code": ts_code,
+                "name": ts_code,
+                "price": close,
+                "pre_close": pre_close,
+                "return": (close / pre_close - 1) if close is not None and pre_close else None,
+                "open": finite(row.get("open")),
+                "high": finite(row.get("high")),
+                "low": finite(row.get("low")),
+                "volume": volume,
+                "amount": amount,
+                "vwap": vwap,
+                "vs_vwap": (close / vwap - 1) if close is not None and vwap else None,
+                "market_date": str(row.get("trade_date") or ""),
+                "source": f"Tushare fund_daily · 最近收盘 {row.get('trade_date', '')}",
+            }
+        df = tushare_call(get_pro().rt_k, ts_code=ts_code)
         if df is None or df.empty:
-            if ts_code.startswith(("5", "1")):
-                daily = fund_history(ts_code)
-                row = daily.iloc[-1].to_dict()
-                close = finite(row.get("close"))
-                pre_close = finite(row.get("pre_close"))
-                amount = finite(row.get("amount"))
-                volume = finite(row.get("vol"))
-                # fund_daily: amount is thousand yuan; vol is hands (100 shares).
-                vwap = amount * 10 / volume if amount is not None and volume else None
-                return {
-                    "ts_code": ts_code,
-                    "name": ts_code,
-                    "price": close,
-                    "pre_close": pre_close,
-                    "return": (close / pre_close - 1) if close is not None and pre_close else None,
-                    "open": finite(row.get("open")),
-                    "high": finite(row.get("high")),
-                    "low": finite(row.get("low")),
-                    "volume": volume,
-                    "amount": amount,
-                    "vwap": vwap,
-                    "vs_vwap": (close / vwap - 1) if close is not None and vwap else None,
-                    "market_date": str(row.get("trade_date") or ""),
-                    "source": f"Tushare fund_daily · 最近收盘 {row.get('trade_date', '')}",
-                }
             raise RuntimeError(f"{ts_code} 无实时快照")
         row = df.iloc[0].to_dict()
         close = finite(row.get("close"))
@@ -151,7 +158,7 @@ def fund_history(ts_code: str) -> pd.DataFrame:
     def load() -> pd.DataFrame:
         end = datetime.now().strftime("%Y%m%d")
         start = (datetime.now() - timedelta(days=80)).strftime("%Y%m%d")
-        df = get_pro().fund_daily(ts_code=ts_code, start_date=start, end_date=end)
+        df = tushare_call(get_pro().fund_daily, ts_code=ts_code, start_date=start, end_date=end)
         if df is None or df.empty:
             raise RuntimeError(f"{ts_code} 无基金日线历史")
         return df.sort_values("trade_date").reset_index(drop=True)
@@ -166,7 +173,7 @@ def history(ts_code: str) -> pd.DataFrame:
     def load() -> pd.DataFrame:
         end = datetime.now().strftime("%Y%m%d")
         start = (datetime.now() - timedelta(days=80)).strftime("%Y%m%d")
-        df = get_pro().daily(ts_code=ts_code, start_date=start, end_date=end)
+        df = tushare_call(get_pro().daily, ts_code=ts_code, start_date=start, end_date=end)
         if df is None or df.empty:
             raise RuntimeError(f"{ts_code} 无日线历史")
         return df.sort_values("trade_date").reset_index(drop=True)
@@ -203,7 +210,8 @@ def turnover_intensity(ts_code: str, amount: float | None) -> float | None:
     def load() -> float | None:
         end = datetime.now().strftime("%Y%m%d")
         start = (datetime.now() - timedelta(days=15)).strftime("%Y%m%d")
-        df = get_pro().daily_basic(
+        df = tushare_call(
+            get_pro().daily_basic,
             ts_code=ts_code,
             start_date=start,
             end_date=end,
@@ -213,9 +221,10 @@ def turnover_intensity(ts_code: str, amount: float | None) -> float | None:
             return None
         circ_mv = finite(df.sort_values("trade_date").iloc[-1].get("circ_mv"))
         # rt_k amount is yuan; daily_basic circ_mv is thousand yuan.
-        return amount / (circ_mv * 1000) if circ_mv else None
+        return circ_mv
 
-    return CACHE.get(f"turnover:{ts_code}", 1800, load)
+    circ_mv = CACHE.get(f"circ_mv:{ts_code}", 1800, load)
+    return amount / (circ_mv * 1000) if circ_mv else None
 
 
 def member_snapshot(item: dict[str, Any], timeframe: str, errors: list[str]) -> dict[str, Any]:
@@ -417,8 +426,8 @@ def money_flow(errors: list[str]) -> dict[str, Any]:
         pro = get_pro()
         for offset in range(0, 8):
             trade_date = (datetime.now() - timedelta(days=offset)).strftime("%Y%m%d")
-            industries = pro.moneyflow_ind_ths(trade_date=trade_date)
-            concepts = pro.moneyflow_cnt_ths(trade_date=trade_date)
+            industries = tushare_call(pro.moneyflow_ind_ths, trade_date=trade_date)
+            concepts = tushare_call(pro.moneyflow_cnt_ths, trade_date=trade_date)
             if industries is not None and not industries.empty:
                 def shape(df: pd.DataFrame, limit: int = 6) -> list[dict[str, Any]]:
                     amount_col = next((c for c in ["net_amount", "net_amount_rate", "pct_change"] if c in df.columns), None)
@@ -569,7 +578,10 @@ class DashboardHandler(SimpleHTTPRequestHandler):
             self.send_header("Cache-Control", "no-store")
             self.send_header("Content-Length", str(len(body)))
             self.end_headers()
-            self.wfile.write(body)
+            try:
+                self.wfile.write(body)
+            except (BrokenPipeError, ConnectionResetError):
+                pass
             return
         if parsed.path == "/":
             self.path = "/index.html"

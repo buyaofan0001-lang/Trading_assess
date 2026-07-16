@@ -8,6 +8,7 @@ canonical Tushare client plus yfinance for the last completed US session.
 from __future__ import annotations
 
 import argparse
+from concurrent.futures import ThreadPoolExecutor, as_completed
 import json
 import math
 import statistics
@@ -38,17 +39,39 @@ class TTLCache:
     def __init__(self) -> None:
         self._items: dict[str, tuple[float, Any]] = {}
         self._lock = threading.Lock()
+        self._inflight: dict[str, threading.Event] = {}
 
     def get(self, key: str, ttl: int, loader: Callable[[], Any]) -> Any:
-        now = time.time()
+        while True:
+            now = time.time()
+            with self._lock:
+                cached = self._items.get(key)
+                if cached and now - cached[0] < ttl:
+                    return cached[1]
+                waiter = self._inflight.get(key)
+                if waiter is None:
+                    waiter = threading.Event()
+                    self._inflight[key] = waiter
+                    break
+            waiter.wait(timeout=120)
+
+        try:
+            value = loader()
+        except Exception:
+            with self._lock:
+                self._inflight.pop(key, None)
+                waiter.set()
+            raise
         with self._lock:
-            cached = self._items.get(key)
-            if cached and now - cached[0] < ttl:
-                return cached[1]
-        value = loader()
-        with self._lock:
-            self._items[key] = (now, value)
+            self._items[key] = (time.time(), value)
+            self._inflight.pop(key, None)
+            waiter.set()
         return value
+
+    def invalidate_prefix(self, prefix: str) -> None:
+        with self._lock:
+            for key in [key for key in self._items if key.startswith(prefix)]:
+                self._items.pop(key, None)
 
 
 CACHE = TTLCache()
@@ -223,9 +246,11 @@ def member_snapshot(item: dict[str, Any], timeframe: str, errors: list[str]) -> 
     }
 
 
-def assess_group(holding: dict[str, Any], timeframe: str, errors: list[str]) -> dict[str, Any]:
-    holding_row = member_snapshot(holding, timeframe, errors)
-    peer_rows = [member_snapshot(peer, timeframe, errors) for peer in holding["peers"]]
+def score_group(
+    holding: dict[str, Any],
+    holding_row: dict[str, Any],
+    peer_rows: list[dict[str, Any]],
+) -> dict[str, Any]:
     valid_peers = [row["return"] for row in peer_rows if row["return"] is not None]
     peer_median = statistics.median(valid_peers) if valid_peers else None
     holding_return = holding_row["return"]
@@ -283,6 +308,46 @@ def assess_group(holding: dict[str, Any], timeframe: str, errors: list[str]) -> 
         "strength": strength,
         "matrix": matrix,
     }
+
+
+def build_groups(timeframe: str, errors: list[str]) -> list[dict[str, Any]]:
+    """Fetch every unique cohort member concurrently, then score groups locally."""
+    items: dict[str, dict[str, Any]] = {}
+    for holding in CONFIG["holdings"]:
+        items[holding["ts_code"]] = holding
+        for peer in holding["peers"]:
+            items[peer["ts_code"]] = peer
+
+    snapshots: dict[str, dict[str, Any]] = {}
+    with ThreadPoolExecutor(max_workers=min(6, len(items)), thread_name_prefix="quotes") as executor:
+        futures = {
+            executor.submit(member_snapshot, item, timeframe, errors): ts_code
+            for ts_code, item in items.items()
+        }
+        for future in as_completed(futures):
+            ts_code = futures[future]
+            try:
+                snapshots[ts_code] = future.result()
+            except Exception as exc:
+                errors.append(f"{ts_code} 同行快照：{exc}")
+                snapshots[ts_code] = {
+                    "ts_code": ts_code,
+                    "name": items[ts_code].get("name") or ts_code,
+                    "price": None,
+                    "return": None,
+                    "vs_vwap": None,
+                    "turnover_intensity": None,
+                    "source": "数据暂不可用",
+                }
+
+    return [
+        score_group(
+            holding,
+            snapshots[holding["ts_code"]],
+            [snapshots[peer["ts_code"]] for peer in holding["peers"]],
+        )
+        for holding in CONFIG["holdings"]
+    ]
 
 
 def us_market(errors: list[str]) -> dict[str, Any]:
@@ -413,10 +478,16 @@ def permission_card(errors: list[str], groups: list[dict[str, Any]]) -> dict[str
 def build_dashboard(timeframe: str) -> dict[str, Any]:
     if timeframe not in PERIOD_DAYS:
         timeframe = "1d"
+    started = time.perf_counter()
     errors: list[str] = []
-    groups = [assess_group(holding, timeframe, errors) for holding in CONFIG["holdings"]]
-    us = us_market(errors)
-    flows = money_flow(errors)
+    get_pro()  # initialize the shared client before worker threads use it
+    with ThreadPoolExecutor(max_workers=3, thread_name_prefix="sections") as executor:
+        groups_future = executor.submit(build_groups, timeframe, errors)
+        us_future = executor.submit(us_market, errors)
+        flows_future = executor.submit(money_flow, errors)
+        groups = groups_future.result()
+        us = us_future.result()
+        flows = flows_future.result()
     position_items = [
         {
             "name": group["holding"]["name"],
@@ -436,6 +507,7 @@ def build_dashboard(timeframe: str) -> dict[str, Any]:
             "timeframe": timeframe,
             "partial": bool(errors),
             "errors": errors,
+            "elapsed_ms": round((time.perf_counter() - started) * 1000),
             "truth_note": "价格按单代码轮询；不同股票快照可能相差数秒。资金流为盘后口径。",
         },
         "permission": permission_card(errors, groups),
@@ -456,16 +528,38 @@ def build_dashboard(timeframe: str) -> dict[str, Any]:
     }
 
 
+def build_peer_payload(timeframe: str) -> dict[str, Any]:
+    if timeframe not in PERIOD_DAYS:
+        timeframe = "1d"
+    started = time.perf_counter()
+    errors: list[str] = []
+    get_pro()
+    groups = build_groups(timeframe, errors)
+    return {
+        "meta": {
+            "generated_at": iso_now(),
+            "timeframe": timeframe,
+            "partial": bool(errors),
+            "errors": errors,
+            "elapsed_ms": round((time.perf_counter() - started) * 1000),
+        },
+        "peer_groups": groups,
+    }
+
+
 class DashboardHandler(SimpleHTTPRequestHandler):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, directory=str(HERE), **kwargs)
 
     def do_GET(self) -> None:  # noqa: N802
         parsed = urlparse(self.path)
-        if parsed.path == "/api/dashboard":
+        if parsed.path in {"/api/dashboard", "/api/peer-groups"}:
             timeframe = parse_qs(parsed.query).get("timeframe", ["1d"])[0]
+            force = parse_qs(parsed.query).get("force", ["0"])[0] == "1"
             try:
-                payload = build_dashboard(timeframe)
+                if force:
+                    CACHE.invalidate_prefix("rt:")
+                payload = build_dashboard(timeframe) if parsed.path == "/api/dashboard" else build_peer_payload(timeframe)
                 body = json.dumps(payload, ensure_ascii=False, allow_nan=False).encode("utf-8")
                 self.send_response(HTTPStatus.OK)
             except Exception as exc:

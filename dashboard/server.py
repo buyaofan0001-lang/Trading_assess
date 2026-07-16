@@ -479,48 +479,17 @@ def intraday_series(
     """Return immediately from cached primary data or the single-request fallback."""
 
     ts_code = item["ts_code"]
-    quote = a_quote(ts_code)
-    pre_close = finite(quote.get("pre_close"))
-    if pre_close is None or pre_close <= 0:
-        raise RuntimeError("缺少昨收，无法计算可比涨跌幅")
-
     with INTRADAY_PRIMARY_LOCK:
         primary = INTRADAY_PRIMARY.get(trade_date, {}).get(ts_code)
     raw_points = list((primary or {}).get("points") or fallback_points or [])
     source = (primary or {}).get("source") or "Yahoo Finance · 1分钟快速回退"
     if not raw_points:
         raise RuntimeError(f"{trade_date} 无分钟行情")
-
-    # Stock rt_k is fresher than delayed fallback bars. ETFs use their minute source,
-    # because fund_daily is not a live quote.
-    current_price = finite(quote.get("price"))
-    now = datetime.now()
-    minute = now.hour * 60 + now.minute
-    if (
-        not ts_code.startswith(("5", "1"))
-        and current_price is not None
-        and (570 <= minute <= 690 or 780 <= minute <= 900)
-    ):
-        current_time = now.strftime("%H:%M")
-        if raw_points[-1]["time"] < current_time:
-            raw_points.append({"time": current_time, "price": current_price})
-            source += " + Tushare rt_k当前点"
-
-    points = [
-        {
-            "time": point["time"],
-            "price": point["price"],
-            "return": point["price"] / pre_close - 1,
-        }
-        for point in raw_points
-    ]
     return {
         "ts_code": ts_code,
-        "name": item.get("name") or quote.get("name") or ts_code,
-        "pre_close": pre_close,
-        "points": points,
-        "latest_time": points[-1]["time"],
-        "latest_return": points[-1]["return"],
+        "name": item.get("name") or ts_code,
+        "points": raw_points,
+        "latest_time": raw_points[-1]["time"],
         "source": source,
     }
 
@@ -560,7 +529,7 @@ def build_intraday_payload(force: bool = False) -> dict[str, Any]:
         "meta": {
             "generated_at": iso_now(),
             "trade_date": trade_date,
-            "source": "东方财富后台补齐 · Yahoo Finance快速回退 · 股票末点用Tushare rt_k",
+            "source": "东方财富后台补齐 · Yahoo Finance快速回退 · 相对昨收由看板快照计算",
             "partial": bool(errors),
             "errors": errors,
             "fallback_count": sum(row.get("source", "").startswith("Yahoo") for row in series.values()),

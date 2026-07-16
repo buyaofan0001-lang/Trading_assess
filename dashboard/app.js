@@ -98,15 +98,33 @@ function renderIntradayChart(group) {
   const source = fallbackCount ? `${sourceBase} · ${fallbackCount}只快速回退` : sourceBase;
   const tradeDate = state.intraday?.meta?.trade_date || "";
   const series = payload?.series || [];
-  const usable = series.map((item, index) => ({
-    ...item,
-    color: CHART_COLORS[index % CHART_COLORS.length],
-    points: (item.points || []).map(point => ({
+  const members = new Map([group.holding, ...group.peers].map(member => [member.ts_code, member]));
+  const generatedTime = state.intraday?.meta?.generated_at
+    ? new Date(state.intraday.meta.generated_at).toLocaleTimeString("zh-CN", { timeZone: "Asia/Shanghai", hour: "2-digit", minute: "2-digit", hourCycle: "h23" })
+    : null;
+  const usable = series.map((item, index) => {
+    const member = members.get(item.ts_code) || {};
+    const preClose = Number(member.pre_close);
+    const points = (item.points || []).map(point => ({
       ...point,
       position: sessionPosition(point.time),
-      value: Number(point.return),
-    })).filter(point => point.position !== null && Number.isFinite(point.value)),
-  })).filter(item => item.points.length);
+      value: preClose > 0 ? Number(point.price) / preClose - 1 : Number.NaN,
+    })).filter(point => point.position !== null && Number.isFinite(point.value));
+    const currentPrice = Number(member.price);
+    if (member.source?.includes("rt_k") && generatedTime && Number.isFinite(currentPrice) && preClose > 0) {
+      const lastTime = points.at(-1)?.time;
+      const position = sessionPosition(generatedTime);
+      if (position !== null && (!lastTime || lastTime < generatedTime)) {
+        points.push({ time: generatedTime, price: currentPrice, position, value: currentPrice / preClose - 1 });
+      }
+    }
+    return {
+      ...item,
+      color: CHART_COLORS[index % CHART_COLORS.length],
+      points,
+      latest_time: points.at(-1)?.time || item.latest_time,
+    };
+  }).filter(item => item.points.length);
 
   if (!usable.length) {
     const message = state.intradayError

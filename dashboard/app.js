@@ -246,7 +246,7 @@ function renderGroups(groups) {
         <tbody>${memberRow(group.holding, true)}${group.peers.map(row => memberRow(row, false)).join("")}${overseasRows(group)}</tbody>
       </table>
       <div class="peer-ai-note"><strong>${escapeHtml(group.cohort_status)}</strong><span>${escapeHtml(group.ai_peer_reason || "本地语义模型自动判定")}</span></div>
-      <div class="peer-card-foot"><span>${escapeHtml(group.matrix)}</span><span>${escapeHtml(group.ai_peer_engine || "local-semantic-ai-v2")}</span></div>
+      <div class="peer-card-foot"><span>${escapeHtml(group.matrix)}</span><span>${escapeHtml(group.ai_peer_engine || "local-semantic-ai-v3")}</span></div>
     </article>`;
   }).join("");
 }

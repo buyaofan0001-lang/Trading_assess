@@ -12,12 +12,15 @@ test("dashboard loads real data and primary interactions work", async ({ page })
   await expect(page.locator(".peer-card")).toHaveCount(2, { timeout: 120000 });
   await expect(page.locator(".intraday-chart svg")).toHaveCount(2, { timeout: 30000 });
   await expect(page.locator(".chart-series.holding polyline")).toHaveCount(2);
-  await expect(page.locator(".chart-legend-item")).toHaveCount(9);
+  await expect(page.locator(".chart-legend-item")).toHaveCount(10);
   const jcetCard = page.locator(".peer-card").filter({ hasText: "长电科技" });
   await expect(jcetCard).toHaveCount(1);
   await expect(jcetCard.locator(".overseas-row")).toHaveCount(2);
   await expect(jcetCard.locator(".overseas-divider")).toContainText("不参与A股排名");
   await expect(jcetCard.locator(".overseas-chip")).toHaveCount(2);
+  await expect(jcetCard.locator(".peer-ai-note")).toContainText("AI自动认定");
+  await expect(jcetCard.locator(".peer-ai-evidence")).toHaveCount(4);
+  await expect(page.locator("#portfolioSyncStatus")).toContainText("Excel已同步");
   await expect(page.locator('a[href="#overnight"]')).toHaveCount(0);
   await expect(page.locator("#overnight")).toHaveCount(0);
   await expect(page.locator(".nav-link")).toHaveCount(4);

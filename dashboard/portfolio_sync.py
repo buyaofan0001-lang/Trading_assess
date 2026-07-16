@@ -29,7 +29,7 @@ REQUIRED_LEDGER_COLUMNS = {
     "证券代码", "证券名称", "买卖标志", "成交日期", "成交价格", "成交数量", "成交金额", "剩余仓位"
 }
 CODE_ALIASES = {"002208": "002028"}
-AI_ENGINE_VERSION = "local-semantic-ai-v2"
+AI_ENGINE_VERSION = "local-semantic-ai-v3"
 
 
 def finite(value: Any) -> float | None:
@@ -251,6 +251,10 @@ def shared_business_phrases(target_text: Any, candidate_text: Any) -> list[str]:
         if block.size < 4:
             continue
         phrase = target[block.a:block.a + block.size]
+        phrase = re.sub(r"^[的与和及为]", "", phrase)
+        phrase = re.sub(r"[的与和及为]$", "", phrase)
+        if len(phrase) < 4:
+            continue
         if phrase and not any(phrase in existing or existing in phrase for existing in phrases):
             phrases.append(phrase)
         if len(phrases) == 2:

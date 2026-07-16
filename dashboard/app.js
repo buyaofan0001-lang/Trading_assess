@@ -694,14 +694,27 @@ document.addEventListener("visibilitychange", () => {
 
 const sections = $$('main section[id]');
 const navLinks = $$('.nav-link');
-const observer = new IntersectionObserver(entries => {
-  const visible = entries.filter(entry => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-  if (!visible) return;
-  navLinks.forEach(link => link.classList.toggle("active", link.getAttribute("href") === `#${visible.target.id}`));
-}, { rootMargin: "-20% 0px -65% 0px", threshold: [0, .2, .6] });
-sections.forEach(section => observer.observe(section));
+let navFrame = null;
+function updateActiveNavigation() {
+  navFrame = null;
+  const marker = window.innerHeight * .34;
+  const active = sections.find(section => {
+    const rect = section.getBoundingClientRect();
+    return rect.top <= marker && rect.bottom > marker;
+  }) || sections.reduce((nearest, section) => {
+    const distance = Math.abs(section.getBoundingClientRect().top - marker);
+    return !nearest || distance < nearest.distance ? { section, distance } : nearest;
+  }, null)?.section;
+  if (!active) return;
+  navLinks.forEach(link => link.classList.toggle("active", link.getAttribute("href") === `#${active.id}`));
+}
+window.addEventListener("scroll", () => {
+  if (!navFrame) navFrame = window.requestAnimationFrame(updateActiveNavigation);
+}, { passive: true });
+window.addEventListener("hashchange", updateActiveNavigation);
 
 state.countdownTimer = window.setInterval(updateFreshnessText, 1000);
 updateTimeframeReadyStates();
 void loadJournalIndex();
 loadDashboard();
+updateActiveNavigation();

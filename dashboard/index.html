@@ -33,7 +33,8 @@
         <a class="nav-link" href="#arena"><span>02</span> 同行擂台</a>
         <a class="nav-link" href="#overnight"><span>03</span> 隔夜映射</a>
         <a class="nav-link" href="#flows"><span>04</span> 资金去向</a>
-        <a class="nav-link" href="#recovery"><span>05</span> 生活恢复</a>
+        <a class="nav-link" href="#journal"><span>05</span> 每日日记</a>
+        <a class="nav-link" href="#recovery"><span>06</span> 生活恢复</a>
       </nav>
 
       <div class="rail-foot">
@@ -147,6 +148,52 @@
         </div>
       </section>
 
+      <section id="journal" class="content-section journal-section" aria-labelledby="journal-title">
+        <div class="section-head journal-section-head">
+          <div>
+            <div class="section-kicker">DAILY TRADING JOURNAL</div>
+            <h2 id="journal-title">每日交易日记</h2>
+            <p>按日期浏览与编写；保存后直接落到仓库的「日记」文件夹。</p>
+          </div>
+          <div id="journalFolder" class="journal-folder">正在连接日记文件夹…</div>
+        </div>
+
+        <div class="journal-layout">
+          <aside class="journal-index" aria-label="历史日记">
+            <div class="journal-index-toolbar">
+              <label for="journalDate">选择日期</label>
+              <div class="journal-date-actions">
+                <input id="journalDate" type="date" aria-label="日记日期">
+                <button id="journalToday" class="text-button" type="button">今天</button>
+              </div>
+            </div>
+            <div class="journal-index-label"><span>历史记录</span><span id="journalCount">—</span></div>
+            <div id="journalList" class="journal-list" aria-live="polite">
+              <div class="journal-list-empty">正在读取已有日记…</div>
+            </div>
+          </aside>
+
+          <article class="journal-editor-panel">
+            <div class="journal-editor-head">
+              <div>
+                <div id="journalSelectedDate" class="journal-selected-date">选择一个日期</div>
+                <div id="journalFilename" class="journal-filename">—</div>
+              </div>
+              <div class="journal-editor-actions">
+                <button id="journalTemplate" class="button" type="button">插入复盘提纲</button>
+                <button id="journalSave" class="button journal-save" type="button" disabled>保存日记</button>
+              </div>
+            </div>
+            <label class="sr-only" for="journalContent">日记正文</label>
+            <textarea id="journalContent" class="journal-content" spellcheck="true" placeholder="写下今天发生的事实、你的执行、情绪，以及明天只在什么条件下行动。" disabled></textarea>
+            <div class="journal-editor-foot">
+              <span id="journalStatus">等待选择日期</span>
+              <span id="journalStats">0 字符</span>
+            </div>
+          </article>
+        </div>
+      </section>
+
       <section id="recovery" class="content-section recovery-section" aria-labelledby="recovery-title">
         <div class="section-head">
           <div>
@@ -163,7 +210,7 @@
       </section>
 
       <footer>
-        <span>守门台 V1.3 · 决策辅助，不连接券商下单</span>
+        <span>守门台 V1.4 · 决策辅助，不连接券商下单</span>
         <span id="truthNote">等待数据口径说明</span>
       </footer>
     </main>

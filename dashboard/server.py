@@ -11,8 +11,11 @@ import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
 import json
 import math
+import os
+import re
 import statistics
 import sys
+import tempfile
 import threading
 import time
 from datetime import datetime, timedelta
@@ -35,6 +38,10 @@ from tushare_client import get_pro  # noqa: E402
 CONFIG = json.loads((HERE / "config.json").read_text(encoding="utf-8"))
 PERIOD_DAYS = {"1d": 1, "5d": 5, "20d": 20}
 INTRADAY_TTL_SECONDS = 60
+JOURNAL_DIR = REPO / "日记"
+JOURNAL_NAME_RE = re.compile(r"^(\d{4})-(\d{1,2})-(\d{1,2})\.md$")
+JOURNAL_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
+JOURNAL_MAX_BYTES = 512_000
 
 
 class TTLCache:
@@ -101,6 +108,105 @@ def finite(value: Any) -> float | None:
 
 def iso_now() -> str:
     return datetime.now().astimezone().isoformat(timespec="seconds")
+
+
+def validate_journal_date(value: Any) -> str:
+    if not isinstance(value, str) or not JOURNAL_DATE_RE.fullmatch(value):
+        raise ValueError("日记日期必须为 YYYY-MM-DD")
+    try:
+        parsed = datetime.strptime(value, "%Y-%m-%d")
+    except ValueError as exc:
+        raise ValueError("日记日期无效") from exc
+    if parsed.strftime("%Y-%m-%d") != value:
+        raise ValueError("日记日期无效")
+    return value
+
+
+def journal_date_from_path(path: Path) -> str | None:
+    match = JOURNAL_NAME_RE.fullmatch(path.name)
+    if not match:
+        return None
+    try:
+        parsed = datetime(int(match.group(1)), int(match.group(2)), int(match.group(3)))
+    except ValueError:
+        return None
+    return parsed.strftime("%Y-%m-%d")
+
+
+def journal_file_map() -> dict[str, Path]:
+    """Map normalized dates to local Markdown files without following symlinks."""
+    JOURNAL_DIR.mkdir(parents=True, exist_ok=True)
+    files: dict[str, Path] = {}
+    for path in JOURNAL_DIR.iterdir():
+        if path.is_symlink() or not path.is_file():
+            continue
+        date = journal_date_from_path(path)
+        if not date:
+            continue
+        current = files.get(date)
+        if current is None or path.name == f"{date}.md":
+            files[date] = path
+    return files
+
+
+def journal_metadata(path: Path, date: str) -> dict[str, Any]:
+    content = path.read_text(encoding="utf-8")
+    excerpt = re.sub(r"\s+", " ", content).strip()
+    stat = path.stat()
+    return {
+        "date": date,
+        "filename": path.name,
+        "modified_at": datetime.fromtimestamp(stat.st_mtime).astimezone().isoformat(timespec="seconds"),
+        "chars": len(content),
+        "excerpt": excerpt[:96],
+    }
+
+
+def list_journals() -> dict[str, Any]:
+    files = journal_file_map()
+    entries = [journal_metadata(path, date) for date, path in files.items()]
+    entries.sort(key=lambda item: item["date"], reverse=True)
+    return {
+        "journals": entries,
+        "today": datetime.now().strftime("%Y-%m-%d"),
+        "folder": str(JOURNAL_DIR),
+    }
+
+
+def get_journal(date: str) -> dict[str, Any]:
+    date = validate_journal_date(date)
+    path = journal_file_map().get(date)
+    if path is None:
+        return {"date": date, "filename": f"{date}.md", "content": "", "exists": False}
+    payload = journal_metadata(path, date)
+    payload.update({"content": path.read_text(encoding="utf-8"), "exists": True})
+    return payload
+
+
+def save_journal(date: str, content: Any) -> dict[str, Any]:
+    date = validate_journal_date(date)
+    if not isinstance(content, str):
+        raise ValueError("日记内容必须为文本")
+    normalized = content.replace("\r\n", "\n").replace("\r", "\n")
+    encoded = normalized.encode("utf-8")
+    if len(encoded) > JOURNAL_MAX_BYTES:
+        raise ValueError("日记内容不能超过 500KB")
+
+    files = journal_file_map()
+    target = files.get(date, JOURNAL_DIR / f"{date}.md")
+    existed = target.exists()
+    with tempfile.NamedTemporaryFile("wb", dir=JOURNAL_DIR, prefix=".journal-", delete=False) as handle:
+        handle.write(encoded)
+        handle.flush()
+        os.fsync(handle.fileno())
+        temp_path = Path(handle.name)
+    try:
+        os.replace(temp_path, target)
+    finally:
+        temp_path.unlink(missing_ok=True)
+    payload = journal_metadata(target, date)
+    payload.update({"content": normalized, "exists": True, "created": not existed})
+    return payload
 
 
 def a_quote(ts_code: str) -> dict[str, Any]:
@@ -744,6 +850,21 @@ class DashboardHandler(SimpleHTTPRequestHandler):
 
     def do_GET(self) -> None:  # noqa: N802
         parsed = urlparse(self.path)
+        if parsed.path == "/api/journals":
+            try:
+                self.send_json(list_journals())
+            except Exception as exc:
+                self.send_json({"error": str(exc)}, HTTPStatus.INTERNAL_SERVER_ERROR)
+            return
+        if parsed.path == "/api/journal":
+            date = parse_qs(parsed.query).get("date", [""])[0]
+            try:
+                self.send_json(get_journal(date))
+            except ValueError as exc:
+                self.send_json({"error": str(exc)}, HTTPStatus.BAD_REQUEST)
+            except Exception as exc:
+                self.send_json({"error": str(exc)}, HTTPStatus.INTERNAL_SERVER_ERROR)
+            return
         if parsed.path in {"/api/dashboard", "/api/peer-groups", "/api/intraday"}:
             timeframe = parse_qs(parsed.query).get("timeframe", ["1d"])[0]
             force = parse_qs(parsed.query).get("force", ["0"])[0] == "1"
@@ -774,6 +895,48 @@ class DashboardHandler(SimpleHTTPRequestHandler):
         if parsed.path == "/":
             self.path = "/index.html"
         super().do_GET()
+
+    def do_POST(self) -> None:  # noqa: N802
+        parsed = urlparse(self.path)
+        if parsed.path != "/api/journal":
+            self.send_json({"error": "接口不存在"}, HTTPStatus.NOT_FOUND)
+            return
+        try:
+            content_length = int(self.headers.get("Content-Length", "0"))
+        except ValueError:
+            self.send_json({"error": "Content-Length 无效"}, HTTPStatus.BAD_REQUEST)
+            return
+        if content_length <= 0:
+            self.send_json({"error": "请求内容为空"}, HTTPStatus.BAD_REQUEST)
+            return
+        if content_length > JOURNAL_MAX_BYTES + 16_384:
+            self.send_json({"error": "日记内容不能超过 500KB"}, HTTPStatus.REQUEST_ENTITY_TOO_LARGE)
+            return
+        try:
+            payload = json.loads(self.rfile.read(content_length).decode("utf-8"))
+            if not isinstance(payload, dict):
+                raise ValueError("请求格式无效")
+            result = save_journal(payload.get("date"), payload.get("content"))
+            status = HTTPStatus.CREATED if result["created"] else HTTPStatus.OK
+            self.send_json(result, status)
+        except (UnicodeDecodeError, json.JSONDecodeError):
+            self.send_json({"error": "请求不是有效的 UTF-8 JSON"}, HTTPStatus.BAD_REQUEST)
+        except ValueError as exc:
+            self.send_json({"error": str(exc)}, HTTPStatus.BAD_REQUEST)
+        except Exception as exc:
+            self.send_json({"error": str(exc)}, HTTPStatus.INTERNAL_SERVER_ERROR)
+
+    def send_json(self, payload: dict[str, Any], status: HTTPStatus = HTTPStatus.OK) -> None:
+        body = json.dumps(payload, ensure_ascii=False, allow_nan=False).encode("utf-8")
+        self.send_response(status)
+        self.send_header("Content-Type", "application/json; charset=utf-8")
+        self.send_header("Cache-Control", "no-store")
+        self.send_header("Content-Length", str(len(body)))
+        self.end_headers()
+        try:
+            self.wfile.write(body)
+        except (BrokenPipeError, ConnectionResetError):
+            pass
 
     def log_message(self, fmt: str, *args: Any) -> None:
         print(f"[{datetime.now().strftime('%H:%M:%S')}] {fmt % args}")

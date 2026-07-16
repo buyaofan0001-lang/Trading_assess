@@ -3,6 +3,7 @@
   "position_seed": "position_seed.json",
   "peer_library": "peer_library.json",
   "peer_universe_cache": ".cache/ai_peer_universe.json",
+  "daily_report_root": "/Users/liuguan1/Documents/New project 2",
   "peer_count": 4,
   "peer_universe_cache_hours": 24,
   "overseas_candidate_count": 60,

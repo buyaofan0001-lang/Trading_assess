@@ -25,10 +25,16 @@ test("dashboard loads real data and primary interactions work", async ({ page })
   await expect(page.locator("#portfolioSyncStatus")).toContainText("Excel已同步");
   await expect(page.locator('a[href="#overnight"]')).toHaveCount(0);
   await expect(page.locator("#overnight")).toHaveCount(0);
-  await expect(page.locator(".nav-link")).toHaveCount(4);
+  await expect(page.locator(".nav-link")).toHaveCount(6);
   await expect(page.locator("#permissionCard")).toHaveClass(/red/);
   await expect(page.locator("#gate-title")).toContainText("停止主动买入");
   await expect(page.locator("#freshness")).toContainText("数据已更新");
+  await expect(page.locator("#premarketReportBody h1")).toContainText("A股盘前", { timeout: 30000 });
+  await expect(page.locator("#premarketList .report-entry")).toHaveCount(1);
+  await expect(page.locator("#premarketSyncStatus")).toContainText("60秒监控");
+  await expect(page.locator("#closeReportBody h1")).toContainText("A股盘后复盘", { timeout: 30000 });
+  expect(await page.locator("#closeList .report-entry").count()).toBeGreaterThanOrEqual(5);
+  await expect(page.locator("#closeReportBody .report-table-scroll").first()).toBeVisible();
 
   await expect(page.locator('[data-timeframe="5d"]')).toHaveAttribute("data-ready", "true", { timeout: 120000 });
   const switchStarted = Date.now();
@@ -94,6 +100,15 @@ test("market-hours timer automatically requests a fresh dashboard", async ({ pag
   await page.clock.fastForward(31_000);
   await automaticResponse;
   await expect(page.locator("#freshness")).toContainText("自动刷新");
+});
+
+test("daily report directories are polled outside the market refresh cycle", async ({ page }) => {
+  await page.clock.install({ time: new Date("2026-07-16T09:30:00Z") });
+  await page.goto(`${dashboardUrl}/#premarket`);
+  await expect(page.locator("#premarketReportBody h1")).toContainText("A股盘前", { timeout: 30000 });
+  const reportResponse = page.waitForResponse(response => response.url().endsWith("/api/reports") && response.ok());
+  await page.clock.fastForward(61_000);
+  await reportResponse;
 });
 
 test("mobile layout does not overflow horizontally", async ({ page }) => {

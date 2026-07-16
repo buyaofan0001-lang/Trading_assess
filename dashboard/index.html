@@ -32,7 +32,9 @@
         <a class="nav-link active" href="#gate"><span>01</span> 今日权限</a>
         <a class="nav-link" href="#arena"><span>02</span> 同行擂台</a>
         <a class="nav-link" href="#flows"><span>03</span> 资金去向</a>
-        <a class="nav-link" href="#journal"><span>04</span> 每日日记</a>
+        <a class="nav-link" href="#premarket"><span>04</span> 昨夜盘前</a>
+        <a class="nav-link" href="#close-review"><span>05</span> 收盘复盘</a>
+        <a class="nav-link" href="#journal"><span>06</span> 每日日记</a>
       </nav>
 
       <div class="rail-foot">
@@ -133,6 +135,54 @@
         </div>
       </section>
 
+      <section id="premarket" class="content-section report-section premarket-report" aria-labelledby="premarket-title">
+        <div class="section-head report-section-head">
+          <div>
+            <div class="section-kicker">OVERNIGHT → A-SHARE OPEN</div>
+            <h2 id="premarket-title">昨夜盘前报告</h2>
+            <p>每日任务生成后自动读入；保留海外信号、A股映射、确认与失效条件。</p>
+          </div>
+          <div class="report-live-status"><span class="report-live-dot"></span><span id="premarketSyncStatus">60秒自动检查</span></div>
+        </div>
+        <div class="report-layout">
+          <aside class="report-index" aria-label="盘前报告历史">
+            <div class="report-index-head"><span>报告日期</span><span id="premarketCount">—</span></div>
+            <div id="premarketList" class="report-list" aria-live="polite"><div class="report-empty">正在读取盘前报告…</div></div>
+          </aside>
+          <article class="report-document">
+            <header class="report-document-head">
+              <div><div class="report-type-label">PRE-MARKET BRIEF</div><h3 id="premarketReportTitle">等待每日任务</h3></div>
+              <div class="report-document-meta"><span id="premarketReportDate">—</span><small id="premarketReportMeta">尚未载入</small></div>
+            </header>
+            <div id="premarketReportBody" class="report-markdown"><div class="report-empty">生成报告后将自动显示在这里。</div></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="close-review" class="content-section report-section close-report" aria-labelledby="close-review-title">
+        <div class="section-head report-section-head">
+          <div>
+            <div class="section-kicker">MARKET CLOSE REVIEW</div>
+            <h2 id="close-review-title">今日收盘复盘</h2>
+            <p>直接阅读市场总览、板块催化、持仓审计与下一交易日验证点。</p>
+          </div>
+          <div class="report-live-status close"><span class="report-live-dot"></span><span id="closeSyncStatus">60秒自动检查</span></div>
+        </div>
+        <div class="report-layout">
+          <aside class="report-index" aria-label="收盘复盘历史">
+            <div class="report-index-head"><span>复盘日期</span><span id="closeCount">—</span></div>
+            <div id="closeList" class="report-list" aria-live="polite"><div class="report-empty">正在读取收盘复盘…</div></div>
+          </aside>
+          <article class="report-document">
+            <header class="report-document-head">
+              <div><div class="report-type-label">CLOSE REVIEW</div><h3 id="closeReportTitle">等待每日任务</h3></div>
+              <div class="report-document-meta"><span id="closeReportDate">—</span><small id="closeReportMeta">尚未载入</small></div>
+            </header>
+            <div id="closeReportBody" class="report-markdown"><div class="report-empty">生成复盘后将自动显示在这里。</div></div>
+          </article>
+        </div>
+      </section>
+
       <section id="journal" class="content-section journal-section" aria-labelledby="journal-title">
         <div class="section-head journal-section-head">
           <div>
@@ -180,7 +230,7 @@
       </section>
 
       <footer>
-        <span>守门台 V1.7 · Excel持仓自动同步 · AI同行自动认定</span>
+        <span>守门台 V1.8 · Excel持仓同步 · 每日报告自动入板</span>
         <span id="truthNote">等待数据口径说明</span>
       </footer>
     </main>

@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 from concurrent.futures import ThreadPoolExecutor, as_completed
+import hashlib
 import json
 import math
 import os
@@ -54,6 +55,12 @@ JOURNAL_DIR = REPO / "日记"
 JOURNAL_NAME_RE = re.compile(r"^(\d{4})-(\d{1,2})-(\d{1,2})\.md$")
 JOURNAL_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 JOURNAL_MAX_BYTES = 512_000
+REPORT_ROOT = Path(CONFIG["daily_report_root"]).expanduser().resolve()
+REPORT_KINDS = {
+    "premarket": {"label": "昨夜盘前报告", "relative": Path("logs/pre-market")},
+    "close": {"label": "今日收盘复盘", "relative": Path("logs")},
+}
+REPORT_MAX_BYTES = 2_000_000
 
 
 class TTLCache:
@@ -240,6 +247,87 @@ def save_journal(date: str, content: Any) -> dict[str, Any]:
         temp_path.unlink(missing_ok=True)
     payload = journal_metadata(target, date)
     payload.update({"content": normalized, "exists": True, "created": not existed})
+    return payload
+
+
+def validate_report_kind(value: Any) -> str:
+    if not isinstance(value, str) or value not in REPORT_KINDS:
+        raise ValueError("报告类型必须为 premarket 或 close")
+    return value
+
+
+def report_file_map(kind: str, root: Path | None = None) -> dict[str, Path]:
+    """Discover generated reports without following links or leaving the report root."""
+    kind = validate_report_kind(kind)
+    base = (root or REPORT_ROOT) / REPORT_KINDS[kind]["relative"]
+    if not base.exists() or base.is_symlink() or not base.is_dir():
+        return {}
+    files: dict[str, Path] = {}
+    for year_dir in base.iterdir():
+        if year_dir.is_symlink() or not year_dir.is_dir() or not re.fullmatch(r"\d{4}", year_dir.name):
+            continue
+        for path in year_dir.iterdir():
+            if path.is_symlink() or not path.is_file():
+                continue
+            date = journal_date_from_path(path)
+            if date and date.startswith(f"{year_dir.name}-"):
+                files[date] = path
+    return files
+
+
+def report_metadata(path: Path, date: str, kind: str) -> dict[str, Any]:
+    stat = path.stat()
+    if stat.st_size > REPORT_MAX_BYTES:
+        raise ValueError(f"报告文件过大：{path.name}")
+    content = path.read_text(encoding="utf-8")
+    title_match = re.search(r"^#\s+(.+)$", content, flags=re.MULTILINE)
+    plain = re.sub(r"\[([^\]]+)\]\([^\)]+\)", r"\1", content)
+    plain = re.sub(r"[#>*_`|\-]+", " ", plain)
+    excerpt = re.sub(r"\s+", " ", plain).strip()
+    return {
+        "kind": kind,
+        "date": date,
+        "filename": path.name,
+        "title": title_match.group(1).strip() if title_match else REPORT_KINDS[kind]["label"],
+        "modified_at": datetime.fromtimestamp(stat.st_mtime).astimezone().isoformat(timespec="seconds"),
+        "chars": len(content),
+        "excerpt": excerpt[:120],
+        "version": f"{stat.st_mtime_ns:x}-{stat.st_size:x}",
+    }
+
+
+def list_daily_reports(root: Path | None = None) -> dict[str, Any]:
+    report_root = root or REPORT_ROOT
+    reports: dict[str, Any] = {}
+    version_parts = []
+    for kind, settings in REPORT_KINDS.items():
+        files = report_file_map(kind, report_root)
+        entries = [report_metadata(path, date, kind) for date, path in files.items()]
+        entries.sort(key=lambda item: item["date"], reverse=True)
+        version_parts.extend(f"{kind}:{item['date']}:{item['version']}" for item in entries)
+        reports[kind] = {
+            "label": settings["label"],
+            "folder": str(report_root / settings["relative"]),
+            "latest": entries[0]["date"] if entries else None,
+            "items": entries,
+        }
+    digest = hashlib.sha256("|".join(version_parts).encode("utf-8")).hexdigest()[:16]
+    return {
+        "root": str(report_root),
+        "library_version": digest,
+        "generated_at": iso_now(),
+        "reports": reports,
+    }
+
+
+def get_daily_report(kind: str, date: str, root: Path | None = None) -> dict[str, Any]:
+    kind = validate_report_kind(kind)
+    date = validate_journal_date(date)
+    path = report_file_map(kind, root).get(date)
+    if path is None:
+        raise ValueError(f"{date} 暂无{REPORT_KINDS[kind]['label']}")
+    payload = report_metadata(path, date, kind)
+    payload.update({"content": path.read_text(encoding="utf-8"), "exists": True})
     return payload
 
 
@@ -907,6 +995,23 @@ class DashboardHandler(SimpleHTTPRequestHandler):
 
     def do_GET(self) -> None:  # noqa: N802
         parsed = urlparse(self.path)
+        if parsed.path == "/api/reports":
+            try:
+                self.send_json(list_daily_reports())
+            except Exception as exc:
+                self.send_json({"error": str(exc)}, HTTPStatus.INTERNAL_SERVER_ERROR)
+            return
+        if parsed.path == "/api/report":
+            query = parse_qs(parsed.query)
+            kind = query.get("kind", [""])[0]
+            date = query.get("date", [""])[0]
+            try:
+                self.send_json(get_daily_report(kind, date))
+            except ValueError as exc:
+                self.send_json({"error": str(exc)}, HTTPStatus.BAD_REQUEST)
+            except Exception as exc:
+                self.send_json({"error": str(exc)}, HTTPStatus.INTERNAL_SERVER_ERROR)
+            return
         if parsed.path == "/api/journals":
             try:
                 self.send_json(list_journals())

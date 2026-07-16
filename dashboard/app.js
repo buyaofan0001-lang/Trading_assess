@@ -1,6 +1,11 @@
 const LIVE_REFRESH_MS = 30_000;
 const POST_CLOSE_REFRESH_MS = 5 * 60_000;
 const PORTFOLIO_POLL_MS = 15_000;
+const REPORT_POLL_MS = 60_000;
+const REPORT_UI = {
+  premarket: { prefix: "premarket", empty: "盘前报告目录中还没有 Markdown 文件。" },
+  close: { prefix: "close", empty: "收盘复盘目录中还没有 Markdown 文件。" },
+};
 const state = {
   timeframe: "1d",
   loading: false,
@@ -12,6 +17,7 @@ const state = {
   intradayLoading: false,
   refreshTimer: null,
   portfolioPollTimer: null,
+  reportPollTimer: null,
   countdownTimer: null,
   nextRefreshAt: null,
   lastMeta: null,
@@ -25,6 +31,12 @@ const state = {
     exists: false,
     loading: false,
     saving: false,
+  },
+  reports: {
+    version: null,
+    loading: false,
+    premarket: { entries: [], latest: null, date: null, version: null, content: "", loading: false },
+    close: { entries: [], latest: null, date: null, version: null, content: "", loading: false },
   },
 };
 
@@ -51,6 +63,106 @@ function escapeHtml(value) {
   return String(value ?? "").replace(/[&<>'"]/g, char => ({
     "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;"
   })[char]);
+}
+
+function renderInlineMarkdown(value) {
+  const links = [];
+  let text = escapeHtml(value);
+  text = text.replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g, (_, label, url) => {
+    const token = `\u0000LINK${links.length}\u0000`;
+    links.push(`<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${label}</a>`);
+    return token;
+  });
+  text = text.replace(/`([^`]+)`/g, "<code>$1</code>");
+  text = text.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+  text = text.replace(/\*([^*]+)\*/g, "<em>$1</em>");
+  return text.replace(/\u0000LINK(\d+)\u0000/g, (_, index) => links[Number(index)] || "");
+}
+
+function splitMarkdownTableRow(line) {
+  return line.trim().replace(/^\|/, "").replace(/\|$/, "").split("|").map(cell => cell.trim());
+}
+
+function isMarkdownTableDivider(line) {
+  const cells = splitMarkdownTableRow(line);
+  return cells.length > 0 && cells.every(cell => /^:?-{3,}:?$/.test(cell));
+}
+
+function markdownToHtml(markdown) {
+  const lines = String(markdown || "").replace(/\r\n?/g, "\n").split("\n");
+  const html = [];
+  for (let index = 0; index < lines.length;) {
+    const line = lines[index];
+    if (!line.trim()) { index += 1; continue; }
+
+    if (/^```/.test(line.trim())) {
+      const language = line.trim().slice(3).trim();
+      const code = [];
+      index += 1;
+      while (index < lines.length && !/^```/.test(lines[index].trim())) code.push(lines[index++]);
+      if (index < lines.length) index += 1;
+      html.push(`<pre${language ? ` data-language="${escapeHtml(language)}"` : ""}><code>${escapeHtml(code.join("\n"))}</code></pre>`);
+      continue;
+    }
+
+    if (line.includes("|") && index + 1 < lines.length && isMarkdownTableDivider(lines[index + 1])) {
+      const headers = splitMarkdownTableRow(line);
+      index += 2;
+      const rows = [];
+      while (index < lines.length && lines[index].includes("|") && lines[index].trim()) {
+        rows.push(splitMarkdownTableRow(lines[index]));
+        index += 1;
+      }
+      html.push(`<div class="report-table-scroll"><table><thead><tr>${headers.map(cell => `<th>${renderInlineMarkdown(cell)}</th>`).join("")}</tr></thead><tbody>${rows.map(row => `<tr>${headers.map((_, cellIndex) => `<td>${renderInlineMarkdown(row[cellIndex] || "")}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`);
+      continue;
+    }
+
+    const heading = line.match(/^(#{1,4})\s+(.+)$/);
+    if (heading) {
+      const level = heading[1].length;
+      html.push(`<h${level}>${renderInlineMarkdown(heading[2])}</h${level}>`);
+      index += 1;
+      continue;
+    }
+
+    if (/^>\s?/.test(line)) {
+      const quote = [];
+      while (index < lines.length && /^>\s?/.test(lines[index])) quote.push(lines[index++].replace(/^>\s?/, ""));
+      html.push(`<blockquote><p>${quote.map(renderInlineMarkdown).join("<br>")}</p></blockquote>`);
+      continue;
+    }
+
+    if (/^\s*[-+*]\s+/.test(line)) {
+      const items = [];
+      while (index < lines.length && /^\s*[-+*]\s+/.test(lines[index])) items.push(lines[index++].replace(/^\s*[-+*]\s+/, ""));
+      html.push(`<ul>${items.map(item => `<li>${renderInlineMarkdown(item)}</li>`).join("")}</ul>`);
+      continue;
+    }
+
+    if (/^\s*\d+[.)]\s+/.test(line)) {
+      const items = [];
+      while (index < lines.length && /^\s*\d+[.)]\s+/.test(lines[index])) items.push(lines[index++].replace(/^\s*\d+[.)]\s+/, ""));
+      html.push(`<ol>${items.map(item => `<li>${renderInlineMarkdown(item)}</li>`).join("")}</ol>`);
+      continue;
+    }
+
+    if (/^\s*(---+|___+|\*\*\*+)\s*$/.test(line)) {
+      html.push("<hr>");
+      index += 1;
+      continue;
+    }
+
+    const paragraph = [line.trim()];
+    index += 1;
+    while (index < lines.length && lines[index].trim()
+      && !/^(#{1,4})\s+|^>\s?|^```|^\s*[-+*]\s+|^\s*\d+[.)]\s+/.test(lines[index])
+      && !(lines[index].includes("|") && index + 1 < lines.length && isMarkdownTableDivider(lines[index + 1]))) {
+      paragraph.push(lines[index].trim());
+      index += 1;
+    }
+    html.push(`<p>${paragraph.map(renderInlineMarkdown).join("<br>")}</p>`);
+  }
+  return html.join("");
 }
 
 function toast(message) {
@@ -447,6 +559,127 @@ function insertJournalTemplate() {
   $("#journalContent").focus();
 }
 
+function reportElements(kind) {
+  const prefix = REPORT_UI[kind].prefix;
+  return {
+    list: $(`#${prefix}List`),
+    count: $(`#${prefix}Count`),
+    title: $(`#${prefix}ReportTitle`),
+    date: $(`#${prefix}ReportDate`),
+    meta: $(`#${prefix}ReportMeta`),
+    body: $(`#${prefix}ReportBody`),
+    status: $(`#${prefix}SyncStatus`),
+  };
+}
+
+function reportModifiedLabel(value) {
+  if (!value) return "生成时间待确认";
+  const parsed = new Date(value);
+  return `更新 ${parsed.toLocaleString("zh-CN", { month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" })}`;
+}
+
+function renderReportList(kind) {
+  const report = state.reports[kind];
+  const elements = reportElements(kind);
+  elements.count.textContent = `${report.entries.length} 篇`;
+  elements.status.textContent = report.latest ? `最新 ${report.latest} · 60秒监控` : "等待每日任务";
+  elements.list.innerHTML = report.entries.length
+    ? report.entries.map(entry => `<button class="report-entry${entry.date === report.date ? " active" : ""}" type="button" data-report-kind="${kind}" data-report-date="${escapeHtml(entry.date)}">
+        <span class="report-entry-date"><span>${escapeHtml(entry.date)}</span><small>${Number(entry.chars || 0).toLocaleString("zh-CN")} 字符</small></span>
+        <span class="report-entry-title">${escapeHtml(entry.title || entry.excerpt || "未命名报告")}</span>
+      </button>`).join("")
+    : `<div class="report-empty">${REPORT_UI[kind].empty}</div>`;
+}
+
+function renderReport(kind, payload) {
+  const report = state.reports[kind];
+  const elements = reportElements(kind);
+  report.date = payload.date;
+  report.version = payload.version;
+  report.content = payload.content || "";
+  elements.title.textContent = payload.title || (kind === "premarket" ? "昨夜盘前报告" : "今日收盘复盘");
+  elements.date.textContent = payload.date;
+  elements.meta.textContent = `${reportModifiedLabel(payload.modified_at)} · ${Number(payload.chars || 0).toLocaleString("zh-CN")} 字符`;
+  elements.body.classList.remove("report-loading");
+  elements.body.innerHTML = markdownToHtml(report.content) || '<div class="report-empty">报告内容为空。</div>';
+  renderReportList(kind);
+}
+
+async function loadReport(kind, date, { force = false } = {}) {
+  const report = state.reports[kind];
+  const entry = report.entries.find(item => item.date === date);
+  if (!force && report.date === date && report.version && report.version === entry?.version) return;
+  const elements = reportElements(kind);
+  report.loading = true;
+  report.date = date;
+  elements.body.classList.add("report-loading");
+  elements.body.innerHTML = "";
+  renderReportList(kind);
+  try {
+    const response = await fetch(`/api/report?kind=${encodeURIComponent(kind)}&date=${encodeURIComponent(date)}`, { cache: "no-store" });
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.error || `HTTP ${response.status}`);
+    renderReport(kind, payload);
+  } catch (error) {
+    console.error(`${kind}报告读取失败`, error);
+    elements.body.classList.remove("report-loading");
+    elements.body.innerHTML = `<div class="report-empty">读取失败：${escapeHtml(error.message)}</div>`;
+    elements.status.textContent = `连接失败 · ${error.message}`;
+  } finally {
+    report.loading = false;
+  }
+}
+
+async function loadReportIndex({ announce = false } = {}) {
+  if (state.reports.loading) return false;
+  state.reports.loading = true;
+  try {
+    const response = await fetch("/api/reports", { cache: "no-store" });
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.error || `HTTP ${response.status}`);
+    const previousVersion = state.reports.version;
+    const libraryChanged = Boolean(previousVersion && previousVersion !== payload.library_version);
+    const loads = [];
+    for (const kind of Object.keys(REPORT_UI)) {
+      const incoming = payload.reports?.[kind] || { items: [], latest: null };
+      const report = state.reports[kind];
+      const previousLatest = report.latest;
+      report.entries = incoming.items || [];
+      report.latest = incoming.latest || null;
+      renderReportList(kind);
+      if (!report.latest) continue;
+      const latestEntry = report.entries.find(item => item.date === report.latest);
+      const newLatest = Boolean(previousLatest && previousLatest !== report.latest);
+      const currentWasUpdated = report.date === report.latest && latestEntry?.version !== report.version;
+      if (!report.date || newLatest || currentWasUpdated) {
+        loads.push(loadReport(kind, report.latest, { force: newLatest || currentWasUpdated }));
+      }
+    }
+    state.reports.version = payload.library_version;
+    await Promise.all(loads);
+    if (libraryChanged && announce) toast("新的每日报告已自动更新到看板");
+    return libraryChanged;
+  } catch (error) {
+    console.error("每日报告目录读取失败", error);
+    for (const kind of Object.keys(REPORT_UI)) {
+      reportElements(kind).status.textContent = `连接失败 · ${error.message}`;
+    }
+    return false;
+  } finally {
+    state.reports.loading = false;
+  }
+}
+
+function scheduleReportPoll(delay = REPORT_POLL_MS) {
+  window.clearTimeout(state.reportPollTimer);
+  state.reportPollTimer = null;
+  if (document.hidden) return;
+  state.reportPollTimer = window.setTimeout(async () => {
+    await loadReportIndex({ announce: true });
+    scheduleReportPoll();
+  }, delay);
+}
+
 function renderMeta(meta) {
   state.lastMeta = meta;
   const fresh = $("#freshness");
@@ -667,7 +900,10 @@ async function loadDashboard({ showToast = false, force = false, background = fa
   }
 }
 
-$("#refreshButton").addEventListener("click", () => loadDashboard({ showToast: true, force: true }));
+$("#refreshButton").addEventListener("click", () => {
+  void loadDashboard({ showToast: true, force: true });
+  void loadReportIndex();
+});
 $$('[data-timeframe]').forEach(button => button.addEventListener("click", () => switchTimeframe(button.dataset.timeframe)));
 $("#journalToday").addEventListener("click", () => loadJournal(shanghaiDate()));
 $("#journalDate").addEventListener("change", event => loadJournal(event.target.value));
@@ -682,6 +918,12 @@ $("#journalContent").addEventListener("input", event => {
 });
 $("#journalSave").addEventListener("click", saveJournal);
 $("#journalTemplate").addEventListener("click", insertJournalTemplate);
+Object.keys(REPORT_UI).forEach(kind => {
+  reportElements(kind).list.addEventListener("click", event => {
+    const entry = event.target.closest("[data-report-date]");
+    if (entry) void loadReport(kind, entry.dataset.reportDate);
+  });
+});
 document.addEventListener("keydown", event => {
   if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "s" && document.activeElement === $("#journalContent")) {
     event.preventDefault();
@@ -698,9 +940,12 @@ document.addEventListener("visibilitychange", () => {
   if (document.hidden) {
     scheduleAutoRefresh();
     schedulePortfolioPoll();
+    scheduleReportPoll();
   } else if (state.data) {
     void loadDashboard({ background: true });
     schedulePortfolioPoll();
+    void loadReportIndex({ announce: true });
+    scheduleReportPoll();
   }
 });
 
@@ -728,6 +973,8 @@ window.addEventListener("hashchange", updateActiveNavigation);
 state.countdownTimer = window.setInterval(updateFreshnessText, 1000);
 updateTimeframeReadyStates();
 void loadJournalIndex();
+void loadReportIndex();
 loadDashboard();
 schedulePortfolioPoll();
+scheduleReportPoll();
 updateActiveNavigation();

@@ -13,6 +13,16 @@ const state = {
   countdownTimer: null,
   nextRefreshAt: null,
   lastMeta: null,
+  journal: {
+    entries: [],
+    date: null,
+    content: "",
+    original: "",
+    filename: "",
+    exists: false,
+    loading: false,
+    saving: false,
+  },
 };
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -297,6 +307,172 @@ function renderRecovery(recovery) {
   update();
 }
 
+function shanghaiDate() {
+  const parts = Object.fromEntries(new Intl.DateTimeFormat("en-CA", {
+    timeZone: "Asia/Shanghai",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+  }).formatToParts(new Date()).map(part => [part.type, part.value]));
+  return `${parts.year}-${parts.month}-${parts.day}`;
+}
+
+function journalDateLabel(date) {
+  if (!date) return "选择一个日期";
+  const parsed = new Date(`${date}T00:00:00+08:00`);
+  return new Intl.DateTimeFormat("zh-CN", {
+    timeZone: "Asia/Shanghai",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    weekday: "short",
+  }).format(parsed);
+}
+
+function journalIsDirty() {
+  return state.journal.date !== null && state.journal.content !== state.journal.original;
+}
+
+function setJournalStatus(message, toneName = "") {
+  const status = $("#journalStatus");
+  status.textContent = message;
+  status.className = toneName;
+}
+
+function renderJournalList() {
+  const entries = state.journal.entries;
+  $("#journalCount").textContent = `${entries.length} 篇`;
+  $("#journalList").innerHTML = entries.length
+    ? entries.map(entry => `<button class="journal-entry${entry.date === state.journal.date ? " active" : ""}" type="button" data-journal-date="${escapeHtml(entry.date)}">
+        <span class="journal-entry-date"><span>${escapeHtml(entry.date)}</span><small>${Number(entry.chars || 0).toLocaleString("zh-CN")} 字符</small></span>
+        <span class="journal-entry-excerpt">${escapeHtml(entry.excerpt || "空白日记")}</span>
+      </button>`).join("")
+    : '<div class="journal-list-empty">日记文件夹中还没有按日期命名的 Markdown 文件。</div>';
+}
+
+function updateJournalEditor() {
+  const journal = state.journal;
+  $("#journalSelectedDate").textContent = journalDateLabel(journal.date);
+  $("#journalFilename").textContent = journal.filename || "—";
+  $("#journalStats").textContent = `${journal.content.length.toLocaleString("zh-CN")} 字符`;
+  $("#journalSave").disabled = journal.loading || journal.saving || !journalIsDirty();
+  $("#journalTemplate").disabled = journal.loading || journal.saving || !journal.date;
+  $("#journalContent").disabled = journal.loading || journal.saving || !journal.date;
+  renderJournalList();
+}
+
+function canLeaveJournal() {
+  return !journalIsDirty() || window.confirm("当前日记尚未保存，确定放弃这些修改吗？");
+}
+
+async function loadJournal(date, { skipConfirm = false } = {}) {
+  if (!date || (date === state.journal.date && !state.journal.loading)) return;
+  if (!skipConfirm && !canLeaveJournal()) {
+    $("#journalDate").value = state.journal.date || shanghaiDate();
+    return;
+  }
+  const journal = state.journal;
+  journal.loading = true;
+  journal.date = date;
+  journal.content = "";
+  journal.original = "";
+  journal.filename = `${date}.md`;
+  $("#journalDate").value = date;
+  $("#journalContent").value = "";
+  setJournalStatus("正在读取日记…");
+  updateJournalEditor();
+  try {
+    const response = await fetch(`/api/journal?date=${encodeURIComponent(date)}`, { cache: "no-store" });
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.error || `HTTP ${response.status}`);
+    journal.content = payload.content || "";
+    journal.original = journal.content;
+    journal.filename = payload.filename;
+    journal.exists = Boolean(payload.exists);
+    $("#journalContent").value = journal.content;
+    setJournalStatus(payload.exists ? "已从日记文件夹载入" : "新日记 · 尚未保存", payload.exists ? "saved" : "");
+  } catch (error) {
+    console.error("日记读取失败", error);
+    setJournalStatus(`读取失败：${error.message}`, "error");
+    toast(`日记读取失败：${error.message}`);
+  } finally {
+    journal.loading = false;
+    updateJournalEditor();
+  }
+}
+
+async function loadJournalIndex() {
+  try {
+    const response = await fetch("/api/journals", { cache: "no-store" });
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.error || `HTTP ${response.status}`);
+    state.journal.entries = payload.journals || [];
+    $("#journalFolder").textContent = payload.folder || "日记/";
+    renderJournalList();
+    await loadJournal(payload.today || shanghaiDate(), { skipConfirm: true });
+  } catch (error) {
+    console.error("日记目录读取失败", error);
+    $("#journalList").innerHTML = `<div class="journal-list-empty">读取失败：${escapeHtml(error.message)}</div>`;
+    setJournalStatus(`连接失败：${error.message}`, "error");
+  }
+}
+
+function upsertJournalEntry(payload) {
+  const entry = {
+    date: payload.date,
+    filename: payload.filename,
+    modified_at: payload.modified_at,
+    chars: payload.chars,
+    excerpt: payload.excerpt,
+  };
+  const index = state.journal.entries.findIndex(item => item.date === entry.date);
+  if (index >= 0) state.journal.entries[index] = entry;
+  else state.journal.entries.push(entry);
+  state.journal.entries.sort((a, b) => b.date.localeCompare(a.date));
+}
+
+async function saveJournal() {
+  const journal = state.journal;
+  if (!journal.date || journal.loading || journal.saving || !journalIsDirty()) return;
+  journal.saving = true;
+  setJournalStatus("正在写入日记文件夹…");
+  updateJournalEditor();
+  try {
+    const response = await fetch("/api/journal", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ date: journal.date, content: journal.content }),
+    });
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.error || `HTTP ${response.status}`);
+    journal.original = journal.content;
+    journal.filename = payload.filename;
+    journal.exists = true;
+    upsertJournalEntry(payload);
+    setJournalStatus(`已保存 · ${new Date(payload.modified_at).toLocaleTimeString("zh-CN", { hour: "2-digit", minute: "2-digit" })}`, "saved");
+    toast(`日记已保存到 ${payload.filename}`);
+  } catch (error) {
+    console.error("日记保存失败", error);
+    setJournalStatus(`保存失败：${error.message}`, "error");
+    toast(`日记保存失败：${error.message}`);
+  } finally {
+    journal.saving = false;
+    updateJournalEditor();
+  }
+}
+
+function insertJournalTemplate() {
+  if (!state.journal.date) return;
+  const existing = state.journal.content.trim();
+  if (existing && !window.confirm("当前日记已有内容，是否在末尾追加复盘提纲？")) return;
+  const template = `# ${state.journal.date} 交易日记\n\n## 今日事实\n- \n\n## 执行复盘\n- 做对了什么：\n- 违反了什么：\n\n## 情绪与生活\n- \n\n## 明日条件\n- 只有当……才行动：\n- 失效条件：\n`;
+  state.journal.content = existing ? `${state.journal.content.trimEnd()}\n\n${template}` : template;
+  $("#journalContent").value = state.journal.content;
+  setJournalStatus("有未保存修改", "dirty");
+  updateJournalEditor();
+  $("#journalContent").focus();
+}
+
 function renderMeta(meta) {
   state.lastMeta = meta;
   const fresh = $("#freshness");
@@ -483,6 +659,30 @@ async function loadDashboard({ showToast = false, force = false, background = fa
 
 $("#refreshButton").addEventListener("click", () => loadDashboard({ showToast: true, force: true }));
 $$('[data-timeframe]').forEach(button => button.addEventListener("click", () => switchTimeframe(button.dataset.timeframe)));
+$("#journalToday").addEventListener("click", () => loadJournal(shanghaiDate()));
+$("#journalDate").addEventListener("change", event => loadJournal(event.target.value));
+$("#journalList").addEventListener("click", event => {
+  const entry = event.target.closest("[data-journal-date]");
+  if (entry) void loadJournal(entry.dataset.journalDate);
+});
+$("#journalContent").addEventListener("input", event => {
+  state.journal.content = event.target.value;
+  setJournalStatus(journalIsDirty() ? "有未保存修改" : "内容未变化", journalIsDirty() ? "dirty" : "");
+  updateJournalEditor();
+});
+$("#journalSave").addEventListener("click", saveJournal);
+$("#journalTemplate").addEventListener("click", insertJournalTemplate);
+document.addEventListener("keydown", event => {
+  if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "s" && document.activeElement === $("#journalContent")) {
+    event.preventDefault();
+    void saveJournal();
+  }
+});
+window.addEventListener("beforeunload", event => {
+  if (!journalIsDirty()) return;
+  event.preventDefault();
+  event.returnValue = "";
+});
 
 document.addEventListener("visibilitychange", () => {
   if (document.hidden) {
@@ -503,4 +703,5 @@ sections.forEach(section => observer.observe(section));
 
 state.countdownTimer = window.setInterval(updateFreshnessText, 1000);
 updateTimeframeReadyStates();
+void loadJournalIndex();
 loadDashboard();

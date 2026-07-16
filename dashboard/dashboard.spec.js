@@ -1,5 +1,7 @@
 const { test, expect } = require("@playwright/test");
 
+test.setTimeout(120000);
+
 test("dashboard loads real data and primary interactions work", async ({ page }) => {
   const consoleErrors = [];
   page.on("console", message => {

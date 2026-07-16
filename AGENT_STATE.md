@@ -1,6 +1,6 @@
 # AGENT_STATE.md - Shared Project State
 
-Last Updated: 2026-07-16 13:22 CST
+Last Updated: 2026-07-16 13:48 CST
 
 ## Project Snapshot
 
@@ -31,14 +31,14 @@ Last Updated: 2026-07-16 13:22 CST
 
 ## Current Holdings Snapshot
 
-- Snapshot status: **trade-screenshot authoritative for the listed transactions, but not a broker holdings snapshot**. The user-provided screenshot shows the latest listed trade as 2026-07-13; exact current cash, position weights, and any trades after that screenshot still need confirmation.
-- Higher-priority source: user screenshot `codex-clipboard-a71c8a5e-b39a-4155-9b39-af2b32216233.png`. Based on the screenshot plus reconciled prior rows, the provisional post-07-13 book is 长电科技 400 shares, 生益科技 0, and 588060 科创50ETF 100份. This assumes no later trades after the screenshot.
-- Workbook conflict: `交易记录.xlsx` rows 195-198 record four 2026-07-15 长电买入 totaling 500 shares, but those trades do not appear in the screenshot that the user described as all recent trades. Treat rows 195-198 as unverified and do not use them for current holdings until the user confirms.
+- Snapshot status: **长电科技900股已由用户于2026-07-16本轮明确确认，并由 `交易记录.xlsx` rows 194–198 的连续剩余仓位链复核；该持仓口径不再存在400/900股冲突。** 精确现金与组合权重仍需券商持仓页才能确认。
+- Highest-priority source: user statement on 2026-07-16: “900股持仓，具体参考我这个excel表格”。Workbook corroboration: row 194 starts 400 shares on 2026-07-13; rows 195–198 add 200/100/100/100 shares on 2026-07-15, and the `剩余仓位` sequence is 400→600→700→800→900.
+- Reconciled cost: the five current-lot transaction amounts sum to 89,869 yuan for 900 shares, giving a fee-excluded weighted execution cost of 99.854444 yuan/share. The dashboard uses 99.854 yuan; broker-reported cost may differ slightly because fees/taxes are not included.
 
 | Code | Name | Shares | Last supporting row | Last recorded action | Confidence |
 | --- | --- | ---: | ---: | --- | --- |
 | 600183 | 生益科技 | 0（截图已清） | screenshot + new row needed | 2026-07-13 13:10:43 卖出 400 @136.140，成交额 54,456 | High for screenshot transaction; workbook not yet patched |
-| 600584 | 长电科技 | 400（截图口径，待确认后续） | screenshot + 194 | 2026-07-13 09:44:17 买入 400 @104.130；7月1日另买 200 @106.800、7月3日卖700后归零 | Medium |
+| 600584 | 长电科技 | 900（用户已确认） | 194–198 | 2026-07-15 14:54 买入100 @93.00后，剩余仓位900；当前批次加权成交成本99.854元（未计费用） | High for shares and trade cost |
 | 588060 | 科创50ETF | 100份（截图新增） | screenshot only | 2026-07-10 13:51:22 买入 100 @1.377 | Medium |
 | 603986 | 兆易创新 | 0（表内已清） | 193 | 2026-07-13 09:37 卖出 100 @577.40 | High |
 | 600176 | 中国巨石 | 0（表内已清） | 190 | 2026-07-07 09:52 卖出 300 @62.76 | High |
@@ -47,9 +47,9 @@ Last Updated: 2026-07-16 13:22 CST
 | 002384 | 东山精密 | 0（表内已清） | 171 | 2026-06-29 10:17 卖出 300 @244.53 | High |
 | 000636 | 风华高科 | 0（表内已清） | 173 | 2026-06-29 14:54 卖出 200 @80.04 | High |
 
-- Risk-unit note (screenshot provisional): after the 07-13 生益 sell, the confirmed recent book is less concentrated than the prior ledger implied, but 长电 remains a semiconductor/AI-hardware exposure. The 588060 ETF is a separate index exposure, not proof of diversification.
-- Execution/data flag: the screenshot confirms the 07-13 生益 exit and exposes four ledger issues: missing 生益 -400, missing 07-01 长电 +200, missing 07-10 588060 +100, and 中天科技 sell-time mismatch (14:30:42 screenshot vs 14:50:00 workbook). Rows 195-198 (07-15 长电 buys) are currently unverified rather than confirmed trades.
-- Current psychological/behavioral flag: the 07-15 diary connects trading-for-living pressure, fixed rent/job uncertainty, urgency to recover losses, family recognition, and compulsive quote-checking with FOMO and repeated rule violations. Until the user is calmer and holdings are confirmed, default to risk containment and a no-new-position/cooling-off bias rather than searching for the next trade.
+- Risk-unit note: 长电900股 is now the dominant confirmed single-stock exposure and remains a semiconductor/AI-hardware risk unit. The 588060 ETF is a separate index exposure, not proof of diversification. Dashboard portfolio P/L may now be shown, but portfolio weight still needs cash/net-asset data.
+- Execution/data flag: the previous screenshot-versus-workbook ambiguity for rows 195–198 is resolved in favor of the user’s current 900-share confirmation. Other ledger issues remain: missing 生益 -400, missing 07-01 长电 +200, missing 07-10 588060 +100, and 中天科技 sell-time mismatch (14:30:42 screenshot vs 14:50:00 workbook).
+- Current psychological/behavioral flag: the 07-15 diary connects trading-for-living pressure, fixed rent/job uncertainty, urgency to recover losses, family recognition, and compulsive quote-checking with FOMO and repeated rule violations. With the 900-share position now confirmed, default to risk containment and a no-new-position/cooling-off bias rather than searching for the next trade.
 
 ## Current Baselines
 
@@ -59,15 +59,16 @@ Last Updated: 2026-07-16 13:22 CST
 - Dashboard requirement (2026-07-16): add a “持仓同行擂台” that groups every confirmed holding with a manually approved direct-competitor cohort, then reports holding excess return versus the peer median, peer percentile/rank, group-vs-market strength, relative turnover intensity, and price-vs-intraday-average confirmation. Keep direct competitors separate from upstream/downstream theme names. ETFs use benchmark/index cohorts rather than company competitors. The first version can use single-symbol `rt_k` polling and does not require `rt_min`.
 - Dashboard US-market requirement/capability (2026-07-16): add an “隔夜美股映射” layer with broad indices, sector benchmarks, and manually mapped US peers for each A-share holding. The self-hosted Tushare endpoint exposes `us_basic` and `index_global`, but `us_daily` is permission-blocked and US indices were one session stale in testing. Local `yfinance 0.2.61` successfully returned the completed 2026-07-15 session for S&P 500, Nasdaq Composite, Philadelphia Semiconductor Index, SMH/SOXX, AMKR, and ASX; use it as the V1 overnight source with caching, source/date labels, and Tushare cross-checks. Never mix US prior-session returns directly into the same cross-sectional rank as current-session A-shares.
 - Dashboard V1 validation (2026-07-16 13:21): real API responses succeeded for 1D/5D/20D. The page showed two independent groups (长电科技 plus four candidate OSAT peers; 588060 plus three same-index ETF candidates), the US market date `2026-07-15`, and THS flow date `20260715`. `rt_k` amount/volume units were corrected to yuan/hands for VWAP, circulating-value intensity was corrected to yuan/thousand-yuan, and funds gracefully fall back to `fund_daily` with the actual market date. Automated Chromium checks passed the red permission gate, 5D switch, refresh, checklist persistence, console-error check, and 390px no-overflow check (`2 passed`).
-- Latest trusted result(s): the workbook contains 198 rows, but the latest user screenshot provides higher-priority transaction evidence through 2026-07-13 and has not yet been written back into the workbook. `交易生活执行手册.md` remains the default recovery protocol. On 2026-07-15, `investor-council` was upgraded from a standalone five-seat framework into the single orchestrator for all installed investment skills. Its dependency checker found all four upstream skills, passed installed/missing-path tests, and the upgraded skill passed Codex validation.
+- Dashboard auto-refresh diagnosis (2026-07-16 13:48): V1 does not yet auto-poll. `app.js` calls `loadDashboard()` only on initial load, the manual refresh button, and timeframe changes; there is no `setInterval`/scheduled refresh. The backend TTL cache is passive and does not push updates. Recommended future policy: visible tab polls A-share quotes every 30 seconds during market hours, pauses when hidden, keeps US/ETF/post-close flows on their slower source-specific schedules, and prevents overlapping requests.
+- Latest trusted result(s): the workbook contains 198 table rows. The user’s 2026-07-16 statement confirms the latest `剩余仓位=900` in row 198 as the current 长电 holding; current-lot cost is 99.854444 yuan before fees. `交易生活执行手册.md` remains the default recovery protocol. On 2026-07-15, `investor-council` was upgraded from a standalone five-seat framework into the single orchestrator for all installed investment skills.
 - 2026-07-15 长电科技总控会审（信息截至收盘）：研究结论为 `Watchlist`，执行结论为 `Execution blocked`。公司先进封装和利润修复有公告级证据，但其为资本密集、强周期 OSAT，2025 年经营现金流 46.52 亿元低于长期资产现金支出 62.98 亿元；2026Q1 同口径仍为负自由现金流。7 月 15 日收盘 92.46 元、跌 9.97%，按 2026H1 业绩预告推算的 TTM PE 仍约 81-89 倍，安全边际不足。恢复期内长电不得继续加仓。
-- 长电双情景风险基线：若按截图口径为 400 股、成本 104.13 元，则 92.46 元对应约 -11.2%，原 -8% 硬止损位 95.80 元已失守；若 rows 195-198 最终确认、持仓为 900 股、成本约 99.85 元，则约 -7.4%，-8% 硬止损位约 91.86 元。上述仅用于纪律审计，最终动作仍需当前券商持仓截图确认。
+- 长电单一风险基线：当前持仓900股，费前加权成交成本99.854444元，-8%规则线约91.866元。看板按实时 `rt_k` 动态显示浮动盈亏；2026-07-16 13:33取到84.14元时约为-15.7%/-14,143元，属于已失守规则线的纪律事实，不应再以摊低成本作为加仓理由。
 - Known caveats: 2026-06-03 `生益科技` remains as the pre-existing aggregated row because the screenshot only showed a partial lower row, not enough to safely split every trade.
 
 ## Open Items
 
-- Next memory task: continue consolidating July records after a broker holdings screenshot confirms the actual book and July drawdown magnitude.
-- Next high-priority work: reconcile the four screenshot-vs-workbook differences before any xlsx edit; obtain a current broker holdings screenshot and resolve the 400-share/900-share 长电 branch. Then review and lock the candidate A-share peer cohorts and US peer mappings in `dashboard/config.json`. No further 长电 buy is permitted in either branch.
+- Next memory task: continue consolidating July records after a broker holdings page supplies cash, total assets, position weights, and broker-reported cost.
+- Next high-priority work: reconcile the remaining screenshot-vs-workbook differences before any xlsx edit, then review and lock the candidate A-share peer cohorts and US peer mappings in `dashboard/config.json`. No further 长电 buy is permitted under the current recovery protocol.
 - Known risks: screenshot-cropped rows can hide time or amount; do not split aggregated historical rows unless every objective field is visible or otherwise provided.
 - Pending migration or cleanup: none.
 

@@ -296,6 +296,7 @@
 - 2026-07-15 用户明确偏好优先从 GitHub 选择维护度、用户量和结构更成熟的现成 skills，而非默认本地自建。随后指定安装 `muxuuu/serenity-skill`：该技能先映射产业链、寻找供应约束/稀缺层，再用一手证据给 A/H/美股公司排研究优先级，并要求列出反证和下一步验证。它只负责产业链研究排序，不能用来越过当前持仓核对、仓位约束、技术失效位和恢复期交易闸门。
 - 2026-07-15 按用户对 GitHub 现成 skill 的偏好，安装 `will2025btc/buffett-perspective` 与 `alchaincyf/munger-skill`，本地技能名分别为 `buffett-perspective` 和 `munger-perspective`。两者是思维视角/表达人格 skill，适合能力圈、护城河、市场先生、反向思考、激励机制和认知偏误审视；它们不等同于严格的实时个股研究。任何“大师语气”都必须视为基于公开资料的框架演绎，不得伪装成本人当前观点；实际交易仍需当期公告/数据、当前持仓和执行风控。
 - 2026-07-15 `investor-council` 升级为所有已安装投资 skills 的唯一总控入口：Serenity 先做产业链与稀缺层，Buffett Research 做公司质地/所有者收益/估值，Buffett Perspective 只补充所有者思维/耐心/能力圈，Munger Perspective 做反向/激励/偏误审计，内置马克斯/林奇/李录席位分别处理周期风险、故事到数字、长期可预测性与诚信。所有模块共享同一份证据包和统一口径，不得把其他模块的结论当成事实；最终保留分歧并按证据真实性、治理/偿债、能力圈、产业链价值捕获、公司质地、价格和执行风控的顺序否决，不做平均分或多数投票。若涉及当前持仓，必须分开输出“研究结论”与“执行结论”，研究通过也可因仓位、技术失效或恢复期规则而标记 `Execution blocked`。
+- 2026-07-16 结构化行情数据入口统一为仓库根目录 `tushare_client.py`。后续脚本必须通过 `from tushare_client import get_pro` 初始化，不再复制 Token 或 HTTP 地址；调用 `ts.pro_bar` 时必须显式传入 `api=pro`。Token 仅从环境变量 `TUSHARE_TOKEN` 或被 Git 忽略的 `tushare_token.txt` 读取。当天已实测 `index_basic(limit=5)` 与 `pro_bar(000001.SZ, limit=3)` 成功返回数据；若出现“Token 不对”，优先检查初始化是否经过该文件并正确设置自建接口地址。
 
 ## 时效性说明
 - 本文件主体整合范围已扩展至 2026-04-26，包含 `交易记录.xlsx` 与 `复盘/` 目录中的主要记录；2026-06-09 新增了记忆系统运行原则与协作要求升级；2026-06-14 新增 TradingView 工具链与 CLAUDE.md 重构 v2 记录。

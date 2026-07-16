@@ -1,6 +1,6 @@
 # AGENT_STATE.md - Shared Project State
 
-Last Updated: 2026-07-15
+Last Updated: 2026-07-16
 
 ## Project Snapshot
 
@@ -12,6 +12,7 @@ Last Updated: 2026-07-15
 
 - Canonical entrypoints: `AGENTS.md` for durable trading-partner policy, `AGENT_STATE.md` for current shared state, `memory.md` for distilled long-term memory.
 - Important modules: `对话备份/` stores raw conversation evidence, `复盘/` stores review notes, `交易记录.xlsx` stores objective trade records, and `交易生活执行手册.md` is the current daily execution and recovery protocol.
+- Canonical structured-market-data entrypoint: `tushare_client.py`. All project scripts must use `from tushare_client import get_pro`; `get_pro()` applies the configured self-hosted HTTP endpoint. Calls to `ts.pro_bar` must explicitly pass `api=pro`. The token lives in ignored local file `tushare_token.txt` or environment variable `TUSHARE_TOKEN`, never in committed source.
 - Global research skills are now coordinated through one entrypoint: `/Users/liuguan1/.codex/skills/investor-council`. It orchestrates `/Users/liuguan1/.codex/skills/serenity-skill`, `/Users/liuguan1/.codex/skills/buffett-investment-research`, `/Users/liuguan1/.codex/skills/buffett-perspective`, `/Users/liuguan1/.codex/skills/munger-perspective`, plus its internal Howard Marks, Peter Lynch, and Li Lu seats. It uses one canonical evidence packet, module handoff contracts, explicit dissent, and veto hierarchy rather than majority voting. Persona output is a framework-derived lens, not the named investor's current view, and cannot override holdings verification, primary evidence, technical invalidation, concentration limits, or the recovery protocol. Codex must be restarted before relying on automatic skill discovery.
 - Execution / runtime assumptions: assistants do not automatically hold every archived chat in context; they must load distilled memory first and retrieve raw archives by topic/date/stock when needed.
 
@@ -52,6 +53,7 @@ Last Updated: 2026-07-15
 ## Current Baselines
 
 - Main command(s): inspect/edit spreadsheet artifacts through the bundled spreadsheet runtime when modifying `.xlsx` files.
+- Tushare interface validation (2026-07-16): `python3 tushare_client.py` successfully returned `pro.index_basic(limit=5)` and `ts.pro_bar(api=pro, ts_code="000001.SZ", limit=3)` from the configured self-hosted endpoint. `tushare_token.txt` is ignored/untracked and has local mode `600`.
 - Latest trusted result(s): the workbook contains 198 rows, but the latest user screenshot provides higher-priority transaction evidence through 2026-07-13 and has not yet been written back into the workbook. `交易生活执行手册.md` remains the default recovery protocol. On 2026-07-15, `investor-council` was upgraded from a standalone five-seat framework into the single orchestrator for all installed investment skills. Its dependency checker found all four upstream skills, passed installed/missing-path tests, and the upgraded skill passed Codex validation.
 - 2026-07-15 长电科技总控会审（信息截至收盘）：研究结论为 `Watchlist`，执行结论为 `Execution blocked`。公司先进封装和利润修复有公告级证据，但其为资本密集、强周期 OSAT，2025 年经营现金流 46.52 亿元低于长期资产现金支出 62.98 亿元；2026Q1 同口径仍为负自由现金流。7 月 15 日收盘 92.46 元、跌 9.97%，按 2026H1 业绩预告推算的 TTM PE 仍约 81-89 倍，安全边际不足。恢复期内长电不得继续加仓。
 - 长电双情景风险基线：若按截图口径为 400 股、成本 104.13 元，则 92.46 元对应约 -11.2%，原 -8% 硬止损位 95.80 元已失守；若 rows 195-198 最终确认、持仓为 900 股、成本约 99.85 元，则约 -7.4%，-8% 硬止损位约 91.86 元。上述仅用于纪律审计，最终动作仍需当前券商持仓截图确认。

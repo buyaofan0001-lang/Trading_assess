@@ -19,6 +19,7 @@ test("dashboard loads real data and primary interactions work", async ({ page })
   await expect(jcetCard.locator(".overseas-row")).toHaveCount(2);
   await expect(jcetCard.locator(".overseas-divider")).toContainText("不参与A股排名");
   await expect(jcetCard.locator(".overseas-chip")).toHaveCount(2);
+  await expect(jcetCard.locator(".overseas-ai-evidence")).toHaveCount(2);
   await expect(jcetCard.locator(".peer-ai-note")).toContainText("AI自动认定");
   await expect(jcetCard.locator(".peer-ai-evidence")).toHaveCount(4);
   await expect(page.locator("#portfolioSyncStatus")).toContainText("Excel已同步");

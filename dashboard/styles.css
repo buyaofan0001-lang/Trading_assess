@@ -178,6 +178,7 @@ h3 { font-size: 14px; font-weight: 500; }
 .peer-table tr.overseas-row td { color: var(--muted); }
 .member-name { font-family: var(--sans); font-size: 12px; }
 .peer-ai-evidence { display: block; margin-top: 4px; color: var(--faint); font: 8px/1.45 var(--mono); white-space: normal; }
+.overseas-ai-evidence { display: block; margin-top: 4px; color: var(--faint); font: 8px/1.45 var(--mono); white-space: normal; }
 .holding-chip { margin-left: 8px; color: var(--amber); font: 8px var(--mono); letter-spacing: .08em; }
 .overseas-chip { margin-left: 8px; padding: 2px 5px; color: var(--cyan); border: 1px solid #355654; font: 8px var(--mono); letter-spacing: .08em; }
 .positive { color: var(--green) !important; }

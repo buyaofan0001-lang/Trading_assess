@@ -96,7 +96,7 @@ function overseasRows(group) {
   return `<tr class="overseas-divider">
     <td colspan="5"><span>隔夜海外同行</span><small>纽约市场日 ${escapeHtml(marketDate)} · 仅作跨市场参照，不参与A股排名</small></td>
   </tr>${mapping.peers.map(row => `<tr class="overseas-row">
-    <td><span class="member-name">${escapeHtml(row.name)}</span><span class="code"> ${escapeHtml(row.ticker)}</span><span class="overseas-chip">隔夜</span></td>
+    <td><span class="member-name">${escapeHtml(row.name)}</span><span class="code"> ${escapeHtml(row.ticker)}</span><span class="overseas-chip">AI隔夜</span>${row.ai_reason ? `<small class="overseas-ai-evidence">${escapeHtml(row.ai_reason)}</small>` : ""}</td>
     <td>${fmtNumber(row.close)}</td>
     <td class="${tone(row.return)}">${fmtPct(row.return)}</td>
     <td class="neutral">—</td>
@@ -248,7 +248,7 @@ function renderGroups(groups) {
         <tbody>${memberRow(group.holding, true)}${group.peers.map(row => memberRow(row, false)).join("")}${overseasRows(group)}</tbody>
       </table>
       <div class="peer-ai-note"><strong>${escapeHtml(group.cohort_status)}</strong><span>${escapeHtml(group.ai_peer_reason || "本地语义模型自动判定")}</span></div>
-      <div class="peer-card-foot"><span>${escapeHtml(group.matrix)}</span><span>${escapeHtml(group.ai_peer_engine || "local-semantic-ai-v3")}</span></div>
+      <div class="peer-card-foot"><span>${escapeHtml(group.matrix)}</span><span>${escapeHtml(group.ai_peer_engine || "local-semantic-ai-v4")}</span></div>
     </article>`;
   }).join("");
 }

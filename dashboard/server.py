@@ -25,6 +25,7 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from typing import Any, Callable
 from urllib.parse import parse_qs, urlparse
+from zoneinfo import ZoneInfo
 
 import pandas as pd
 import akshare as ak
@@ -61,6 +62,7 @@ REPORT_KINDS = {
     "close": {"label": "今日收盘复盘", "relative": Path("logs")},
 }
 REPORT_MAX_BYTES = 2_000_000
+SHANGHAI_TZ = ZoneInfo("Asia/Shanghai")
 
 
 class TTLCache:
@@ -296,7 +298,30 @@ def report_metadata(path: Path, date: str, kind: str) -> dict[str, Any]:
     }
 
 
-def list_daily_reports(root: Path | None = None) -> dict[str, Any]:
+def report_health(kind: str, latest: str | None, now: datetime | None = None) -> dict[str, Any]:
+    current = (now or datetime.now(SHANGHAI_TZ)).astimezone(SHANGHAI_TZ)
+    today = current.strftime("%Y-%m-%d")
+    weekday = current.weekday() < 5
+    due_minute = 8 * 60 + 45 if kind == "premarket" else 17 * 60
+    due = weekday and current.hour * 60 + current.minute >= due_minute
+    stale = due and latest != today
+    if stale:
+        shown = f"当前展示 {latest}" if latest else "当前没有可用报告"
+        message = f"{today} 报告尚未生成；{shown}。若今天是交易日，请检查每日任务。"
+    elif latest == today:
+        message = f"{today} 报告已生成"
+    else:
+        message = "尚未到今日报告的计划生成时间"
+    return {
+        "today": today,
+        "due": due,
+        "stale": stale,
+        "status": "missing" if stale else "current" if latest == today else "not_due",
+        "message": message,
+    }
+
+
+def list_daily_reports(root: Path | None = None, now: datetime | None = None) -> dict[str, Any]:
     report_root = root or REPORT_ROOT
     reports: dict[str, Any] = {}
     version_parts = []
@@ -311,6 +336,7 @@ def list_daily_reports(root: Path | None = None) -> dict[str, Any]:
             "latest": entries[0]["date"] if entries else None,
             "items": entries,
         }
+        reports[kind]["health"] = report_health(kind, reports[kind]["latest"], now)
     digest = hashlib.sha256("|".join(version_parts).encode("utf-8")).hexdigest()[:16]
     return {
         "root": str(report_root),

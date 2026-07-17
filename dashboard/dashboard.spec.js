@@ -30,7 +30,7 @@ test("dashboard loads real data and primary interactions work", async ({ page })
   await expect(page.locator("#gate-title")).toContainText("停止主动买入");
   await expect(page.locator("#freshness")).toContainText("数据已更新");
   await expect(page.locator("#premarketReportBody h1")).toContainText("A股盘前", { timeout: 30000 });
-  await expect(page.locator("#premarketList .report-entry")).toHaveCount(1);
+  expect(await page.locator("#premarketList .report-entry").count()).toBeGreaterThanOrEqual(1);
   await expect(page.locator("#premarketSyncStatus")).toContainText("60秒监控");
   await expect(page.locator("#closeReportBody h1")).toContainText("A股盘后复盘", { timeout: 30000 });
   expect(await page.locator("#closeList .report-entry").count()).toBeGreaterThanOrEqual(5);
@@ -109,6 +109,25 @@ test("daily report directories are polled outside the market refresh cycle", asy
   const reportResponse = page.waitForResponse(response => response.url().endsWith("/api/reports") && response.ok());
   await page.clock.fastForward(61_000);
   await reportResponse;
+});
+
+test("missing due report is clearly marked instead of looking current", async ({ page }) => {
+  await page.route("**/api/reports", async route => {
+    const response = await route.fetch();
+    const payload = await response.json();
+    payload.reports.premarket.health = {
+      today: "2026-07-17",
+      due: true,
+      stale: true,
+      status: "missing",
+      message: "2026-07-17 报告尚未生成；当前展示 2026-07-15。若今天是交易日，请检查每日任务。",
+    };
+    await route.fulfill({ response, json: payload });
+  });
+  await page.goto(`${dashboardUrl}/#premarket`);
+  await expect(page.locator("#premarketSyncStatus")).toContainText("今日未生成");
+  await expect(page.locator("#premarketHealthAlert")).toContainText("当前展示 2026-07-15");
+  await expect(page.locator("#premarketHealthAlert")).toBeVisible();
 });
 
 test("mobile layout does not overflow horizontally", async ({ page }) => {

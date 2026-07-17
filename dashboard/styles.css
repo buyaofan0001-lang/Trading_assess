@@ -207,7 +207,10 @@ h3 { font-size: 14px; font-weight: 500; }
 .report-section-head { align-items: center; }
 .report-live-status { display: inline-flex; align-items: center; gap: 9px; color: var(--amber); font: 9px/1.4 var(--mono); letter-spacing: .06em; }
 .report-live-status.close { color: var(--cyan); }
+.report-live-status.stale { color: var(--red); }
 .report-live-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 5px color-mix(in srgb, currentColor 10%, transparent); }
+.report-health-alert { margin: -8px 0 16px; padding: 11px 14px; border: 1px solid color-mix(in srgb, var(--red) 48%, var(--line)); background: color-mix(in srgb, var(--red) 8%, var(--surface)); color: var(--red); font: 10px/1.6 var(--mono); }
+.report-health-alert[hidden] { display: none; }
 .report-layout { display: grid; grid-template-columns: minmax(220px, .58fr) minmax(0, 2.5fr); gap: 16px; align-items: start; }
 .report-index, .report-document { min-width: 0; border: 1px solid var(--line); background: var(--surface); }
 .report-index { position: sticky; top: 16px; max-height: calc(100vh - 32px); overflow: hidden; }

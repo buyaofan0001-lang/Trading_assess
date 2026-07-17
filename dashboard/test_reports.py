@@ -1,6 +1,8 @@
 from pathlib import Path
 import tempfile
 import unittest
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 from server import get_daily_report, list_daily_reports
 
@@ -32,6 +34,18 @@ class DailyReportTests(unittest.TestCase):
             (folder / "2026-07-16.md").write_text("# 7月16日", encoding="utf-8")
             after = list_daily_reports(root)["library_version"]
             self.assertNotEqual(before, after)
+
+    def test_marks_due_weekday_report_as_missing_without_hiding_latest(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            folder = root / "logs" / "pre-market" / "2026"
+            folder.mkdir(parents=True)
+            (folder / "2026-07-15.md").write_text("# 7月15日", encoding="utf-8")
+            now = datetime(2026, 7, 17, 9, 0, tzinfo=ZoneInfo("Asia/Shanghai"))
+            report = list_daily_reports(root, now=now)["reports"]["premarket"]
+            self.assertEqual(report["latest"], "2026-07-15")
+            self.assertTrue(report["health"]["stale"])
+            self.assertIn("当前展示 2026-07-15", report["health"]["message"])
 
 
 if __name__ == "__main__":

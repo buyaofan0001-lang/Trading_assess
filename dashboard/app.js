@@ -35,8 +35,8 @@ const state = {
   reports: {
     version: null,
     loading: false,
-    premarket: { entries: [], latest: null, date: null, version: null, content: "", loading: false },
-    close: { entries: [], latest: null, date: null, version: null, content: "", loading: false },
+    premarket: { entries: [], latest: null, date: null, version: null, content: "", loading: false, health: null },
+    close: { entries: [], latest: null, date: null, version: null, content: "", loading: false, health: null },
   },
 };
 
@@ -569,6 +569,8 @@ function reportElements(kind) {
     meta: $(`#${prefix}ReportMeta`),
     body: $(`#${prefix}ReportBody`),
     status: $(`#${prefix}SyncStatus`),
+    statusWrap: $(`#${prefix}SyncStatus`)?.closest(".report-live-status"),
+    alert: $(`#${prefix}HealthAlert`),
   };
 }
 
@@ -582,7 +584,15 @@ function renderReportList(kind) {
   const report = state.reports[kind];
   const elements = reportElements(kind);
   elements.count.textContent = `${report.entries.length} 篇`;
-  elements.status.textContent = report.latest ? `最新 ${report.latest} · 60秒监控` : "等待每日任务";
+  const stale = Boolean(report.health?.stale);
+  elements.status.textContent = stale
+    ? `今日未生成 · 60秒监控`
+    : report.latest ? `最新 ${report.latest} · 60秒监控` : "等待每日任务";
+  elements.statusWrap?.classList.toggle("stale", stale);
+  if (elements.alert) {
+    elements.alert.hidden = !stale;
+    elements.alert.textContent = stale ? report.health.message : "";
+  }
   elements.list.innerHTML = report.entries.length
     ? report.entries.map(entry => `<button class="report-entry${entry.date === report.date ? " active" : ""}" type="button" data-report-kind="${kind}" data-report-date="${escapeHtml(entry.date)}">
         <span class="report-entry-date"><span>${escapeHtml(entry.date)}</span><small>${Number(entry.chars || 0).toLocaleString("zh-CN")} 字符</small></span>
@@ -647,6 +657,7 @@ async function loadReportIndex({ announce = false } = {}) {
       const previousLatest = report.latest;
       report.entries = incoming.items || [];
       report.latest = incoming.latest || null;
+      report.health = incoming.health || null;
       renderReportList(kind);
       if (!report.latest) continue;
       const latestEntry = report.entries.find(item => item.date === report.latest);

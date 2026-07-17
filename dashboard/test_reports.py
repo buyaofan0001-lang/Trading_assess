@@ -4,7 +4,9 @@ import unittest
 from datetime import datetime
 from zoneinfo import ZoneInfo
 
-from server import get_daily_report, list_daily_reports
+import pandas as pd
+
+from server import compute_volatility_metrics, get_daily_report, list_daily_reports
 
 
 class DailyReportTests(unittest.TestCase):
@@ -46,6 +48,26 @@ class DailyReportTests(unittest.TestCase):
             self.assertEqual(report["latest"], "2026-07-15")
             self.assertTrue(report["health"]["stale"])
             self.assertIn("当前展示 2026-07-15", report["health"]["message"])
+
+    def test_atr_boundary_uses_prior_sessions_and_flags_extreme_drop(self):
+        rows = [{
+            "trade_date": f"202607{day:02d}", "high": 101.0, "low": 99.0,
+            "pre_close": 100.0, "close": 100.0,
+        } for day in range(1, 17)]
+        rows.append({
+            "trade_date": "20260717", "high": 120.0, "low": 80.0,
+            "pre_close": 100.0, "close": 90.0,
+        })
+        live = {
+            "market_date": "20260717", "pre_close": 100.0, "price": 96.0,
+            "low": 95.0, "return": -0.04,
+        }
+        metrics = compute_volatility_metrics(pd.DataFrame(rows), live)
+        self.assertAlmostEqual(metrics["atr_value"], 2.0)
+        self.assertAlmostEqual(metrics["current_down_atr"], 2.0)
+        self.assertAlmostEqual(metrics["intraday_low_atr"], 2.5)
+        self.assertEqual(metrics["status_code"], "extreme")
+        self.assertEqual(metrics["history_end"], "20260716")
 
 
 if __name__ == "__main__":

@@ -409,6 +409,7 @@ def a_quote(ts_code: str) -> dict[str, Any]:
             "amount": amount,
             "vwap": vwap,
             "vs_vwap": (close / vwap - 1) if close is not None and vwap else None,
+            "market_date": str(row.get("trade_date") or datetime.now(SHANGHAI_TZ).strftime("%Y%m%d")),
             "source": "Tushare rt_k · 单代码轮询",
         }
 
@@ -463,6 +464,79 @@ def period_return(ts_code: str, days: int, live: dict[str, Any] | None) -> float
     return latest / baseline - 1 if baseline else None
 
 
+def compute_volatility_metrics(
+    daily: pd.DataFrame,
+    live: dict[str, Any] | None,
+    atr_days: int = 14,
+    vol_days: int = 20,
+) -> dict[str, Any]:
+    """Measure today's downside against a prior-session Wilder ATR boundary."""
+    if daily is None or daily.empty:
+        raise ValueError("缺少日线历史")
+    work = daily.sort_values("trade_date").copy()
+    evaluation_date = re.sub(r"\D", "", str((live or {}).get("market_date") or ""))[:8]
+    if evaluation_date and "trade_date" in work.columns and not work.empty:
+        last_date = re.sub(r"\D", "", str(work.iloc[-1].get("trade_date") or ""))[:8]
+        if last_date == evaluation_date:
+            work = work.iloc[:-1]
+
+    true_ranges: list[float] = []
+    returns: list[float] = []
+    for _, row in work.iterrows():
+        high = finite(row.get("high"))
+        low = finite(row.get("low"))
+        pre_close = finite(row.get("pre_close"))
+        close = finite(row.get("close"))
+        if high is not None and low is not None and pre_close:
+            true_ranges.append(max(high - low, abs(high - pre_close), abs(low - pre_close)))
+        if close is not None and pre_close:
+            returns.append(close / pre_close - 1)
+
+    if len(true_ranges) < atr_days:
+        raise ValueError(f"不足{atr_days}个完整交易日")
+    atr = statistics.mean(true_ranges[:atr_days])
+    for true_range in true_ranges[atr_days:]:
+        atr = (atr * (atr_days - 1) + true_range) / atr_days
+
+    pre_close = finite((live or {}).get("pre_close"))
+    if pre_close is None and not work.empty:
+        pre_close = finite(work.iloc[-1].get("close"))
+    price = finite((live or {}).get("price"))
+    current_return = finite((live or {}).get("return"))
+    if current_return is None and price is not None and pre_close:
+        current_return = price / pre_close - 1
+    low = finite((live or {}).get("low"))
+    atr_pct = atr / pre_close if pre_close else None
+    current_down_atr = max(0.0, pre_close - price) / atr if pre_close and price is not None and atr else None
+    intraday_low_atr = max(0.0, pre_close - low) / atr if pre_close and low is not None and atr else None
+
+    recent_returns = returns[-vol_days:]
+    realized_vol = statistics.stdev(recent_returns) * math.sqrt(252) if len(recent_returns) >= 10 else None
+    if current_return is None or current_down_atr is None:
+        status, status_code = "数据不足", "insufficient"
+    elif current_return >= 0:
+        status, status_code = "今日未下跌", "up"
+    elif current_down_atr <= 1.0:
+        status, status_code = "正常范围内", "normal"
+    elif current_down_atr <= 1.5:
+        status, status_code = "波动偏大", "elevated"
+    else:
+        status, status_code = "超出正常范围", "extreme"
+
+    return {
+        "atr_days": atr_days,
+        "atr_value": atr,
+        "atr_pct": atr_pct,
+        "realized_vol_days": vol_days,
+        "realized_vol_annualized": realized_vol,
+        "current_down_atr": current_down_atr,
+        "intraday_low_atr": intraday_low_atr,
+        "status": status,
+        "status_code": status_code,
+        "history_end": str(work.iloc[-1].get("trade_date") or "") if not work.empty else None,
+    }
+
+
 def turnover_intensity(ts_code: str, amount: float | None) -> float | None:
     """Current traded amount as a percentage of the latest circulating market value."""
     if amount is None or ts_code.startswith(("5", "1")):
@@ -505,6 +579,12 @@ def member_snapshot(item: dict[str, Any], timeframe: str, errors: list[str]) -> 
     except Exception as exc:
         errors.append(f"{ts_code} 换手强度：{exc}")
         intensity = None
+    volatility = None
+    if "shares" in item:
+        try:
+            volatility = compute_volatility_metrics(history(ts_code), live)
+        except Exception as exc:
+            errors.append(f"{ts_code} ATR/波动率：{exc}")
     return {
         "ts_code": ts_code,
         "name": item.get("name") or (live or {}).get("name") or ts_code,
@@ -513,6 +593,7 @@ def member_snapshot(item: dict[str, Any], timeframe: str, errors: list[str]) -> 
         "return": ret,
         "vs_vwap": finite((live or {}).get("vs_vwap")),
         "turnover_intensity": intensity,
+        "volatility": volatility,
         "source": (live or {}).get("source", "Tushare 日线"),
         "ai_score": item.get("ai_score"),
         "ai_reason": item.get("ai_reason"),
@@ -617,6 +698,7 @@ def build_groups(timeframe: str, errors: list[str], holdings: list[dict[str, Any
                     "return": None,
                     "vs_vwap": None,
                     "turnover_intensity": None,
+                    "volatility": None,
                     "source": "数据暂不可用",
                 }
 

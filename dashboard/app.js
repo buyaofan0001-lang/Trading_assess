@@ -232,6 +232,32 @@ function axisPct(value) {
   return `${pct > 0 ? "+" : ""}${pct.toFixed(Math.abs(pct) >= 10 ? 1 : 2)}%`;
 }
 
+function fmtAtrMultiple(value) {
+  if (value === null || value === undefined || Number.isNaN(Number(value))) return "—";
+  return `${Number(value).toFixed(2)} ATR`;
+}
+
+function renderVolatilityBoundary(group) {
+  const volatility = group.holding.volatility;
+  if (!volatility) {
+    return `<section class="volatility-boundary unavailable" aria-label="${escapeHtml(group.holding.name)}波动边界">
+      <div class="volatility-heading"><span>波动边界</span><b>数据不足</b></div>
+      <div class="volatility-note">ATR需要至少14个完整交易日；缺失时不使用估算值填充。</div>
+    </section>`;
+  }
+  const statusCode = escapeHtml(volatility.status_code || "insufficient");
+  return `<section class="volatility-boundary ${statusCode}" aria-label="${escapeHtml(group.holding.name)}波动边界">
+    <div class="volatility-heading"><span>波动边界</span><b>${escapeHtml(volatility.status || "数据不足")}</b></div>
+    <div class="volatility-metrics">
+      <div><span>ATR(14)</span><strong>${fmtNumber(volatility.atr_value)} / ${fmtPct(volatility.atr_pct)}</strong></div>
+      <div><span>当前跌幅</span><strong>${fmtAtrMultiple(volatility.current_down_atr)}</strong></div>
+      <div><span>盘中最大下探</span><strong>${fmtAtrMultiple(volatility.intraday_low_atr)}</strong></div>
+      <div><span>20日年化波动</span><strong>${fmtPct(volatility.realized_vol_annualized)}</strong></div>
+    </div>
+    <div class="volatility-note">以昨日收盘前的完整日线计算：≤1 ATR 为正常范围，1–1.5 ATR 为偏大，&gt;1.5 ATR 为超常。ATR只描述波动，不替代止损与事件判断。</div>
+  </section>`;
+}
+
 function renderIntradayChart(group) {
   const payload = state.intraday?.groups?.find(item => item.holding_ts_code === group.holding.ts_code);
   const fallbackCount = (payload?.series || []).filter(item => item.source?.startsWith("Yahoo")).length;
@@ -354,6 +380,7 @@ function renderGroups(groups) {
         <div class="metric"><span class="label">同行中位数</span><span class="value ${tone(group.peer_median)}">${fmtPct(group.peer_median)}</span></div>
         <div class="metric"><span class="label">组内排名</span><span class="value">${group.rank ?? "—"} / ${group.member_count || "—"}</span></div>
       </div>
+      ${renderVolatilityBoundary(group)}
       ${renderIntradayChart(group)}
       <table class="peer-table">
         <thead><tr><th>成员</th><th>价格/收盘</th><th>${state.timeframe.toUpperCase()}收益 / 隔夜</th><th>价格/均价</th><th>成交额/流通市值</th></tr></thead>

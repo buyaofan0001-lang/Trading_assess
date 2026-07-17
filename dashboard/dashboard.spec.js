@@ -21,6 +21,10 @@ test("dashboard loads real data and primary interactions work", async ({ page })
   await expect(jcetCard.locator(".overseas-chip")).toHaveCount(2);
   await expect(jcetCard.locator(".overseas-ai-evidence")).toHaveCount(2);
   await expect(jcetCard.locator(".peer-ai-note")).toContainText("AI自动认定");
+  await expect(page.locator(".volatility-boundary")).toHaveCount(2);
+  await expect(jcetCard.locator(".volatility-boundary")).toContainText("ATR(14)");
+  await expect(jcetCard.locator(".volatility-boundary")).toContainText("当前跌幅");
+  await expect(jcetCard.locator(".volatility-boundary")).toContainText("盘中最大下探");
   await expect(jcetCard.locator(".peer-ai-evidence")).toHaveCount(4);
   await expect(page.locator("#portfolioSyncStatus")).toContainText("Excel已同步");
   await expect(page.locator('a[href="#overnight"]')).toHaveCount(0);

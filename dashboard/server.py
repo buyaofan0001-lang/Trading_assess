@@ -302,7 +302,7 @@ def report_health(kind: str, latest: str | None, now: datetime | None = None) ->
     current = (now or datetime.now(SHANGHAI_TZ)).astimezone(SHANGHAI_TZ)
     today = current.strftime("%Y-%m-%d")
     weekday = current.weekday() < 5
-    due_minute = 8 * 60 + 45 if kind == "premarket" else 17 * 60
+    due_minute = 9 * 60 if kind == "premarket" else 17 * 60
     due = weekday and current.hour * 60 + current.minute >= due_minute
     stale = due and latest != today
     if stale:

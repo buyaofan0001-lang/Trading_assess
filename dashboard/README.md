@@ -21,6 +21,38 @@ python3 dashboard/server.py
 
 浏览器打开 <http://127.0.0.1:8765>。
 
+## macOS 后台自启动
+
+本机已经安装用户级 LaunchAgent：
+
+```text
+~/Library/LaunchAgents/com.liuguan.trading-assess.dashboard.plist
+```
+
+它在用户登录后自动运行，进程异常结束时自动重启。服务固定使用 `/opt/anaconda3/bin/python3`，工作目录为项目根目录，且只监听 `127.0.0.1:8765`；因此不会直接向局域网或互联网开放。
+
+常用维护命令：
+
+```bash
+# 查看状态
+launchctl print gui/$(id -u)/com.liuguan.trading-assess.dashboard
+
+# 重启
+launchctl kickstart -k gui/$(id -u)/com.liuguan.trading-assess.dashboard
+
+# 查看日志
+tail -f dashboard/runtime/dashboard.stdout.log
+tail -f dashboard/runtime/dashboard.stderr.log
+
+# 停止并卸载；执行后不会再自动拉起
+launchctl bootout gui/$(id -u)/com.liuguan.trading-assess.dashboard
+
+# 重新加载
+launchctl bootstrap gui/$(id -u) ~/Library/LaunchAgents/com.liuguan.trading-assess.dashboard.plist
+```
+
+电脑关机、注销用户或深度睡眠时，本地服务仍不可访问；唤醒并保持登录后由系统继续管理。若以后需要手机通过家庭局域网访问，必须另行修改监听地址并增加访问控制，不能直接把当前无鉴权服务暴露到公网。
+
 ## 数据口径
 
 - A股价格：项目统一入口 `tushare_client.py`，使用单代码 `rt_k` 轮询，缓存 25 秒。

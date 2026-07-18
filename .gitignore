@@ -8,6 +8,7 @@ tushare_token.txt
 dashboard/node_modules/
 dashboard/__pycache__/
 dashboard/.cache/
+dashboard/runtime/
 test-results/
 playwright-report/
 .tmp/

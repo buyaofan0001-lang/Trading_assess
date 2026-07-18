@@ -759,8 +759,16 @@ function renderRiskModel(payload) {
   const statusCode = payload.status?.code || "normal";
   const fresh = Boolean(payload.freshness?.pass);
   const shadow = payload.shadow || {};
+  const sync = payload.sync || {};
+  const syncRunning = Boolean(sync.running || ["checking", "refreshing_data", "running_model"].includes(sync.status));
+  const syncError = sync.status === "error";
   const staleSymbols = payload.freshness?.stale_symbols || [];
   const controllerAvailable = Boolean(payload.operational?.automatic_position_action_available);
+  const refreshButton = $("#riskModelRefreshButton");
+  if (refreshButton) {
+    refreshButton.disabled = syncRunning;
+    refreshButton.textContent = syncRunning ? "正在同步重跑…" : "立即同步并重跑";
+  }
   card.className = `risk-model-card ${statusCode}`;
   card.innerHTML = `<div class="risk-model-overview">
     <div class="risk-score-wrap">
@@ -779,6 +787,7 @@ function renderRiskModel(payload) {
         <span>research_only</span>
       </div>
       ${staleSymbols.length ? `<div class="risk-stale-symbols">滞后数据：${staleSymbols.map(escapeHtml).join("、")}</div>` : ""}
+      ${syncError ? `<div class="risk-sync-error">自动更新失败：${escapeHtml(sync.error || sync.message || "未知错误")}</div>` : ""}
     </div>
     <div class="risk-model-metrics">
       <div><span>校准路径风险率</span><strong>${fmtPlainPct(payload.scores?.calibrated_probability)}</strong><small>不是收益预测</small></div>
@@ -793,11 +802,30 @@ function renderRiskModel(payload) {
   </div>
   <div class="risk-model-foot">
     <span>${escapeHtml(payload.model?.scope || "科技板块风险观察")}</span>
-    <span>冻结指纹 ${escapeHtml((payload.model?.fingerprint || "").slice(0, 12))} · 结果文件60秒检查</span>
+    <span>冻结指纹 ${escapeHtml((payload.model?.fingerprint || "").slice(0, 12))} · 数据与模型每${Number(sync.interval_minutes || 30)}分钟自动同步</span>
   </div>`;
-  status.className = `risk-model-sync ${fresh ? "current" : "stale"}`;
-  status.innerHTML = `<span class="risk-model-live-dot"></span><span>${escapeHtml(payload.signal_date || "无信号日")} · 60秒检查</span>`;
+  status.className = `risk-model-sync ${syncError ? "error" : syncRunning ? "running" : fresh ? "current" : "stale"}`;
+  const syncLabel = syncRunning
+    ? (sync.status === "running_model" ? "冻结V8重跑中" : sync.status === "refreshing_data" ? "最新数据同步中" : "正在核对交易日")
+    : syncError ? "自动重跑失败" : `${escapeHtml(payload.signal_date || "无信号日")} · 自动同步`;
+  status.innerHTML = `<span class="risk-model-live-dot"></span><span>${syncLabel}</span>`;
   window.requestAnimationFrame(updateActiveNavigation);
+}
+
+async function forceRiskModelRefresh() {
+  const button = $("#riskModelRefreshButton");
+  if (button) button.disabled = true;
+  try {
+    const response = await fetch("/api/risk-model/refresh", { method: "POST", cache: "no-store" });
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.error || `HTTP ${response.status}`);
+    toast(payload.started ? "已开始同步最新数据并重跑冻结V8" : "模型同步任务已在运行");
+    await loadRiskModel();
+  } catch (error) {
+    console.error("风控模型手动重跑失败", error);
+    toast(`模型重跑启动失败：${error.message}`);
+    if (button) button.disabled = false;
+  }
 }
 
 async function loadRiskModel({ announce = false } = {}) {
@@ -1057,6 +1085,7 @@ $("#refreshButton").addEventListener("click", () => {
   void loadReportIndex();
   void loadRiskModel();
 });
+$("#riskModelRefreshButton").addEventListener("click", () => void forceRiskModelRefresh());
 $$('[data-timeframe]').forEach(button => button.addEventListener("click", () => switchTimeframe(button.dataset.timeframe)));
 $("#journalToday").addEventListener("click", () => loadJournal(shanghaiDate()));
 $("#journalDate").addEventListener("change", event => loadJournal(event.target.value));

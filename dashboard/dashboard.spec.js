@@ -36,7 +36,8 @@ test("dashboard loads real data and primary interactions work", async ({ page })
   await expect(page.locator("#riskModelCard")).toContainText("校准路径风险率");
   await expect(page.locator("#riskModelCard")).toContainText("自动仓位动作不可用");
   await expect(page.locator("#riskModelCard")).toContainText("research_only");
-  await expect(page.locator("#riskModelSyncStatus")).toContainText("60秒检查");
+  await expect(page.locator("#riskModelSyncStatus")).toContainText("自动同步");
+  await expect(page.getByRole("button", { name: "立即同步并重跑" })).toBeEnabled();
   expect(await page.locator(".risk-factor-row").count()).toBeGreaterThanOrEqual(2);
   await expect(page.locator('a[href="#overnight"]')).toHaveCount(0);
   await expect(page.locator("#overnight")).toHaveCount(0);
@@ -133,6 +134,19 @@ test("risk model result is polled independently", async ({ page }) => {
   const riskResponse = page.waitForResponse(response => response.url().endsWith("/api/risk-model") && response.ok());
   await page.clock.fastForward(61_000);
   await riskResponse;
+});
+
+test("risk model can request a non-blocking manual refresh", async ({ page }) => {
+  await page.route("**/api/risk-model/refresh", async route => {
+    await route.fulfill({
+      status: 202,
+      contentType: "application/json",
+      body: JSON.stringify({ started: true, status: "checking", running: true }),
+    });
+  });
+  await page.goto(`${dashboardUrl}/#risk-model`);
+  await page.getByRole("button", { name: "立即同步并重跑" }).click();
+  await expect(page.locator("#toast")).toContainText("已开始同步最新数据并重跑冻结V8");
 });
 
 test("missing due report is clearly marked instead of looking current", async ({ page }) => {

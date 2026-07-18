@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
   <title>守门台 · 交易控制看板</title>
-  <link rel="stylesheet" href="styles.css?v=1.10.0">
+    <link rel="stylesheet" href="styles.css?v=1.11.0">
 </head>
 <body>
   <!--
@@ -100,7 +100,10 @@
             <h2 id="risk-model-title">科技板块风控雷达</h2>
             <p>预测未来1–2个交易日的科技板块下跌起点；只作风险观察，不生成个股买卖指令。</p>
           </div>
-          <div id="riskModelSyncStatus" class="risk-model-sync"><span class="risk-model-live-dot"></span><span>正在读取正式模型输出</span></div>
+          <div class="risk-model-controls">
+            <div id="riskModelSyncStatus" class="risk-model-sync"><span class="risk-model-live-dot"></span><span>正在读取正式模型输出</span></div>
+            <button id="riskModelRefreshButton" type="button" class="text-button">立即同步并重跑</button>
+          </div>
         </div>
         <div id="riskModelCard" class="risk-model-card loading" aria-live="polite">
           <div class="risk-model-loading">
@@ -250,13 +253,13 @@
       </section>
 
       <footer>
-        <span>守门台 V1.10 · Excel持仓同步 · 科技风控雷达</span>
+      <span>守门台 V1.11 · Excel持仓同步 · 科技风控自动重跑</span>
         <span id="truthNote">等待数据口径说明</span>
       </footer>
     </main>
   </div>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="app.js?v=1.10.0"></script>
+  <script src="app.js?v=1.11.0"></script>
 </body>
 </html>

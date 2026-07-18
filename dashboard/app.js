@@ -65,7 +65,7 @@ function fmtNumber(value, digits = 2) {
 function fmtContribution(value) {
   if (value === null || value === undefined || Number.isNaN(Number(value))) return "—";
   const points = Number(value) * 100;
-  return `${points > 0 ? "+" : ""}${points.toFixed(2)} pct`;
+  return `${points > 0 ? "+" : ""}${points.toFixed(2)} 个百分点`;
 }
 
 function tone(value) {

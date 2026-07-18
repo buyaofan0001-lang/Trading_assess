@@ -15,6 +15,7 @@ import math
 import os
 import re
 import statistics
+import subprocess
 import sys
 import tempfile
 import threading
@@ -64,6 +65,11 @@ REPORT_KINDS = {
 REPORT_MAX_BYTES = 2_000_000
 RISK_MODEL_ROOT = Path(CONFIG["risk_model_root"]).expanduser().resolve()
 RISK_MODEL_MAX_BYTES = 2_000_000
+RISK_MODEL_SYNC_ENABLED = bool(CONFIG.get("risk_model_auto_sync", True))
+RISK_MODEL_SYNC_INTERVAL_SECONDS = max(300, int(CONFIG.get("risk_model_sync_interval_minutes", 30)) * 60)
+RISK_MODEL_SYNC_AFTER_CLOSE = str(CONFIG.get("risk_model_sync_after_close", "17:45"))
+RISK_MODEL_SYNC_STATE = HERE / "runtime" / "risk_model_sync_state.json"
+RISK_MODEL_SYNC_LOG = HERE / "runtime" / "risk_model_sync.log"
 SHANGHAI_TZ = ZoneInfo("Asia/Shanghai")
 
 RISK_FEATURE_LABELS = {
@@ -554,6 +560,186 @@ def read_risk_model(root: Path | None = None) -> dict[str, Any]:
             "down": [item for item in down if item is not None][:5],
         },
     }
+
+
+class RiskModelSync:
+    """Refresh the frozen model inputs and rerun it without blocking HTTP reads."""
+
+    def __init__(self, root: Path = RISK_MODEL_ROOT) -> None:
+        self.root = root
+        self._lock = threading.Lock()
+        self._worker: threading.Thread | None = None
+        self._scheduler: threading.Thread | None = None
+        self._stop = threading.Event()
+        self._state = self._load_state()
+
+    def _load_state(self) -> dict[str, Any]:
+        try:
+            payload = json.loads(RISK_MODEL_SYNC_STATE.read_text(encoding="utf-8"))
+            return payload if isinstance(payload, dict) else {}
+        except (FileNotFoundError, json.JSONDecodeError, OSError):
+            return {}
+
+    def _save_state(self, **updates: Any) -> None:
+        with self._lock:
+            self._state.update(updates)
+            payload = dict(self._state)
+        RISK_MODEL_SYNC_STATE.parent.mkdir(parents=True, exist_ok=True)
+        with tempfile.NamedTemporaryFile(
+            "w", encoding="utf-8", dir=RISK_MODEL_SYNC_STATE.parent,
+            prefix=".risk-sync-", delete=False,
+        ) as handle:
+            json.dump(payload, handle, ensure_ascii=False, indent=2)
+            temp_path = Path(handle.name)
+        os.replace(temp_path, RISK_MODEL_SYNC_STATE)
+
+    def _append_log(self, text: str) -> None:
+        RISK_MODEL_SYNC_LOG.parent.mkdir(parents=True, exist_ok=True)
+        with RISK_MODEL_SYNC_LOG.open("a", encoding="utf-8") as handle:
+            handle.write(text.rstrip() + "\n")
+
+    def latest_completed_trade_date(self, now: datetime | None = None) -> str:
+        current = (now or datetime.now(SHANGHAI_TZ)).astimezone(SHANGHAI_TZ)
+        try:
+            hour, minute = [int(item) for item in RISK_MODEL_SYNC_AFTER_CLOSE.split(":", 1)]
+        except (TypeError, ValueError):
+            hour, minute = 17, 45
+        cutoff = current.date()
+        if current.weekday() < 5 and (current.hour, current.minute) < (hour, minute):
+            cutoff -= timedelta(days=1)
+        start = cutoff - timedelta(days=20)
+        pro = get_pro()
+        calendar = tushare_call(
+            pro.trade_cal,
+            exchange="SSE",
+            start_date=start.strftime("%Y%m%d"),
+            end_date=cutoff.strftime("%Y%m%d"),
+            is_open="1",
+        )
+        if calendar is None or calendar.empty or "cal_date" not in calendar:
+            raise RuntimeError("无法取得A股交易日历")
+        dates = calendar["cal_date"].astype(str).str.replace("-", "", regex=False)
+        return str(dates.max())
+
+    def status(self) -> dict[str, Any]:
+        with self._lock:
+            payload = dict(self._state)
+            running = bool(self._worker and self._worker.is_alive())
+        payload.setdefault("status", "idle")
+        payload.setdefault("message", "等待自动同步")
+        payload["enabled"] = RISK_MODEL_SYNC_ENABLED
+        payload["running"] = running
+        payload["interval_minutes"] = RISK_MODEL_SYNC_INTERVAL_SECONDS // 60
+        payload["log_path"] = str(RISK_MODEL_SYNC_LOG)
+        return payload
+
+    def start(self, *, force: bool = False, reason: str = "scheduled") -> bool:
+        if not RISK_MODEL_SYNC_ENABLED and not force:
+            return False
+        with self._lock:
+            if self._worker and self._worker.is_alive():
+                return False
+            self._worker = threading.Thread(
+                target=self._run,
+                kwargs={"force": force, "reason": reason},
+                name="risk-model-sync",
+                daemon=True,
+            )
+            worker = self._worker
+        worker.start()
+        return True
+
+    def _command(self, args: list[str], label: str) -> None:
+        self._save_state(status=label, message="正在更新模型，请勿把旧信号当成最新结果")
+        command = [sys.executable, *args]
+        started = iso_now()
+        completed = subprocess.run(
+            command,
+            cwd=self.root,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            text=True,
+            timeout=3600,
+            check=False,
+        )
+        self._append_log(
+            f"[{started}] $ {' '.join(command)}\n{completed.stdout}\nexit={completed.returncode}"
+        )
+        if completed.returncode:
+            tail = completed.stdout.strip().splitlines()[-8:]
+            raise RuntimeError(f"{label}失败（exit {completed.returncode}）：{' | '.join(tail)}")
+
+    def _run(self, *, force: bool, reason: str) -> None:
+        attempted_at = iso_now()
+        try:
+            target = self.latest_completed_trade_date()
+            current = read_risk_model(self.root)
+            signal_date = str(current.get("signal_date") or "").replace("-", "")
+            self._save_state(
+                status="checking",
+                message="正在核对最新已收盘交易日",
+                reason=reason,
+                target_date=f"{target[:4]}-{target[4:6]}-{target[6:]}",
+                last_attempt_at=attempted_at,
+                error=None,
+            )
+            if not force and signal_date and signal_date >= target:
+                self._save_state(
+                    status="current",
+                    message="模型已覆盖最新已收盘交易日",
+                    last_checked_at=iso_now(),
+                )
+                return
+            self._command(["refresh_data.py", "--end-date", target], "refreshing_data")
+            self._command(
+                ["run_model.py", "--end-date", target, "--output-dir", "results"],
+                "running_model",
+            )
+            updated = read_risk_model(self.root)
+            updated_date = str(updated.get("signal_date") or "").replace("-", "")
+            if not updated.get("available") or updated_date < target:
+                raise RuntimeError(
+                    f"重跑完成但正式信号仍为 {updated.get('signal_date') or '未知'}，目标为 {target}"
+                )
+            self._save_state(
+                status="success",
+                message="最新数据已同步，冻结V8已重跑",
+                last_success_at=iso_now(),
+                last_success_signal_date=updated.get("signal_date"),
+                error=None,
+            )
+        except Exception as exc:
+            self._append_log(f"[{iso_now()}] ERROR {type(exc).__name__}: {exc}")
+            self._save_state(
+                status="error",
+                message="自动同步或模型重跑失败；面板保留旧结果并明确报错",
+                error=str(exc),
+                last_failed_at=iso_now(),
+            )
+
+    def start_scheduler(self) -> None:
+        if not RISK_MODEL_SYNC_ENABLED:
+            return
+        with self._lock:
+            if self._scheduler and self._scheduler.is_alive():
+                return
+            self._scheduler = threading.Thread(
+                target=self._scheduler_loop,
+                name="risk-model-scheduler",
+                daemon=True,
+            )
+            scheduler = self._scheduler
+        scheduler.start()
+
+    def _scheduler_loop(self) -> None:
+        if self._stop.wait(8):
+            return
+        while not self._stop.is_set():
+            self.start(reason="scheduled")
+            self._stop.wait(RISK_MODEL_SYNC_INTERVAL_SECONDS)
+
+
+RISK_MODEL_SYNC = RiskModelSync()
 
 
 def a_quote(ts_code: str) -> dict[str, Any]:

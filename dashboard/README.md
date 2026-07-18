@@ -1,11 +1,13 @@
-# 守门台 V1.10
+# 守门台 V1.11
 
 个人交易控制看板。它自动把 `交易记录.xlsx → 当前持仓 → AI同行库 → 同行擂台` 串起来，再展示交易权限、科技板块风控雷达、盘后资金流、昨夜盘前报告、今日收盘复盘与每日交易日记。海外同行保留在对应持仓篮子内，不再单设隔夜美股页面。
 
 ## 科技板块风控雷达
 
-- 看板只读接入 `/Users/liuguan1/Documents/github/backtest/backtest_project/deliverables/tech_sector_risk_model_v8_20260718`，正式接口为 `/api/risk-model`。它优先读取模型包生成的 `results/current_warning_brief.json`，并补充 `results/forward_shadow_summary.csv` 与冻结清单中的部署状态、模型指纹和前瞻样本进度；看板不复制参数、不重新实现模型，也不改写冻结输出。
-- 页面可见时每60秒检查一次正式结果文件；模型项目生成新结果后，看板会自动更新。这个轮询只负责读取结果，不会替代模型包自己的数据刷新和计算流程。需要更新信号时，仍应在模型目录按说明运行 `refresh_data.py` 与 `run_model.py --output-dir results`。
+- 看板接入 `/Users/liuguan1/Documents/github/backtest/backtest_project/deliverables/tech_sector_risk_model_v8_20260718`，正式读取接口为 `/api/risk-model`。它读取模型包生成的 `results/current_warning_brief.json`，并补充 `results/forward_shadow_summary.csv` 与冻结清单中的部署状态、模型指纹和前瞻样本进度；看板不复制参数、不重新实现模型，也不改变冻结特征、权重、阈值或模型指纹。
+- 后台每30分钟核对一次上交所最近已收盘交易日。工作日17:45前只要求上一交易日，17:45后要求当日；周末和节假日按交易日历回退。若正式信号落后，后台依次执行 `refresh_data.py --end-date YYYYMMDD` 和 `run_model.py --end-date YYYYMMDD --output-dir results`。运行在独立线程，不阻塞看板行情与旧结果读取。
+- 页面每60秒读取一次结果与同步状态；重跑完成后自动切换新信号。右上角“立即同步并重跑”调用 `POST /api/risk-model/refresh`，可手动强制完整流程。同步状态写入 `dashboard/runtime/risk_model_sync_state.json`，完整命令输出写入 `dashboard/runtime/risk_model_sync.log`；失败时保留上一版正式结果并在前端明确报错。
+- 增量更新器已修复 coverage 空尾问题：sidecar 只用于避免重复探测序列上市前的历史头部，最新尾部是否覆盖严格以CSV真实行日期为准。数据源曾在收盘数据尚未发布时返回空表，也不会再永久跳过该交易日。
 - 模型回答的是“科技板块未来1–2日是否进入风险起点”，事件标签观察随后5日是否出现至少3%的最大回撤；它不是长电科技或其他单只股票的涨跌预测。
 - 前端固定展示原始风险分数、冻结阈值、校准路径风险率、数据时效、推高/压低风险因子、前瞻影子样本进度和冻结指纹。`stale` 会明确标为“数据过期 · 只作诊断”，不会被悄悄当成有效预警。
 - 当前包的部署状态是 `research_only`，且自动仓位控制器未通过。因此看板只提供研究预警，不会生成自动减仓、卖出或买入动作；低分也不能解释为安全或买入信号。正式升级必须先满足模型包规定的前瞻影子样本门槛。

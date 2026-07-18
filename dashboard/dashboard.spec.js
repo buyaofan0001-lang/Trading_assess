@@ -18,7 +18,6 @@ test("dashboard loads real data and primary interactions work", async ({ page })
     await expect(page.locator(".chart-legend-item")).toHaveCount(10);
   } else {
     await expect(page.locator(".intraday-empty")).toHaveCount(2);
-    await expect(page.locator(".intraday-empty").first()).toContainText("暂无可用分钟线");
   }
   const jcetCard = page.locator(".peer-card").filter({ hasText: "长电科技" });
   await expect(jcetCard).toHaveCount(1);

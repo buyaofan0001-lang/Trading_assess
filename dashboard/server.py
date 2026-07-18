@@ -62,7 +62,47 @@ REPORT_KINDS = {
     "close": {"label": "今日收盘复盘", "relative": Path("logs")},
 }
 REPORT_MAX_BYTES = 2_000_000
+RISK_MODEL_ROOT = Path(CONFIG["risk_model_root"]).expanduser().resolve()
+RISK_MODEL_MAX_BYTES = 2_000_000
 SHANGHAI_TZ = ZoneInfo("Asia/Shanghai")
+
+RISK_FEATURE_LABELS = {
+    "tech_vol60": "科技60日波动率",
+    "tech_vol20": "科技20日波动率",
+    "tech_vol5": "科技5日波动率",
+    "tech_downside_vol20": "科技20日下行波动率",
+    "tech_ret1": "科技1日涨跌",
+    "tech_ret2": "科技2日涨跌",
+    "tech_ret5": "科技5日涨跌",
+    "tech_ret10": "科技10日涨跌",
+    "tech_ret20": "科技20日涨跌",
+    "tech_breadth_ret20_positive": "科技成分20日上涨广度",
+    "medicine_relative_tech_5": "医药相对科技5日强弱",
+    "medicine_relative_tech_20": "医药相对科技20日强弱",
+    "old_style_relative_tech_5": "防御风格相对科技5日强弱",
+    "old_style_relative_tech_20": "防御风格相对科技20日强弱",
+    "old_style_relative_tech_60": "防御风格相对科技60日强弱",
+    "finance_relative_tech_5": "金融相对科技5日强弱",
+    "finance_relative_tech_20": "金融相对科技20日强弱",
+    "csi300_vol20": "沪深300的20日波动率",
+    "csi300_ret5": "沪深300的5日涨跌",
+    "csi300_ret20": "沪深300的20日涨跌",
+    "chinext_ret5": "创业板5日涨跌",
+    "chinext_ret20": "创业板20日涨跌",
+    "qqq_ret1": "隔夜QQQ单日涨跌",
+    "qqq_ret3": "隔夜QQQ三日涨跌",
+    "qqq_ret5": "隔夜QQQ五日涨跌",
+    "us_semis_ret1": "海外半导体单日涨跌",
+    "us_semis_ret3": "海外半导体三日涨跌",
+    "us_semis_ret5": "海外半导体五日涨跌",
+    "vix_z60": "VIX相对60日异常度",
+    "vvix_z60": "VVIX相对60日异常度",
+    "vix_term_9d_3m": "VIX九日/三月期限结构",
+    "usdcnh_ret5": "离岸人民币五日变化",
+    "dxy_ret5": "美元指数五日变化",
+    "yield_curve_10y2y": "美债10年/2年期限利差",
+    "y2_chg5": "美国2年期收益率五日变化",
+}
 
 
 class TTLCache:
@@ -355,6 +395,165 @@ def get_daily_report(kind: str, date: str, root: Path | None = None) -> dict[str
     payload = report_metadata(path, date, kind)
     payload.update({"content": path.read_text(encoding="utf-8"), "exists": True})
     return payload
+
+
+def risk_feature_label(feature: str) -> str:
+    if feature in RISK_FEATURE_LABELS:
+        return RISK_FEATURE_LABELS[feature]
+    patterns = (
+        (r"^tech_ret(\d+)$", "科技{}日涨跌"),
+        (r"^tech_vol(\d+)$", "科技{}日波动率"),
+        (r"^tech_dd(\d+)$", "科技{}日回撤"),
+        (r"^tech_above_ma(\d+)$", "科技位于{}日均线上方"),
+        (r"^tech_breadth_ret(\d+)_positive$", "科技成分{}日上涨广度"),
+        (r"^medicine_relative_tech_(\d+)$", "医药相对科技{}日强弱"),
+        (r"^finance_relative_tech_(\d+)$", "金融相对科技{}日强弱"),
+        (r"^old_style_relative_tech_(\d+)$", "防御风格相对科技{}日强弱"),
+        (r"^csi300_ret(\d+)$", "沪深300的{}日涨跌"),
+        (r"^chinext_ret(\d+)$", "创业板{}日涨跌"),
+        (r"^qqq_ret(\d+)$", "隔夜QQQ的{}日涨跌"),
+        (r"^us_semis_ret(\d+)$", "海外半导体{}日涨跌"),
+    )
+    for pattern, template in patterns:
+        match = re.fullmatch(pattern, feature)
+        if match:
+            return template.format(match.group(1))
+    return feature
+
+
+def _read_risk_json(path: Path) -> dict[str, Any]:
+    if not path.exists() or path.is_symlink() or not path.is_file():
+        raise FileNotFoundError(f"缺少模型输出：{path.name}")
+    if path.stat().st_size > RISK_MODEL_MAX_BYTES:
+        raise ValueError(f"模型输出过大：{path.name}")
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise ValueError(f"模型输出格式无效：{path.name}")
+    return payload
+
+
+def _risk_factor(item: Any) -> dict[str, Any] | None:
+    if not isinstance(item, dict) or not item.get("feature"):
+        return None
+    feature = str(item["feature"])
+    return {
+        "feature": feature,
+        "label": risk_feature_label(feature),
+        "value": finite(item.get("value")),
+        "percentile": finite(item.get("training_percentile")),
+        "contribution": finite(item.get("score_contribution")),
+    }
+
+
+def _risk_status(brief: dict[str, Any]) -> tuple[str, str]:
+    if not bool(brief.get("data_freshness_pass")):
+        return "数据过期 · 只作诊断", "stale"
+    tier = str(brief.get("raw_warning_tier") or "normal")
+    if bool(brief.get("operational_new_warning")):
+        return ("高风险新预警", "high") if tier == "high" else ("新风险预警", "warning")
+    if "already_weak" in str(brief.get("display_state") or brief.get("controller_state") or ""):
+        return "已处弱势 · 诊断", "diagnostic"
+    if tier == "watch":
+        return "风险观察", "watch"
+    return "未触发新预警", "normal"
+
+
+def read_risk_model(root: Path | None = None) -> dict[str, Any]:
+    """Read the frozen model's official compact outputs without rerunning it."""
+    model_root = (root or RISK_MODEL_ROOT).expanduser().resolve()
+    results = model_root / "results"
+    brief_path = results / "current_warning_brief.json"
+    shadow_path = results / "forward_shadow_summary.csv"
+    manifest_path = model_root / "config" / "frozen_model_manifest.json"
+    try:
+        brief = _read_risk_json(brief_path)
+        manifest = _read_risk_json(manifest_path)
+    except (FileNotFoundError, ValueError, json.JSONDecodeError) as exc:
+        return {
+            "available": False,
+            "generated_at": iso_now(),
+            "root": str(model_root),
+            "error": str(exc),
+        }
+
+    shadow: dict[str, Any] = {}
+    if shadow_path.exists() and shadow_path.is_file() and not shadow_path.is_symlink():
+        try:
+            frame = pd.read_csv(shadow_path)
+            if not frame.empty:
+                row = frame.iloc[0]
+                shadow = {
+                    "status": str(row.get("status") or brief.get("shadow_validation_status") or "collecting"),
+                    "matured_rows": int(finite(row.get("matured_eligible_rows")) or 0),
+                    "required_rows": int(finite(row.get("minimum_rows_required")) or 252),
+                    "positive_events": int(finite(row.get("positive_events")) or 0),
+                    "required_positive_events": int(finite(row.get("minimum_positive_events_required")) or 25),
+                    "promotion_pass": bool(row.get("promotion_pass")) if not pd.isna(row.get("promotion_pass")) else False,
+                }
+        except Exception:
+            shadow = {}
+    if not shadow:
+        shadow = {
+            "status": str(brief.get("shadow_validation_status") or "collecting"),
+            "matured_rows": 0,
+            "required_rows": 252,
+            "positive_events": 0,
+            "required_positive_events": 25,
+            "promotion_pass": False,
+        }
+
+    specification = manifest.get("model_specification") or {}
+    thresholds = specification.get("signal") or {}
+    status_label, status_code = _risk_status(brief)
+    files = [brief_path, shadow_path, manifest_path]
+    version_input = []
+    modified_times = []
+    for path in files:
+        if path.exists() and path.is_file():
+            stat = path.stat()
+            version_input.append(f"{path.name}:{stat.st_mtime_ns}:{stat.st_size}")
+            modified_times.append(stat.st_mtime)
+    version = hashlib.sha256("|".join(version_input).encode("utf-8")).hexdigest()[:16]
+    up = [_risk_factor(item) for item in brief.get("top_risk_up_factors", [])]
+    down = [_risk_factor(item) for item in brief.get("top_risk_down_factors", [])]
+    return {
+        "available": True,
+        "generated_at": iso_now(),
+        "version": version,
+        "root": str(model_root),
+        "result_modified_at": datetime.fromtimestamp(max(modified_times)).astimezone().isoformat(timespec="seconds") if modified_times else None,
+        "signal_date": brief.get("signal_date"),
+        "status": {"label": status_label, "code": status_code},
+        "scores": {
+            "raw": finite(brief.get("raw_warning_score")),
+            "calibrated_probability": finite(brief.get("calibrated_selloff_probability")),
+            "tier": str(brief.get("raw_warning_tier") or "normal"),
+            "warning_threshold": finite(thresholds.get("warning_threshold")) or 0.55,
+            "high_threshold": finite(thresholds.get("high_warning_threshold")) or 0.70,
+        },
+        "operational": {
+            "new_warning": bool(brief.get("operational_new_warning")),
+            "warning_eligible": bool(brief.get("warning_eligible")),
+            "automatic_position_action_available": bool(brief.get("automatic_position_action_available")),
+            "message": str(brief.get("message") or "模型未提供说明。"),
+        },
+        "freshness": {
+            "status": str(brief.get("data_freshness_status") or "unknown"),
+            "pass": bool(brief.get("data_freshness_pass")),
+            "stale_symbols": [str(item) for item in brief.get("stale_data_symbols", [])],
+        },
+        "model": {
+            "version": str(brief.get("model_version") or manifest.get("model_version") or "unknown"),
+            "fingerprint": str(brief.get("model_specification_sha256") or manifest.get("model_specification_sha256") or ""),
+            "deployment_status": "research_only",
+            "scope": "科技板块未来1–2日风险起点；不是个股预测，也不是自动买卖指令。",
+        },
+        "shadow": shadow,
+        "factors": {
+            "up": [item for item in up if item is not None][:5],
+            "down": [item for item in down if item is not None][:5],
+        },
+    }
 
 
 def a_quote(ts_code: str) -> dict[str, Any]:
@@ -1112,6 +1311,12 @@ class DashboardHandler(SimpleHTTPRequestHandler):
 
     def do_GET(self) -> None:  # noqa: N802
         parsed = urlparse(self.path)
+        if parsed.path == "/api/risk-model":
+            try:
+                self.send_json(read_risk_model())
+            except Exception as exc:
+                self.send_json({"error": str(exc)}, HTTPStatus.INTERNAL_SERVER_ERROR)
+            return
         if parsed.path == "/api/reports":
             try:
                 self.send_json(list_daily_reports())

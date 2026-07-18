@@ -4,6 +4,7 @@
   "peer_library": "peer_library.json",
   "peer_universe_cache": ".cache/ai_peer_universe.json",
   "daily_report_root": "/Users/liuguan1/Documents/New project 2",
+  "risk_model_root": "/Users/liuguan1/Documents/github/backtest/backtest_project/deliverables/tech_sector_risk_model_v8_20260718",
   "peer_count": 4,
   "peer_universe_cache_hours": 24,
   "overseas_candidate_count": 60,

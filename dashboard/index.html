@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
   <title>守门台 · 交易控制看板</title>
-  <link rel="stylesheet" href="styles.css?v=1.9.1">
+  <link rel="stylesheet" href="styles.css?v=1.10.0">
 </head>
 <body>
   <!--
@@ -30,11 +30,12 @@
 
       <nav>
         <a class="nav-link active" href="#gate"><span>01</span> 今日权限</a>
-        <a class="nav-link" href="#arena"><span>02</span> 同行擂台</a>
-        <a class="nav-link" href="#flows"><span>03</span> 资金去向</a>
-        <a class="nav-link" href="#premarket"><span>04</span> 昨夜盘前</a>
-        <a class="nav-link" href="#close-review"><span>05</span> 收盘复盘</a>
-        <a class="nav-link" href="#journal"><span>06</span> 每日日记</a>
+        <a class="nav-link" href="#risk-model"><span>02</span> 风控雷达</a>
+        <a class="nav-link" href="#arena"><span>03</span> 同行擂台</a>
+        <a class="nav-link" href="#flows"><span>04</span> 资金去向</a>
+        <a class="nav-link" href="#premarket"><span>05</span> 昨夜盘前</a>
+        <a class="nav-link" href="#close-review"><span>06</span> 收盘复盘</a>
+        <a class="nav-link" href="#journal"><span>07</span> 每日日记</a>
       </nav>
 
       <div class="rail-foot">
@@ -89,6 +90,23 @@
             <div class="panel-label">持仓真相</div>
             <div id="holdingTruth" class="truth-lines"></div>
           </article>
+        </div>
+      </section>
+
+      <section id="risk-model" class="content-section risk-model-section" aria-labelledby="risk-model-title">
+        <div class="section-head risk-model-head">
+          <div>
+            <div class="section-kicker">TECH SECTOR RISK · FROZEN V8</div>
+            <h2 id="risk-model-title">科技板块风控雷达</h2>
+            <p>预测未来1–2个交易日的科技板块下跌起点；只作风险观察，不生成个股买卖指令。</p>
+          </div>
+          <div id="riskModelSyncStatus" class="risk-model-sync"><span class="risk-model-live-dot"></span><span>正在读取正式模型输出</span></div>
+        </div>
+        <div id="riskModelCard" class="risk-model-card loading" aria-live="polite">
+          <div class="risk-model-loading">
+            <div class="skeleton"></div>
+            <div class="skeleton"></div>
+          </div>
         </div>
       </section>
 
@@ -232,13 +250,13 @@
       </section>
 
       <footer>
-        <span>守门台 V1.9 · Excel持仓同步 · 持仓波动边界</span>
+        <span>守门台 V1.10 · Excel持仓同步 · 科技风控雷达</span>
         <span id="truthNote">等待数据口径说明</span>
       </footer>
     </main>
   </div>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="app.js?v=1.9.1"></script>
+  <script src="app.js?v=1.10.0"></script>
 </body>
 </html>

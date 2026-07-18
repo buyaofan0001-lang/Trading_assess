@@ -27,9 +27,15 @@ test("dashboard loads real data and primary interactions work", async ({ page })
   await expect(jcetCard.locator(".volatility-boundary")).toContainText("盘中最大下探");
   await expect(jcetCard.locator(".peer-ai-evidence")).toHaveCount(4);
   await expect(page.locator("#portfolioSyncStatus")).toContainText("Excel已同步");
+  await expect(page.locator("#riskModelCard")).toContainText("模型分数");
+  await expect(page.locator("#riskModelCard")).toContainText("校准路径风险率");
+  await expect(page.locator("#riskModelCard")).toContainText("自动仓位动作不可用");
+  await expect(page.locator("#riskModelCard")).toContainText("research_only");
+  await expect(page.locator("#riskModelSyncStatus")).toContainText("60秒检查");
+  expect(await page.locator(".risk-factor-row").count()).toBeGreaterThanOrEqual(2);
   await expect(page.locator('a[href="#overnight"]')).toHaveCount(0);
   await expect(page.locator("#overnight")).toHaveCount(0);
-  await expect(page.locator(".nav-link")).toHaveCount(6);
+  await expect(page.locator(".nav-link")).toHaveCount(7);
   await expect(page.locator("#permissionCard")).toHaveClass(/red/);
   await expect(page.locator("#gate-title")).toContainText("停止主动买入");
   await expect(page.locator("#freshness")).toContainText("数据已更新");
@@ -115,6 +121,15 @@ test("daily report directories are polled outside the market refresh cycle", asy
   await reportResponse;
 });
 
+test("risk model result is polled independently", async ({ page }) => {
+  await page.clock.install({ time: new Date("2026-07-16T09:30:00Z") });
+  await page.goto(`${dashboardUrl}/#risk-model`);
+  await expect(page.locator("#riskModelCard")).toContainText("模型分数");
+  const riskResponse = page.waitForResponse(response => response.url().endsWith("/api/risk-model") && response.ok());
+  await page.clock.fastForward(61_000);
+  await riskResponse;
+});
+
 test("missing due report is clearly marked instead of looking current", async ({ page }) => {
   await page.route("**/api/reports", async route => {
     const response = await route.fetch();
@@ -138,6 +153,7 @@ test("mobile layout does not overflow horizontally", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto(dashboardUrl);
   await expect(page.locator(".peer-card")).toHaveCount(2, { timeout: 120000 });
+  await expect(page.locator("#riskModelCard .risk-score-ring")).toHaveCount(1);
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1);
   expect(overflow).toBe(false);
 });

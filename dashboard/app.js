@@ -52,6 +52,11 @@ function fmtPct(value, digits = 2) {
   return `${number > 0 ? "+" : ""}${number.toFixed(digits)}%`;
 }
 
+function fmtPlainPct(value, digits = 2) {
+  if (value === null || value === undefined || Number.isNaN(Number(value))) return "—";
+  return `${(Number(value) * 100).toFixed(digits)}%`;
+}
+
 function fmtNumber(value, digits = 2) {
   if (value === null || value === undefined || Number.isNaN(Number(value))) return "—";
   return Number(value).toLocaleString("zh-CN", { maximumFractionDigits: digits, minimumFractionDigits: digits });
@@ -733,7 +738,7 @@ function renderRiskFactors(items, direction) {
   return items.map(item => `<div class="risk-factor-row">
     <div class="risk-factor-copy">
       <strong>${escapeHtml(item.label || item.feature)}</strong>
-      <small>${escapeHtml(item.feature)} · 训练分位 ${fmtPct(item.percentile, 1)}</small>
+      <small>${escapeHtml(item.feature)} · 训练分位 ${fmtPlainPct(item.percentile, 1)}</small>
     </div>
     <span class="risk-factor-value ${direction}">${fmtContribution(item.contribution)}</span>
   </div>`).join("");
@@ -760,9 +765,9 @@ function renderRiskModel(payload) {
   card.innerHTML = `<div class="risk-model-overview">
     <div class="risk-score-wrap">
       <div class="risk-score-ring" style="--risk-score:${(raw * 100).toFixed(2)}">
-        <div><strong>${fmtPct(raw)}</strong><small>模型分数</small></div>
+        <div><strong>${fmtPlainPct(raw)}</strong><small>模型分数</small></div>
       </div>
-      <div class="risk-threshold-note">预警 ${fmtPct(payload.scores?.warning_threshold, 0)} · 高风险 ${fmtPct(payload.scores?.high_threshold, 0)}</div>
+      <div class="risk-threshold-note">预警 ${fmtPlainPct(payload.scores?.warning_threshold, 0)} · 高风险 ${fmtPlainPct(payload.scores?.high_threshold, 0)}</div>
     </div>
     <div class="risk-model-verdict">
       <div class="risk-model-date">信号日 ${escapeHtml(payload.signal_date || "—")} · T日收盘信号</div>
@@ -776,7 +781,7 @@ function renderRiskModel(payload) {
       ${staleSymbols.length ? `<div class="risk-stale-symbols">滞后数据：${staleSymbols.map(escapeHtml).join("、")}</div>` : ""}
     </div>
     <div class="risk-model-metrics">
-      <div><span>校准路径风险率</span><strong>${fmtPct(payload.scores?.calibrated_probability)}</strong><small>不是收益预测</small></div>
+      <div><span>校准路径风险率</span><strong>${fmtPlainPct(payload.scores?.calibrated_probability)}</strong><small>不是收益预测</small></div>
       <div><span>新预警资格</span><strong>${payload.operational?.warning_eligible ? "符合" : "不符合"}</strong><small>已弱时只诊断</small></div>
       <div><span>前瞻样本进度</span><strong>${Number(shadow.matured_rows || 0)} / ${Number(shadow.required_rows || 252)}</strong><small>事件 ${Number(shadow.positive_events || 0)} / ${Number(shadow.required_positive_events || 25)}</small></div>
       <div><span>部署状态</span><strong>研究监控</strong><small>控制器未通过</small></div>

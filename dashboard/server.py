@@ -1499,7 +1499,9 @@ class DashboardHandler(SimpleHTTPRequestHandler):
         parsed = urlparse(self.path)
         if parsed.path == "/api/risk-model":
             try:
-                self.send_json(read_risk_model())
+                payload = read_risk_model()
+                payload["sync"] = RISK_MODEL_SYNC.status()
+                self.send_json(payload)
             except Exception as exc:
                 self.send_json({"error": str(exc)}, HTTPStatus.INTERNAL_SERVER_ERROR)
             return
@@ -1574,6 +1576,12 @@ class DashboardHandler(SimpleHTTPRequestHandler):
 
     def do_POST(self) -> None:  # noqa: N802
         parsed = urlparse(self.path)
+        if parsed.path == "/api/risk-model/refresh":
+            started = RISK_MODEL_SYNC.start(force=True, reason="manual")
+            payload = RISK_MODEL_SYNC.status()
+            payload["started"] = started
+            self.send_json(payload, HTTPStatus.ACCEPTED if started else HTTPStatus.OK)
+            return
         if parsed.path != "/api/journal":
             self.send_json({"error": "接口不存在"}, HTTPStatus.NOT_FOUND)
             return
@@ -1624,6 +1632,7 @@ def main() -> None:
     parser.add_argument("--port", type=int, default=8765)
     args = parser.parse_args()
     server = ThreadingHTTPServer((args.host, args.port), DashboardHandler)
+    RISK_MODEL_SYNC.start_scheduler()
     print(f"交易看板已启动：http://{args.host}:{args.port}")
     print("按 Ctrl+C 停止")
     try:

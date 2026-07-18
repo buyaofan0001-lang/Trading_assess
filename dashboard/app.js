@@ -2,6 +2,7 @@ const LIVE_REFRESH_MS = 30_000;
 const POST_CLOSE_REFRESH_MS = 5 * 60_000;
 const PORTFOLIO_POLL_MS = 15_000;
 const REPORT_POLL_MS = 60_000;
+const RISK_MODEL_POLL_MS = 60_000;
 const REPORT_UI = {
   premarket: { prefix: "premarket", empty: "盘前报告目录中还没有 Markdown 文件。" },
   close: { prefix: "close", empty: "收盘复盘目录中还没有 Markdown 文件。" },
@@ -18,6 +19,7 @@ const state = {
   refreshTimer: null,
   portfolioPollTimer: null,
   reportPollTimer: null,
+  riskModelPollTimer: null,
   countdownTimer: null,
   nextRefreshAt: null,
   lastMeta: null,
@@ -38,6 +40,7 @@ const state = {
     premarket: { entries: [], latest: null, date: null, version: null, content: "", loading: false, health: null },
     close: { entries: [], latest: null, date: null, version: null, content: "", loading: false, health: null },
   },
+  riskModel: { data: null, version: null, loading: false },
 };
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -52,6 +55,12 @@ function fmtPct(value, digits = 2) {
 function fmtNumber(value, digits = 2) {
   if (value === null || value === undefined || Number.isNaN(Number(value))) return "—";
   return Number(value).toLocaleString("zh-CN", { maximumFractionDigits: digits, minimumFractionDigits: digits });
+}
+
+function fmtContribution(value) {
+  if (value === null || value === undefined || Number.isNaN(Number(value))) return "—";
+  const points = Number(value) * 100;
+  return `${points > 0 ? "+" : ""}${points.toFixed(2)} pct`;
 }
 
 function tone(value) {
@@ -719,6 +728,105 @@ function scheduleReportPoll(delay = REPORT_POLL_MS) {
   }, delay);
 }
 
+function renderRiskFactors(items, direction) {
+  if (!items?.length) return '<div class="risk-factor-empty">暂无可展示因子</div>';
+  return items.map(item => `<div class="risk-factor-row">
+    <div class="risk-factor-copy">
+      <strong>${escapeHtml(item.label || item.feature)}</strong>
+      <small>${escapeHtml(item.feature)} · 训练分位 ${fmtPct(item.percentile, 1)}</small>
+    </div>
+    <span class="risk-factor-value ${direction}">${fmtContribution(item.contribution)}</span>
+  </div>`).join("");
+}
+
+function renderRiskModel(payload) {
+  const card = $("#riskModelCard");
+  const status = $("#riskModelSyncStatus");
+  if (!payload?.available) {
+    card.className = "risk-model-card unavailable";
+    card.innerHTML = `<div class="risk-model-unavailable"><strong>风控模型结果不可用</strong><p>${escapeHtml(payload?.error || "尚未找到正式模型输出。")}</p></div>`;
+    status.className = "risk-model-sync error";
+    status.innerHTML = '<span class="risk-model-live-dot"></span><span>模型连接失败</span>';
+    return;
+  }
+
+  const raw = Math.max(0, Math.min(1, Number(payload.scores?.raw || 0)));
+  const statusCode = payload.status?.code || "normal";
+  const fresh = Boolean(payload.freshness?.pass);
+  const shadow = payload.shadow || {};
+  const staleSymbols = payload.freshness?.stale_symbols || [];
+  const controllerAvailable = Boolean(payload.operational?.automatic_position_action_available);
+  card.className = `risk-model-card ${statusCode}`;
+  card.innerHTML = `<div class="risk-model-overview">
+    <div class="risk-score-wrap">
+      <div class="risk-score-ring" style="--risk-score:${(raw * 100).toFixed(2)}">
+        <div><strong>${fmtPct(raw)}</strong><small>模型分数</small></div>
+      </div>
+      <div class="risk-threshold-note">预警 ${fmtPct(payload.scores?.warning_threshold, 0)} · 高风险 ${fmtPct(payload.scores?.high_threshold, 0)}</div>
+    </div>
+    <div class="risk-model-verdict">
+      <div class="risk-model-date">信号日 ${escapeHtml(payload.signal_date || "—")} · T日收盘信号</div>
+      <h3>${escapeHtml(payload.status?.label || "状态未知")}</h3>
+      <p>${escapeHtml(payload.operational?.message || "模型未提供说明。")}</p>
+      <div class="risk-model-badges">
+        <span class="${fresh ? "pass" : "stale"}">数据时效 ${escapeHtml(payload.freshness?.status || "unknown")}</span>
+        <span class="blocked">${controllerAvailable ? "存在仓位动作" : "自动仓位动作不可用"}</span>
+        <span>research_only</span>
+      </div>
+      ${staleSymbols.length ? `<div class="risk-stale-symbols">滞后数据：${staleSymbols.map(escapeHtml).join("、")}</div>` : ""}
+    </div>
+    <div class="risk-model-metrics">
+      <div><span>校准路径风险率</span><strong>${fmtPct(payload.scores?.calibrated_probability)}</strong><small>不是收益预测</small></div>
+      <div><span>新预警资格</span><strong>${payload.operational?.warning_eligible ? "符合" : "不符合"}</strong><small>已弱时只诊断</small></div>
+      <div><span>前瞻样本进度</span><strong>${Number(shadow.matured_rows || 0)} / ${Number(shadow.required_rows || 252)}</strong><small>事件 ${Number(shadow.positive_events || 0)} / ${Number(shadow.required_positive_events || 25)}</small></div>
+      <div><span>部署状态</span><strong>研究监控</strong><small>控制器未通过</small></div>
+    </div>
+  </div>
+  <div class="risk-factor-grid">
+    <article><div class="risk-factor-head"><span>推高风险</span><small>反事实分数贡献</small></div>${renderRiskFactors(payload.factors?.up, "up")}</article>
+    <article><div class="risk-factor-head"><span>压低风险</span><small>不等于安全或买入</small></div>${renderRiskFactors(payload.factors?.down, "down")}</article>
+  </div>
+  <div class="risk-model-foot">
+    <span>${escapeHtml(payload.model?.scope || "科技板块风险观察")}</span>
+    <span>冻结指纹 ${escapeHtml((payload.model?.fingerprint || "").slice(0, 12))} · 结果文件60秒检查</span>
+  </div>`;
+  status.className = `risk-model-sync ${fresh ? "current" : "stale"}`;
+  status.innerHTML = `<span class="risk-model-live-dot"></span><span>${escapeHtml(payload.signal_date || "无信号日")} · 60秒检查</span>`;
+  window.requestAnimationFrame(updateActiveNavigation);
+}
+
+async function loadRiskModel({ announce = false } = {}) {
+  if (state.riskModel.loading) return false;
+  state.riskModel.loading = true;
+  try {
+    const response = await fetch("/api/risk-model", { cache: "no-store" });
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.error || `HTTP ${response.status}`);
+    const changed = Boolean(state.riskModel.version && payload.version && state.riskModel.version !== payload.version);
+    state.riskModel.data = payload;
+    state.riskModel.version = payload.version || null;
+    renderRiskModel(payload);
+    if (changed && announce) toast("科技风控模型结果已更新");
+    return changed;
+  } catch (error) {
+    console.error("风控模型读取失败", error);
+    renderRiskModel({ available: false, error: error.message });
+    return false;
+  } finally {
+    state.riskModel.loading = false;
+  }
+}
+
+function scheduleRiskModelPoll(delay = RISK_MODEL_POLL_MS) {
+  window.clearTimeout(state.riskModelPollTimer);
+  state.riskModelPollTimer = null;
+  if (document.hidden) return;
+  state.riskModelPollTimer = window.setTimeout(async () => {
+    await loadRiskModel({ announce: true });
+    scheduleRiskModelPoll();
+  }, delay);
+}
+
 function renderMeta(meta) {
   state.lastMeta = meta;
   const fresh = $("#freshness");
@@ -942,6 +1050,7 @@ async function loadDashboard({ showToast = false, force = false, background = fa
 $("#refreshButton").addEventListener("click", () => {
   void loadDashboard({ showToast: true, force: true });
   void loadReportIndex();
+  void loadRiskModel();
 });
 $$('[data-timeframe]').forEach(button => button.addEventListener("click", () => switchTimeframe(button.dataset.timeframe)));
 $("#journalToday").addEventListener("click", () => loadJournal(shanghaiDate()));
@@ -980,11 +1089,14 @@ document.addEventListener("visibilitychange", () => {
     scheduleAutoRefresh();
     schedulePortfolioPoll();
     scheduleReportPoll();
+    scheduleRiskModelPoll();
   } else if (state.data) {
     void loadDashboard({ background: true });
     schedulePortfolioPoll();
     void loadReportIndex({ announce: true });
     scheduleReportPoll();
+    void loadRiskModel({ announce: true });
+    scheduleRiskModelPoll();
   }
 });
 
@@ -1016,6 +1128,7 @@ async function initializeDashboard() {
   await Promise.allSettled([
     loadJournalIndex(),
     loadReportIndex(),
+    loadRiskModel(),
     loadDashboard(),
   ]);
   const hashTarget = window.location.hash ? $(window.location.hash) : null;
@@ -1023,6 +1136,7 @@ async function initializeDashboard() {
   window.requestAnimationFrame(updateActiveNavigation);
   schedulePortfolioPoll();
   scheduleReportPoll();
+  scheduleRiskModelPoll();
 }
 
 void initializeDashboard();

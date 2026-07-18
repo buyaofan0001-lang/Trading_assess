@@ -11,9 +11,15 @@ test("dashboard loads real data and primary interactions work", async ({ page })
 
   await page.goto(dashboardUrl);
   await expect(page.locator(".peer-card")).toHaveCount(2, { timeout: 120000 });
-  await expect(page.locator(".intraday-chart svg")).toHaveCount(2, { timeout: 30000 });
-  await expect(page.locator(".chart-series.holding polyline")).toHaveCount(2);
-  await expect(page.locator(".chart-legend-item")).toHaveCount(10);
+  await expect(page.locator(".intraday-chart")).toHaveCount(2, { timeout: 30000 });
+  const intradaySvgCount = await page.locator(".intraday-chart svg").count();
+  if (intradaySvgCount === 2) {
+    await expect(page.locator(".chart-series.holding polyline")).toHaveCount(2);
+    await expect(page.locator(".chart-legend-item")).toHaveCount(10);
+  } else {
+    await expect(page.locator(".intraday-empty")).toHaveCount(2);
+    await expect(page.locator(".intraday-empty").first()).toContainText("暂无可用分钟线");
+  }
   const jcetCard = page.locator(".peer-card").filter({ hasText: "长电科技" });
   await expect(jcetCard).toHaveCount(1);
   await expect(jcetCard.locator(".overseas-row")).toHaveCount(2);

@@ -1,0 +1,9 @@
+company,ts_code,cycle_price_peak_date,pe_ttm_at_cycle_peak,pe_static_at_cycle_peak,pe_ex_post_ntm_at_cycle_peak,forecast_anchor_report_date,forecast_anchor_price_basis_date,forecast_anchor_institution,forecast_year,fy1_pe_reported,fy1_pe_scaled_to_cycle_peak,forecast_anchor_gap_days,forecast_anchor_url
+宁德时代,300750.SZ,2021-12-02,160.72,287.22,62.22,2021-11-01,2021-11-01,国元证券,2022,91.06,96.38,31,https://pdf.dfcfw.com/pdf/H3_AP202111011526431124_1.pdf
+隆基绿能,601012.SH,2021-11-01,55.62,63.42,43.37,2021-11-01,2021-10-29,山西证券,2022,35.68,36.6,0,https://pdf.dfcfw.com/pdf/H3_AP202111011526378839_1.pdf
+阳光电源,300274.SZ,2021-10-27,113.13,131.13,119.83,2021-09-03,2021-09-01,山西证券,2022,60.25,73.16,54,https://pdf.dfcfw.com/pdf/H3_AP202109031513988826_1.pdf
+亿纬锂能,300014.SZ,2021-11-26,96.65,170.92,84.15,2021-11-08,2021-11-08,东吴证券,2022,43.21,48.87,18,https://pdf.dfcfw.com/pdf/H3_AP202111081527752050_1.pdf
+恩捷股份,002812.SZ,2021-09-14,150.03,248.04,75.05,2021-09-06,2021-09-06,华金证券,2022,49.0,56.61,8,https://pdf.dfcfw.com/pdf/H3_AP202109061514610321_1.pdf
+通威股份,600438.SH,2022-07-05,24.29,37.16,11.39,2022-07-05,2022-07-05,西南证券,2023,15.28,15.28,0,https://pdf.dfcfw.com/pdf/H3_AP202207051575819324_1.pdf
+天齐锂业,002466.SZ,2022-07-08,38.66,105.16,10.8,2022-06-30,2022-06-29,东亚前海证券,2023,11.4,13.74,8,https://pdf.dfcfw.com/pdf/H3_AP202206301575605564_1.pdf
+锦浪科技,300763.SZ,2022-08-23,198.7,223.15,82.05,2022-07-18,2022-07-15,东吴证券,2023,31.8,40.28,36,https://pdf.dfcfw.com/pdf/H3_AP202207171576261392_1.pdf

@@ -1,0 +1,110 @@
+{
+  "generated_at": "2026-07-19T22:11:54.995462+08:00",
+  "price_window": [
+    "2019-01-01",
+    "2026-07-18"
+  ],
+  "cycle_peak_window": [
+    "2019-01-01",
+    "2022-12-31"
+  ],
+  "profit_definition": "TTM attributable net profit = sum of the latest four reported single-quarter values",
+  "companies": {
+    "宁德时代": {
+      "ts_code": "300750.SZ",
+      "price": {
+        "provider": "AkShare stock_zh_a_hist / Eastmoney (local query cache)",
+        "adjustment": "qfq",
+        "fallback_reason": "TuShare token expired during the 2026-07-19 research run"
+      },
+      "financial": {
+        "provider": "AkShare stock_profit_sheet_by_quarterly_em / Eastmoney (local query cache)",
+        "profit_basis": "single-quarter attributable net profit; TTM is rolling sum of four quarters"
+      }
+    },
+    "隆基绿能": {
+      "ts_code": "601012.SH",
+      "price": {
+        "provider": "AkShare stock_zh_a_hist / Eastmoney (local query cache)",
+        "adjustment": "qfq",
+        "fallback_reason": "TuShare token expired during the 2026-07-19 research run"
+      },
+      "financial": {
+        "provider": "AkShare stock_profit_sheet_by_quarterly_em / Eastmoney (local query cache)",
+        "profit_basis": "single-quarter attributable net profit; TTM is rolling sum of four quarters"
+      }
+    },
+    "阳光电源": {
+      "ts_code": "300274.SZ",
+      "price": {
+        "provider": "AkShare stock_zh_a_hist / Eastmoney (local query cache)",
+        "adjustment": "qfq",
+        "fallback_reason": "TuShare token expired during the 2026-07-19 research run"
+      },
+      "financial": {
+        "provider": "AkShare stock_profit_sheet_by_quarterly_em / Eastmoney (local query cache)",
+        "profit_basis": "single-quarter attributable net profit; TTM is rolling sum of four quarters"
+      }
+    },
+    "亿纬锂能": {
+      "ts_code": "300014.SZ",
+      "price": {
+        "provider": "AkShare stock_zh_a_hist / Eastmoney (local query cache)",
+        "adjustment": "qfq",
+        "fallback_reason": "TuShare token expired during the 2026-07-19 research run"
+      },
+      "financial": {
+        "provider": "AkShare stock_profit_sheet_by_quarterly_em / Eastmoney (local query cache)",
+        "profit_basis": "single-quarter attributable net profit; TTM is rolling sum of four quarters"
+      }
+    },
+    "恩捷股份": {
+      "ts_code": "002812.SZ",
+      "price": {
+        "provider": "AkShare stock_zh_a_hist / Eastmoney (local query cache)",
+        "adjustment": "qfq",
+        "fallback_reason": "TuShare token expired during the 2026-07-19 research run"
+      },
+      "financial": {
+        "provider": "AkShare stock_profit_sheet_by_quarterly_em / Eastmoney (local query cache)",
+        "profit_basis": "single-quarter attributable net profit; TTM is rolling sum of four quarters"
+      }
+    },
+    "通威股份": {
+      "ts_code": "600438.SH",
+      "price": {
+        "provider": "AkShare stock_zh_a_hist / Eastmoney (local query cache)",
+        "adjustment": "qfq",
+        "fallback_reason": "TuShare token expired during the 2026-07-19 research run"
+      },
+      "financial": {
+        "provider": "AkShare stock_profit_sheet_by_quarterly_em / Eastmoney (local query cache)",
+        "profit_basis": "single-quarter attributable net profit; TTM is rolling sum of four quarters"
+      }
+    },
+    "天齐锂业": {
+      "ts_code": "002466.SZ",
+      "price": {
+        "provider": "AkShare stock_zh_a_hist / Eastmoney (local query cache)",
+        "adjustment": "qfq",
+        "fallback_reason": "TuShare token expired during the 2026-07-19 research run"
+      },
+      "financial": {
+        "provider": "AkShare stock_profit_sheet_by_quarterly_em / Eastmoney (local query cache)",
+        "profit_basis": "single-quarter attributable net profit; TTM is rolling sum of four quarters"
+      }
+    },
+    "锦浪科技": {
+      "ts_code": "300763.SZ",
+      "price": {
+        "provider": "AkShare stock_zh_a_hist / Eastmoney (local query cache)",
+        "adjustment": "qfq",
+        "fallback_reason": "TuShare token expired during the 2026-07-19 research run"
+      },
+      "financial": {
+        "provider": "AkShare stock_profit_sheet_by_quarterly_em / Eastmoney (local query cache)",
+        "profit_basis": "single-quarter attributable net profit; TTM is rolling sum of four quarters"
+      }
+    }
+  }
+}

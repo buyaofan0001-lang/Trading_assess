@@ -1,0 +1,72 @@
+{
+  "generated_at": "2026-07-19T22:34:18.712481+08:00",
+  "tushare_probe_error": "Exception: token已过期",
+  "ttm_static_provider": "AkShare stock_value_em / Eastmoney",
+  "continuous_forward_note": "pe_ex_post_ntm uses future realised four-quarter profit; it is hindsight, not historical consensus",
+  "anchors": {
+    "宁德时代": {
+      "price_basis_date": "2021-11-01",
+      "report_date": "2021-11-01",
+      "forecast_year": 2022,
+      "fy1_pe_reported": 91.06,
+      "institution": "国元证券",
+      "url": "https://pdf.dfcfw.com/pdf/H3_AP202111011526431124_1.pdf"
+    },
+    "隆基绿能": {
+      "price_basis_date": "2021-10-29",
+      "report_date": "2021-11-01",
+      "forecast_year": 2022,
+      "fy1_pe_reported": 35.68,
+      "institution": "山西证券",
+      "url": "https://pdf.dfcfw.com/pdf/H3_AP202111011526378839_1.pdf"
+    },
+    "阳光电源": {
+      "price_basis_date": "2021-09-01",
+      "report_date": "2021-09-03",
+      "forecast_year": 2022,
+      "fy1_pe_reported": 60.25,
+      "institution": "山西证券",
+      "url": "https://pdf.dfcfw.com/pdf/H3_AP202109031513988826_1.pdf"
+    },
+    "亿纬锂能": {
+      "price_basis_date": "2021-11-08",
+      "report_date": "2021-11-08",
+      "forecast_year": 2022,
+      "fy1_pe_reported": 43.21,
+      "institution": "东吴证券",
+      "url": "https://pdf.dfcfw.com/pdf/H3_AP202111081527752050_1.pdf"
+    },
+    "恩捷股份": {
+      "price_basis_date": "2021-09-06",
+      "report_date": "2021-09-06",
+      "forecast_year": 2022,
+      "fy1_pe_reported": 49.0,
+      "institution": "华金证券",
+      "url": "https://pdf.dfcfw.com/pdf/H3_AP202109061514610321_1.pdf"
+    },
+    "通威股份": {
+      "price_basis_date": "2022-07-05",
+      "report_date": "2022-07-05",
+      "forecast_year": 2023,
+      "fy1_pe_reported": 15.28,
+      "institution": "西南证券",
+      "url": "https://pdf.dfcfw.com/pdf/H3_AP202207051575819324_1.pdf"
+    },
+    "天齐锂业": {
+      "price_basis_date": "2022-06-29",
+      "report_date": "2022-06-30",
+      "forecast_year": 2023,
+      "fy1_pe_reported": 11.4,
+      "institution": "东亚前海证券",
+      "url": "https://pdf.dfcfw.com/pdf/H3_AP202206301575605564_1.pdf"
+    },
+    "锦浪科技": {
+      "price_basis_date": "2022-07-15",
+      "report_date": "2022-07-18",
+      "forecast_year": 2023,
+      "fy1_pe_reported": 31.8,
+      "institution": "东吴证券",
+      "url": "https://pdf.dfcfw.com/pdf/H3_AP202207171576261392_1.pdf"
+    }
+  }
+}

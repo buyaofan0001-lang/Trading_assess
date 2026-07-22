@@ -1,7 +1,7 @@
 {
   "version": 1,
   "engine": "local-semantic-ai-v4",
-  "updated_at": "2026-07-16T17:05:42+08:00",
+  "updated_at": "2026-07-22T20:57:54+08:00",
   "entries": {
     "588060.SH": {
       "peers": [
@@ -87,6 +87,41 @@
       ],
       "engine": "local-semantic-ai-v4",
       "generated_at": "2026-07-16T17:05:42+08:00"
+    },
+    "588710.SH": {
+      "peers": [
+        {
+          "ts_code": "589020.SH",
+          "name": "鹏华上证科创板半导体材料设备主题ETF",
+          "ai_score": 1.0,
+          "ai_reason": "同一业绩基准：上证科创板半导体材料设备主题指数收益率×100%"
+        },
+        {
+          "ts_code": "588170.SH",
+          "name": "华夏上证科创板半导体材料设备主题ETF",
+          "ai_score": 1.0,
+          "ai_reason": "同一业绩基准：上证科创板半导体材料设备主题指数收益率×100%"
+        },
+        {
+          "ts_code": "562590.SH",
+          "name": "华夏中证半导体材料设备主题ETF",
+          "ai_score": 0.6055,
+          "ai_reason": "基金名称与基准语义相似：上证科创板半导体材料设备主题指数收益率×100%"
+        },
+        {
+          "ts_code": "159516.SZ",
+          "name": "国泰中证半导体材料设备主题ETF",
+          "ai_score": 0.6055,
+          "ai_reason": "基金名称与基准语义相似：上证科创板半导体材料设备主题指数收益率×100%"
+        }
+      ],
+      "benchmark": "上证科创板半导体材料设备主题指数收益率×100%",
+      "cohort_type": "AI自动同指数产品",
+      "confidence": 96,
+      "reason": "同一业绩基准：上证科创板半导体材料设备主题指数收益率×100%",
+      "overseas_peers": [],
+      "engine": "local-semantic-ai-v4",
+      "generated_at": "2026-07-22T20:57:54+08:00"
     }
   }
 }

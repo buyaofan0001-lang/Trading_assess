@@ -1,6 +1,6 @@
 # AGENT_STATE.md - Shared Project State
 
-Last Updated: 2026-07-21 00:35 CST
+Last Updated: 2026-07-25 14:35 CST
 
 ## Project Snapshot
 
@@ -87,6 +87,7 @@ Last Updated: 2026-07-21 00:35 CST
 
 ## Open Items
 
+- ChatGPT Work/Sites Cloud V1 (2026-07-25): a separate private cloud site now lives under `dashboard-work/` and is deployed at `https://shoumentai-cloud.buyaofan0001.chatgpt.site`. The owner-only Sites project is `appgprj_6a6457dd0f548191bb56267c3128eced`; deployed V1 source commit is `b7cfd4610181deca4c0da72664679b6e8dda43d7`. The cloud version has D1-backed holdings/journals, Tencent quote and adjusted-daily data, 1/5/20-session peer-relative strength, ATR and 20-day realized volatility, responsive mobile layout, and the official 2026-07-24 V8 risk snapshot. It deliberately does not claim that local history is already synchronized: old journals and daily report bodies remain local, the Excel-to-cloud automatic push is pending, and the Python risk model still needs an external scheduled runner to publish future snapshots. The existing localhost dashboard remains the fallback.
 - ChatGPT Work deployment requirement (2026-07-25): the user wants the dashboard available through ChatGPT Work/Sites so it remains usable from a phone while the home Mac is off. This requires a separate cloud-compatible Sites version rather than exposing the existing localhost server. Preserve the local dashboard as a fallback; migrate structured records/journal/report metadata to D1, file blobs to R2 only where needed, store market-data credentials as hosted secrets, and protect access with ChatGPT/workspace authentication. The existing Python risk-model rerun and local-file watchers cannot run unchanged in Sites and must remain in an external Python runner/automation that publishes compact results to the hosted data layer. A custom ChatGPT MCP app is optional phase two for conversational access, not required for the first hosted dashboard.
 - Next memory task: continue consolidating July records after a broker holdings page supplies cash, total assets, position weights, and broker-reported cost.
 - Next high-priority work: define and validate the market-wide source registry, event importance rubric, and industry-stock mapping graph for the proposed news-intelligence module; separately reconcile the remaining screenshot-vs-workbook differences. AI peer groups now update automatically and no longer wait for manual locking. No further 长电 buy is permitted under the current recovery protocol.

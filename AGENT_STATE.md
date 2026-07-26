@@ -1,6 +1,6 @@
 # AGENT_STATE.md - Shared Project State
 
-Last Updated: 2026-07-25 14:35 CST
+Last Updated: 2026-07-26 14:16 CST
 
 ## Project Snapshot
 
@@ -54,6 +54,7 @@ Last Updated: 2026-07-25 14:35 CST
 ## Current Baselines
 
 - Main command(s): inspect/edit spreadsheet artifacts through the bundled spreadsheet runtime when modifying `.xlsx` files.
+- BAMLH0A0HYM2 × 沪深300近十年检验（2026-07-26）：完整数据包、CSV、统计结果、报告与可视化工作簿存放在 `outputs/baml_csi300_20260726/`。样本为 2016-07-26 至 2026-07-23 的 2,406 个共同日期；BAML OAS 共 2,614 条，沪深300共 2,427 条。FRED 自 2026-04 起只公开该 ICE 序列滚动3年，因此早期数据使用 SHA256 验证的历史 FRED 镜像补齐，并与当前 FRED 697 条重叠及另一独立归档 5,510 条重叠逐值完全一致。同日 `ΔOAS(bp)` 与沪深300对数收益 Pearson `r=-0.2316`、HAC `p<0.0001`，但存在美国收盘晚于中国收盘的时区错位；严格使用中国开盘前已知的前一美国收盘后，`r=-0.0775`、HAC `p=0.0021`、`R²=0.0060`。结论：可作为弱风险背景变量，不能单独用作择时开关。沪深300点位 ADF `p=0.2467` 且与 OAS 水平不协整（Engle-Granger `p=0.6169`），后续不得用水平相关直接推导交易关系。
 - 润泽科技财报审视（2026-07-21）：基于公司 2025 年报与未经审计的 2026Q1 报告，巴菲特框架结论为 `Watchlist / Weak-to-moderate fit`，未发现足以指向财务造假的证据。2025 年归母净利润 50.50 亿元被数据中心 REIT 处置收益显著放大，扣非净利润仅 19.01 亿元、同比增长 6.87%；经营现金流 32.92 亿元，但购建长期资产现金支出 121.50 亿元，自由现金流约 -88.58 亿元。年末固定资产和在建工程占资产 74.25%，估算融资性有息负债约 232.29 亿元、净债务约 203.60 亿元，流动比率约 0.83；2026Q1 扣非净利润同比增长 35.92%，但毛利率同比下降约 2.93pct，长期应付款单季增加约 29.66 亿元，估算净债务升至约 221.47 亿元。前五大客户占收入 95.52%、前三大约 93.70%；AIDC 交付类与服务类收入未分别披露，持续性和总额/净额判断透明度仍需追问。2025 年重组承诺累计完成率仅 93.56%，补偿方已以 1 元回购注销 87,138,076 股并返还 1.278 亿元分红，股东获得补偿但历史预测失准是治理黄旗。按 2026-07-20 收盘 66.60 元、最新总股本约 16.4104 亿股估算市值约 1,092.9 亿元，最近四季扣非利润约 20.54 亿元，对应约 53.2 倍，安全边际不足。
 - 利通电子财报审视（2026-07-20）：基于 2025 年报、2025Q1 报告、上交所 2024 年报问询回复及 2026Q1 后续验证，巴菲特框架结论为 `Weak fit`，没有足够证据指向财务造假。2025Q1 披露收入增长 64.62%，但毛利率由 25.20%降至 18.98%、归母净利润下降 11.01%；本地文件是 2025-06-14 更正版，原报告将算力设备经销现金流按净额列示，后将销售收现和采购付现同时上调约 6.77 亿元，经营现金流净额不变，构成信息披露及内控质量的重要黄旗。全年核心风险是算力业务净额法将 2025 年披露毛利率抬至 49.69%，还原总额法后仅 10.09%；经营现金流减购建资产现金约 4.78 亿元，但再扣租赁本金约 5.74 亿元后约为 -0.96 亿元；年末含租赁的有息负债约 29.34 亿元、净债务约 25.21 亿元。2026Q1 业绩继续兑现，但存货升至 27.19 亿元、合同负债升至 21.72 亿元，风险进一步转为大额经销存货、客户预付款和交付/退款集中度。监管与审计已核查 2024 年收入时点和净额法，未发现跨期调整，但经济护城河、关联方双向交易、资产减值和分部披露透明度仍需持续验证。
 - New-energy price/profit peak study (2026-07-19): reproducible report, raw data, summary CSV, and charts are stored in `行业分析整理/新能源股价与利润见顶验证_20260719/`. With the 2019–2022 cycle-high close as the price peak, all 8 user-selected stocks reached their maximum observed TTM attributable profit later (8–52 months; median 15.5 months). This does not validate “always”: CATL and Sungrow later made new full-sample price highs, so the whole-sample relation is 6/8; CATL and EVE profits are right-censored because their latest 2026Q1 TTM values are still the sample maxima. TuShare returned an expired-token error during this run, so the script used documented AkShare/Eastmoney fallbacks and recorded the source switch.

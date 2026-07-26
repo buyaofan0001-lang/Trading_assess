@@ -1,0 +1,2615 @@
+date,oas_percent,oas_bps,oas_change_bps,source
+2016-07-26,5.45,545.0,,Archived FRED mirror (Hugging Face)
+2016-07-27,5.51,551.0,6.0,Archived FRED mirror (Hugging Face)
+2016-07-28,5.54,554.0,3.0,Archived FRED mirror (Hugging Face)
+2016-07-29,5.61,561.0,7.0,Archived FRED mirror (Hugging Face)
+2016-07-31,5.69,569.0,8.0,Archived FRED mirror (Hugging Face)
+2016-08-01,5.69,569.0,0.0,Archived FRED mirror (Hugging Face)
+2016-08-02,5.73,573.0,4.0,Archived FRED mirror (Hugging Face)
+2016-08-03,5.72,572.0,-1.0,Archived FRED mirror (Hugging Face)
+2016-08-04,5.65,565.0,-7.0,Archived FRED mirror (Hugging Face)
+2016-08-05,5.46,546.0,-19.0,Archived FRED mirror (Hugging Face)
+2016-08-08,5.42,542.0,-4.0,Archived FRED mirror (Hugging Face)
+2016-08-09,5.36,536.0,-6.0,Archived FRED mirror (Hugging Face)
+2016-08-10,5.38,538.0,2.0,Archived FRED mirror (Hugging Face)
+2016-08-11,5.31,531.0,-7.0,Archived FRED mirror (Hugging Face)
+2016-08-12,5.34,534.0,3.0,Archived FRED mirror (Hugging Face)
+2016-08-15,5.23,523.0,-11.0,Archived FRED mirror (Hugging Face)
+2016-08-16,5.17,517.0,-6.0,Archived FRED mirror (Hugging Face)
+2016-08-17,5.19,519.0,2.0,Archived FRED mirror (Hugging Face)
+2016-08-18,5.2,520.0,1.0,Archived FRED mirror (Hugging Face)
+2016-08-19,5.15,515.0,-5.0,Archived FRED mirror (Hugging Face)
+2016-08-22,5.18,518.0,3.0,Archived FRED mirror (Hugging Face)
+2016-08-23,5.14,514.0,-4.0,Archived FRED mirror (Hugging Face)
+2016-08-24,5.13,513.0,-1.0,Archived FRED mirror (Hugging Face)
+2016-08-25,5.14,514.0,1.0,Archived FRED mirror (Hugging Face)
+2016-08-26,5.04,504.0,-10.0,Archived FRED mirror (Hugging Face)
+2016-08-29,5.1,509.99999999999994,5.999999999999943,Archived FRED mirror (Hugging Face)
+2016-08-30,5.07,507.0,-2.999999999999943,Archived FRED mirror (Hugging Face)
+2016-08-31,5.1,509.99999999999994,2.999999999999943,Archived FRED mirror (Hugging Face)
+2016-09-01,5.12,512.0,2.000000000000057,Archived FRED mirror (Hugging Face)
+2016-09-02,5.09,509.0,-3.0,Archived FRED mirror (Hugging Face)
+2016-09-05,5.09,509.0,0.0,Archived FRED mirror (Hugging Face)
+2016-09-06,5.09,509.0,0.0,Archived FRED mirror (Hugging Face)
+2016-09-07,5.07,507.0,-2.0,Archived FRED mirror (Hugging Face)
+2016-09-08,4.99,499.0,-8.0,Archived FRED mirror (Hugging Face)
+2016-09-09,5.1,509.99999999999994,10.999999999999943,Archived FRED mirror (Hugging Face)
+2016-09-12,5.18,518.0,8.000000000000057,Archived FRED mirror (Hugging Face)
+2016-09-13,5.24,524.0,6.0,Archived FRED mirror (Hugging Face)
+2016-09-14,5.26,526.0,2.0,Archived FRED mirror (Hugging Face)
+2016-09-15,5.26,526.0,0.0,Archived FRED mirror (Hugging Face)
+2016-09-16,5.27,527.0,1.0,Archived FRED mirror (Hugging Face)
+2016-09-19,5.25,525.0,-2.0,Archived FRED mirror (Hugging Face)
+2016-09-20,5.24,524.0,-1.0,Archived FRED mirror (Hugging Face)
+2016-09-21,5.22,522.0,-2.0,Archived FRED mirror (Hugging Face)
+2016-09-22,5.09,509.0,-13.0,Archived FRED mirror (Hugging Face)
+2016-09-23,5.1,509.99999999999994,0.9999999999999432,Archived FRED mirror (Hugging Face)
+2016-09-26,5.16,516.0,6.000000000000057,Archived FRED mirror (Hugging Face)
+2016-09-27,5.18,518.0,2.0,Archived FRED mirror (Hugging Face)
+2016-09-28,5.14,514.0,-4.0,Archived FRED mirror (Hugging Face)
+2016-09-29,5.09,509.0,-5.0,Archived FRED mirror (Hugging Face)
+2016-09-30,4.97,497.0,-12.0,Archived FRED mirror (Hugging Face)
+2016-10-03,4.93,493.0,-4.0,Archived FRED mirror (Hugging Face)
+2016-10-04,4.85,484.99999999999994,-8.000000000000057,Archived FRED mirror (Hugging Face)
+2016-10-05,4.78,478.0,-6.999999999999943,Archived FRED mirror (Hugging Face)
+2016-10-06,4.75,475.0,-3.0,Archived FRED mirror (Hugging Face)
+2016-10-07,4.76,476.0,1.0,Archived FRED mirror (Hugging Face)
+2016-10-10,4.76,476.0,0.0,Archived FRED mirror (Hugging Face)
+2016-10-11,4.75,475.0,-1.0,Archived FRED mirror (Hugging Face)
+2016-10-12,4.75,475.0,0.0,Archived FRED mirror (Hugging Face)
+2016-10-13,4.82,482.0,7.0,Archived FRED mirror (Hugging Face)
+2016-10-14,4.72,472.0,-10.0,Archived FRED mirror (Hugging Face)
+2016-10-17,4.76,476.0,4.0,Archived FRED mirror (Hugging Face)
+2016-10-18,4.72,472.0,-4.0,Archived FRED mirror (Hugging Face)
+2016-10-19,4.66,466.0,-6.0,Archived FRED mirror (Hugging Face)
+2016-10-20,4.62,462.0,-4.0,Archived FRED mirror (Hugging Face)
+2016-10-21,4.62,462.0,0.0,Archived FRED mirror (Hugging Face)
+2016-10-24,4.6,459.99999999999994,-2.000000000000057,Archived FRED mirror (Hugging Face)
+2016-10-25,4.6,459.99999999999994,0.0,Archived FRED mirror (Hugging Face)
+2016-10-26,4.66,466.0,6.000000000000057,Archived FRED mirror (Hugging Face)
+2016-10-27,4.69,469.00000000000006,3.000000000000057,Archived FRED mirror (Hugging Face)
+2016-10-28,4.76,476.0,6.999999999999943,Archived FRED mirror (Hugging Face)
+2016-10-31,4.91,491.0,15.0,Archived FRED mirror (Hugging Face)
+2016-11-01,5.05,505.0,14.0,Archived FRED mirror (Hugging Face)
+2016-11-02,5.15,515.0,10.0,Archived FRED mirror (Hugging Face)
+2016-11-03,5.15,515.0,0.0,Archived FRED mirror (Hugging Face)
+2016-11-04,5.2,520.0,5.0,Archived FRED mirror (Hugging Face)
+2016-11-07,5.01,501.0,-19.0,Archived FRED mirror (Hugging Face)
+2016-11-08,4.98,498.00000000000006,-2.999999999999943,Archived FRED mirror (Hugging Face)
+2016-11-09,4.94,494.00000000000006,-4.0,Archived FRED mirror (Hugging Face)
+2016-11-10,4.97,497.0,2.999999999999943,Archived FRED mirror (Hugging Face)
+2016-11-11,4.97,497.0,0.0,Archived FRED mirror (Hugging Face)
+2016-11-14,5.11,511.00000000000006,14.000000000000057,Archived FRED mirror (Hugging Face)
+2016-11-15,4.94,494.00000000000006,-17.0,Archived FRED mirror (Hugging Face)
+2016-11-16,4.94,494.00000000000006,0.0,Archived FRED mirror (Hugging Face)
+2016-11-17,4.85,484.99999999999994,-9.000000000000114,Archived FRED mirror (Hugging Face)
+2016-11-18,4.84,484.0,-0.9999999999999432,Archived FRED mirror (Hugging Face)
+2016-11-21,4.78,478.0,-6.0,Archived FRED mirror (Hugging Face)
+2016-11-22,4.7,470.0,-8.0,Archived FRED mirror (Hugging Face)
+2016-11-23,4.66,466.0,-4.0,Archived FRED mirror (Hugging Face)
+2016-11-24,4.66,466.0,0.0,Archived FRED mirror (Hugging Face)
+2016-11-25,4.64,463.99999999999994,-2.000000000000057,Archived FRED mirror (Hugging Face)
+2016-11-28,4.66,466.0,2.000000000000057,Archived FRED mirror (Hugging Face)
+2016-11-29,4.69,469.00000000000006,3.000000000000057,Archived FRED mirror (Hugging Face)
+2016-11-30,4.67,467.0,-2.000000000000057,Archived FRED mirror (Hugging Face)
+2016-12-01,4.62,462.0,-5.0,Archived FRED mirror (Hugging Face)
+2016-12-02,4.64,463.99999999999994,1.9999999999999432,Archived FRED mirror (Hugging Face)
+2016-12-05,4.58,458.0,-5.999999999999943,Archived FRED mirror (Hugging Face)
+2016-12-06,4.5,450.0,-8.0,Archived FRED mirror (Hugging Face)
+2016-12-07,4.42,442.0,-8.0,Archived FRED mirror (Hugging Face)
+2016-12-08,4.38,438.0,-4.0,Archived FRED mirror (Hugging Face)
+2016-12-09,4.28,428.0,-10.0,Archived FRED mirror (Hugging Face)
+2016-12-12,4.25,425.0,-3.0,Archived FRED mirror (Hugging Face)
+2016-12-13,4.2,420.0,-5.0,Archived FRED mirror (Hugging Face)
+2016-12-14,4.12,412.0,-8.0,Archived FRED mirror (Hugging Face)
+2016-12-15,4.2,420.0,8.0,Archived FRED mirror (Hugging Face)
+2016-12-16,4.21,421.0,1.0,Archived FRED mirror (Hugging Face)
+2016-12-19,4.23,423.00000000000006,2.000000000000057,Archived FRED mirror (Hugging Face)
+2016-12-20,4.2,420.0,-3.000000000000057,Archived FRED mirror (Hugging Face)
+2016-12-21,4.19,419.00000000000006,-0.9999999999999432,Archived FRED mirror (Hugging Face)
+2016-12-22,4.17,417.0,-2.000000000000057,Archived FRED mirror (Hugging Face)
+2016-12-23,4.16,416.0,-1.0,Archived FRED mirror (Hugging Face)
+2016-12-27,4.11,411.00000000000006,-4.999999999999943,Archived FRED mirror (Hugging Face)
+2016-12-28,4.15,415.00000000000006,4.0,Archived FRED mirror (Hugging Face)
+2016-12-29,4.18,418.0,2.999999999999943,Archived FRED mirror (Hugging Face)
+2016-12-30,4.21,421.0,3.0,Archived FRED mirror (Hugging Face)
+2016-12-31,4.22,422.0,1.0,Archived FRED mirror (Hugging Face)
+2017-01-03,4.13,413.0,-9.0,Archived FRED mirror (Hugging Face)
+2017-01-04,4.02,401.99999999999994,-11.000000000000057,Archived FRED mirror (Hugging Face)
+2017-01-05,4.04,404.0,2.000000000000057,Archived FRED mirror (Hugging Face)
+2017-01-06,3.98,398.0,-6.0,Archived FRED mirror (Hugging Face)
+2017-01-09,4.02,401.99999999999994,3.999999999999943,Archived FRED mirror (Hugging Face)
+2017-01-10,4.0,400.0,-1.9999999999999432,Archived FRED mirror (Hugging Face)
+2017-01-11,4.03,403.0,3.0,Archived FRED mirror (Hugging Face)
+2017-01-12,4.05,405.0,2.0,Archived FRED mirror (Hugging Face)
+2017-01-13,4.02,401.99999999999994,-3.000000000000057,Archived FRED mirror (Hugging Face)
+2017-01-16,4.0,400.0,-1.9999999999999432,Archived FRED mirror (Hugging Face)
+2017-01-17,4.06,405.99999999999994,5.999999999999943,Archived FRED mirror (Hugging Face)
+2017-01-18,4.01,401.0,-4.999999999999943,Archived FRED mirror (Hugging Face)
+2017-01-19,3.99,399.0,-2.0,Archived FRED mirror (Hugging Face)
+2017-01-20,4.02,401.99999999999994,2.999999999999943,Archived FRED mirror (Hugging Face)
+2017-01-23,4.1,409.99999999999994,8.0,Archived FRED mirror (Hugging Face)
+2017-01-24,4.02,401.99999999999994,-8.0,Archived FRED mirror (Hugging Face)
+2017-01-25,3.93,393.0,-8.999999999999943,Archived FRED mirror (Hugging Face)
+2017-01-26,3.93,393.0,0.0,Archived FRED mirror (Hugging Face)
+2017-01-27,3.93,393.0,0.0,Archived FRED mirror (Hugging Face)
+2017-01-30,3.96,396.0,3.0,Archived FRED mirror (Hugging Face)
+2017-01-31,4.0,400.0,4.0,Archived FRED mirror (Hugging Face)
+2017-02-01,3.95,395.0,-5.0,Archived FRED mirror (Hugging Face)
+2017-02-02,3.93,393.0,-2.0,Archived FRED mirror (Hugging Face)
+2017-02-03,3.86,386.0,-7.0,Archived FRED mirror (Hugging Face)
+2017-02-06,3.91,391.0,5.0,Archived FRED mirror (Hugging Face)
+2017-02-07,3.93,393.0,2.0,Archived FRED mirror (Hugging Face)
+2017-02-08,3.98,398.0,5.0,Archived FRED mirror (Hugging Face)
+2017-02-09,3.93,393.0,-5.0,Archived FRED mirror (Hugging Face)
+2017-02-10,3.9,390.0,-3.0,Archived FRED mirror (Hugging Face)
+2017-02-13,3.86,386.0,-4.0,Archived FRED mirror (Hugging Face)
+2017-02-14,3.8,380.0,-6.0,Archived FRED mirror (Hugging Face)
+2017-02-15,3.77,377.0,-3.0,Archived FRED mirror (Hugging Face)
+2017-02-16,3.83,383.0,6.0,Archived FRED mirror (Hugging Face)
+2017-02-17,3.86,386.0,3.0,Archived FRED mirror (Hugging Face)
+2017-02-20,3.86,386.0,0.0,Archived FRED mirror (Hugging Face)
+2017-02-21,3.81,381.0,-5.0,Archived FRED mirror (Hugging Face)
+2017-02-22,3.78,378.0,-3.0,Archived FRED mirror (Hugging Face)
+2017-02-23,3.77,377.0,-1.0,Archived FRED mirror (Hugging Face)
+2017-02-24,3.84,384.0,7.0,Archived FRED mirror (Hugging Face)
+2017-02-27,3.75,375.0,-9.0,Archived FRED mirror (Hugging Face)
+2017-02-28,3.74,374.0,-1.0,Archived FRED mirror (Hugging Face)
+2017-03-01,3.57,357.0,-17.0,Archived FRED mirror (Hugging Face)
+2017-03-02,3.55,355.0,-2.0,Archived FRED mirror (Hugging Face)
+2017-03-03,3.6,360.0,5.0,Archived FRED mirror (Hugging Face)
+2017-03-06,3.66,366.0,6.0,Archived FRED mirror (Hugging Face)
+2017-03-07,3.73,373.0,7.0,Archived FRED mirror (Hugging Face)
+2017-03-08,3.79,379.0,6.0,Archived FRED mirror (Hugging Face)
+2017-03-09,3.88,388.0,9.0,Archived FRED mirror (Hugging Face)
+2017-03-10,3.89,389.0,1.0,Archived FRED mirror (Hugging Face)
+2017-03-13,3.94,394.0,5.0,Archived FRED mirror (Hugging Face)
+2017-03-14,4.05,405.0,11.0,Archived FRED mirror (Hugging Face)
+2017-03-15,4.02,401.99999999999994,-3.000000000000057,Archived FRED mirror (Hugging Face)
+2017-03-16,3.88,388.0,-13.999999999999943,Archived FRED mirror (Hugging Face)
+2017-03-17,3.91,391.0,3.0,Archived FRED mirror (Hugging Face)
+2017-03-20,3.97,397.0,6.0,Archived FRED mirror (Hugging Face)
+2017-03-21,4.04,404.0,7.0,Archived FRED mirror (Hugging Face)
+2017-03-22,4.16,416.0,12.0,Archived FRED mirror (Hugging Face)
+2017-03-23,4.11,411.00000000000006,-4.999999999999943,Archived FRED mirror (Hugging Face)
+2017-03-24,4.07,407.0,-4.000000000000057,Archived FRED mirror (Hugging Face)
+2017-03-27,4.12,412.0,5.0,Archived FRED mirror (Hugging Face)
+2017-03-28,4.01,401.0,-11.0,Archived FRED mirror (Hugging Face)
+2017-03-29,3.94,394.0,-7.0,Archived FRED mirror (Hugging Face)
+2017-03-30,3.85,385.0,-9.0,Archived FRED mirror (Hugging Face)
+2017-03-31,3.92,392.0,7.0,Archived FRED mirror (Hugging Face)
+2017-04-03,3.98,398.0,6.0,Archived FRED mirror (Hugging Face)
+2017-04-04,3.98,398.0,0.0,Archived FRED mirror (Hugging Face)
+2017-04-05,3.91,391.0,-7.0,Archived FRED mirror (Hugging Face)
+2017-04-06,3.93,393.0,2.0,Archived FRED mirror (Hugging Face)
+2017-04-07,3.86,386.0,-7.0,Archived FRED mirror (Hugging Face)
+2017-04-10,3.86,386.0,0.0,Archived FRED mirror (Hugging Face)
+2017-04-11,3.94,394.0,8.0,Archived FRED mirror (Hugging Face)
+2017-04-12,3.96,396.0,2.0,Archived FRED mirror (Hugging Face)
+2017-04-13,4.03,403.0,7.0,Archived FRED mirror (Hugging Face)
+2017-04-17,4.0,400.0,-3.0,Archived FRED mirror (Hugging Face)
+2017-04-18,4.07,407.0,7.0,Archived FRED mirror (Hugging Face)
+2017-04-19,4.01,401.0,-6.0,Archived FRED mirror (Hugging Face)
+2017-04-20,3.98,398.0,-3.0,Archived FRED mirror (Hugging Face)
+2017-04-21,3.97,397.0,-1.0,Archived FRED mirror (Hugging Face)
+2017-04-24,3.86,386.0,-11.0,Archived FRED mirror (Hugging Face)
+2017-04-25,3.78,378.0,-8.0,Archived FRED mirror (Hugging Face)
+2017-04-26,3.76,376.0,-2.0,Archived FRED mirror (Hugging Face)
+2017-04-27,3.78,378.0,2.0,Archived FRED mirror (Hugging Face)
+2017-04-28,3.75,375.0,-3.0,Archived FRED mirror (Hugging Face)
+2017-04-30,3.81,381.0,6.0,Archived FRED mirror (Hugging Face)
+2017-05-01,3.78,378.0,-3.0,Archived FRED mirror (Hugging Face)
+2017-05-02,3.79,379.0,1.0,Archived FRED mirror (Hugging Face)
+2017-05-03,3.76,376.0,-3.0,Archived FRED mirror (Hugging Face)
+2017-05-04,3.8,380.0,4.0,Archived FRED mirror (Hugging Face)
+2017-05-05,3.82,382.0,2.0,Archived FRED mirror (Hugging Face)
+2017-05-08,3.8,380.0,-2.0,Archived FRED mirror (Hugging Face)
+2017-05-09,3.74,374.0,-6.0,Archived FRED mirror (Hugging Face)
+2017-05-10,3.72,372.0,-2.0,Archived FRED mirror (Hugging Face)
+2017-05-11,3.72,372.0,0.0,Archived FRED mirror (Hugging Face)
+2017-05-12,3.77,377.0,5.0,Archived FRED mirror (Hugging Face)
+2017-05-15,3.72,372.0,-5.0,Archived FRED mirror (Hugging Face)
+2017-05-16,3.71,371.0,-1.0,Archived FRED mirror (Hugging Face)
+2017-05-17,3.84,384.0,13.0,Archived FRED mirror (Hugging Face)
+2017-05-18,3.85,385.0,1.0,Archived FRED mirror (Hugging Face)
+2017-05-19,3.78,378.0,-7.0,Archived FRED mirror (Hugging Face)
+2017-05-22,3.72,372.0,-6.0,Archived FRED mirror (Hugging Face)
+2017-05-23,3.67,367.0,-5.0,Archived FRED mirror (Hugging Face)
+2017-05-24,3.68,368.0,1.0,Archived FRED mirror (Hugging Face)
+2017-05-25,3.67,367.0,-1.0,Archived FRED mirror (Hugging Face)
+2017-05-26,3.67,367.0,0.0,Archived FRED mirror (Hugging Face)
+2017-05-29,3.67,367.0,0.0,Archived FRED mirror (Hugging Face)
+2017-05-30,3.68,368.0,1.0,Archived FRED mirror (Hugging Face)
+2017-05-31,3.74,374.0,6.0,Archived FRED mirror (Hugging Face)
+2017-06-01,3.69,369.0,-5.0,Archived FRED mirror (Hugging Face)
+2017-06-02,3.69,369.0,0.0,Archived FRED mirror (Hugging Face)
+2017-06-05,3.68,368.0,-1.0,Archived FRED mirror (Hugging Face)
+2017-06-06,3.72,372.0,4.0,Archived FRED mirror (Hugging Face)
+2017-06-07,3.73,373.0,1.0,Archived FRED mirror (Hugging Face)
+2017-06-08,3.76,376.0,3.0,Archived FRED mirror (Hugging Face)
+2017-06-09,3.73,373.0,-3.0,Archived FRED mirror (Hugging Face)
+2017-06-12,3.71,371.0,-2.0,Archived FRED mirror (Hugging Face)
+2017-06-13,3.68,368.0,-3.0,Archived FRED mirror (Hugging Face)
+2017-06-14,3.7,370.0,2.0,Archived FRED mirror (Hugging Face)
+2017-06-15,3.72,372.0,2.0,Archived FRED mirror (Hugging Face)
+2017-06-16,3.76,376.0,4.0,Archived FRED mirror (Hugging Face)
+2017-06-19,3.7,370.0,-6.0,Archived FRED mirror (Hugging Face)
+2017-06-20,3.77,377.0,7.0,Archived FRED mirror (Hugging Face)
+2017-06-21,3.85,385.0,8.0,Archived FRED mirror (Hugging Face)
+2017-06-22,3.87,387.0,2.0,Archived FRED mirror (Hugging Face)
+2017-06-23,3.86,386.0,-1.0,Archived FRED mirror (Hugging Face)
+2017-06-26,3.83,383.0,-3.0,Archived FRED mirror (Hugging Face)
+2017-06-27,3.77,377.0,-6.0,Archived FRED mirror (Hugging Face)
+2017-06-28,3.77,377.0,0.0,Archived FRED mirror (Hugging Face)
+2017-06-29,3.76,376.0,-1.0,Archived FRED mirror (Hugging Face)
+2017-06-30,3.77,377.0,1.0,Archived FRED mirror (Hugging Face)
+2017-07-03,3.72,372.0,-5.0,Archived FRED mirror (Hugging Face)
+2017-07-04,3.72,372.0,0.0,Archived FRED mirror (Hugging Face)
+2017-07-05,3.73,373.0,1.0,Archived FRED mirror (Hugging Face)
+2017-07-06,3.78,378.0,5.0,Archived FRED mirror (Hugging Face)
+2017-07-07,3.83,383.0,5.0,Archived FRED mirror (Hugging Face)
+2017-07-10,3.83,383.0,0.0,Archived FRED mirror (Hugging Face)
+2017-07-11,3.85,385.0,2.0,Archived FRED mirror (Hugging Face)
+2017-07-12,3.81,381.0,-4.0,Archived FRED mirror (Hugging Face)
+2017-07-13,3.77,377.0,-4.0,Archived FRED mirror (Hugging Face)
+2017-07-14,3.73,373.0,-4.0,Archived FRED mirror (Hugging Face)
+2017-07-17,3.69,369.0,-4.0,Archived FRED mirror (Hugging Face)
+2017-07-18,3.69,369.0,0.0,Archived FRED mirror (Hugging Face)
+2017-07-19,3.64,364.0,-5.0,Archived FRED mirror (Hugging Face)
+2017-07-20,3.61,361.0,-3.0,Archived FRED mirror (Hugging Face)
+2017-07-21,3.64,364.0,3.0,Archived FRED mirror (Hugging Face)
+2017-07-24,3.63,363.0,-1.0,Archived FRED mirror (Hugging Face)
+2017-07-25,3.55,355.0,-8.0,Archived FRED mirror (Hugging Face)
+2017-07-26,3.56,356.0,1.0,Archived FRED mirror (Hugging Face)
+2017-07-27,3.55,355.0,-1.0,Archived FRED mirror (Hugging Face)
+2017-07-28,3.59,359.0,4.0,Archived FRED mirror (Hugging Face)
+2017-07-31,3.61,361.0,2.0,Archived FRED mirror (Hugging Face)
+2017-08-01,3.6,360.0,-1.0,Archived FRED mirror (Hugging Face)
+2017-08-02,3.59,359.0,-1.0,Archived FRED mirror (Hugging Face)
+2017-08-03,3.63,363.0,4.0,Archived FRED mirror (Hugging Face)
+2017-08-04,3.63,363.0,0.0,Archived FRED mirror (Hugging Face)
+2017-08-07,3.64,364.0,1.0,Archived FRED mirror (Hugging Face)
+2017-08-08,3.64,364.0,0.0,Archived FRED mirror (Hugging Face)
+2017-08-09,3.81,381.0,17.0,Archived FRED mirror (Hugging Face)
+2017-08-10,3.92,392.0,11.0,Archived FRED mirror (Hugging Face)
+2017-08-11,4.0,400.0,8.0,Archived FRED mirror (Hugging Face)
+2017-08-14,3.89,389.0,-11.0,Archived FRED mirror (Hugging Face)
+2017-08-15,3.87,387.0,-2.0,Archived FRED mirror (Hugging Face)
+2017-08-16,3.88,388.0,1.0,Archived FRED mirror (Hugging Face)
+2017-08-17,3.93,393.0,5.0,Archived FRED mirror (Hugging Face)
+2017-08-18,3.98,398.0,5.0,Archived FRED mirror (Hugging Face)
+2017-08-21,4.0,400.0,2.0,Archived FRED mirror (Hugging Face)
+2017-08-22,3.93,393.0,-7.0,Archived FRED mirror (Hugging Face)
+2017-08-23,3.95,395.0,2.0,Archived FRED mirror (Hugging Face)
+2017-08-24,3.91,391.0,-4.0,Archived FRED mirror (Hugging Face)
+2017-08-25,3.89,389.0,-2.0,Archived FRED mirror (Hugging Face)
+2017-08-28,3.88,388.0,-1.0,Archived FRED mirror (Hugging Face)
+2017-08-29,3.9,390.0,2.0,Archived FRED mirror (Hugging Face)
+2017-08-30,3.86,386.0,-4.0,Archived FRED mirror (Hugging Face)
+2017-08-31,3.85,385.0,-1.0,Archived FRED mirror (Hugging Face)
+2017-09-01,3.82,382.0,-3.0,Archived FRED mirror (Hugging Face)
+2017-09-04,3.82,382.0,0.0,Archived FRED mirror (Hugging Face)
+2017-09-05,3.91,391.0,9.0,Archived FRED mirror (Hugging Face)
+2017-09-06,3.84,384.0,-7.0,Archived FRED mirror (Hugging Face)
+2017-09-07,3.88,388.0,4.0,Archived FRED mirror (Hugging Face)
+2017-09-08,3.92,392.0,4.0,Archived FRED mirror (Hugging Face)
+2017-09-11,3.85,385.0,-7.0,Archived FRED mirror (Hugging Face)
+2017-09-12,3.81,381.0,-4.0,Archived FRED mirror (Hugging Face)
+2017-09-13,3.78,378.0,-3.0,Archived FRED mirror (Hugging Face)
+2017-09-14,3.74,374.0,-4.0,Archived FRED mirror (Hugging Face)
+2017-09-15,3.73,373.0,-1.0,Archived FRED mirror (Hugging Face)
+2017-09-18,3.68,368.0,-5.0,Archived FRED mirror (Hugging Face)
+2017-09-19,3.66,366.0,-2.0,Archived FRED mirror (Hugging Face)
+2017-09-20,3.6,360.0,-6.0,Archived FRED mirror (Hugging Face)
+2017-09-21,3.62,362.0,2.0,Archived FRED mirror (Hugging Face)
+2017-09-22,3.64,364.0,2.0,Archived FRED mirror (Hugging Face)
+2017-09-25,3.66,366.0,2.0,Archived FRED mirror (Hugging Face)
+2017-09-26,3.62,362.0,-4.0,Archived FRED mirror (Hugging Face)
+2017-09-27,3.57,357.0,-5.0,Archived FRED mirror (Hugging Face)
+2017-09-28,3.57,357.0,0.0,Archived FRED mirror (Hugging Face)
+2017-09-29,3.54,354.0,-3.0,Archived FRED mirror (Hugging Face)
+2017-09-30,3.56,356.0,2.0,Archived FRED mirror (Hugging Face)
+2017-10-02,3.55,355.0,-1.0,Archived FRED mirror (Hugging Face)
+2017-10-03,3.55,355.0,0.0,Archived FRED mirror (Hugging Face)
+2017-10-04,3.54,354.0,-1.0,Archived FRED mirror (Hugging Face)
+2017-10-05,3.52,352.0,-2.0,Archived FRED mirror (Hugging Face)
+2017-10-06,3.52,352.0,0.0,Archived FRED mirror (Hugging Face)
+2017-10-09,3.51,351.0,-1.0,Archived FRED mirror (Hugging Face)
+2017-10-10,3.52,352.0,1.0,Archived FRED mirror (Hugging Face)
+2017-10-11,3.52,352.0,0.0,Archived FRED mirror (Hugging Face)
+2017-10-12,3.56,356.0,4.0,Archived FRED mirror (Hugging Face)
+2017-10-13,3.6,360.0,4.0,Archived FRED mirror (Hugging Face)
+2017-10-16,3.53,353.0,-7.0,Archived FRED mirror (Hugging Face)
+2017-10-17,3.5,350.0,-3.0,Archived FRED mirror (Hugging Face)
+2017-10-18,3.46,346.0,-4.0,Archived FRED mirror (Hugging Face)
+2017-10-19,3.48,348.0,2.0,Archived FRED mirror (Hugging Face)
+2017-10-20,3.42,342.0,-6.0,Archived FRED mirror (Hugging Face)
+2017-10-23,3.4,340.0,-2.0,Archived FRED mirror (Hugging Face)
+2017-10-24,3.38,338.0,-2.0,Archived FRED mirror (Hugging Face)
+2017-10-25,3.42,342.0,4.0,Archived FRED mirror (Hugging Face)
+2017-10-26,3.41,341.0,-1.0,Archived FRED mirror (Hugging Face)
+2017-10-27,3.44,344.0,3.0,Archived FRED mirror (Hugging Face)
+2017-10-30,3.49,349.0,5.0,Archived FRED mirror (Hugging Face)
+2017-10-31,3.51,351.0,2.0,Archived FRED mirror (Hugging Face)
+2017-11-01,3.48,348.0,-3.0,Archived FRED mirror (Hugging Face)
+2017-11-02,3.52,352.0,4.0,Archived FRED mirror (Hugging Face)
+2017-11-03,3.52,352.0,0.0,Archived FRED mirror (Hugging Face)
+2017-11-06,3.55,355.0,3.0,Archived FRED mirror (Hugging Face)
+2017-11-07,3.57,357.0,2.0,Archived FRED mirror (Hugging Face)
+2017-11-08,3.67,367.0,10.0,Archived FRED mirror (Hugging Face)
+2017-11-09,3.79,379.0,12.0,Archived FRED mirror (Hugging Face)
+2017-11-10,3.76,376.0,-3.0,Archived FRED mirror (Hugging Face)
+2017-11-13,3.77,377.0,1.0,Archived FRED mirror (Hugging Face)
+2017-11-14,3.84,384.0,7.0,Archived FRED mirror (Hugging Face)
+2017-11-15,3.97,397.0,13.0,Archived FRED mirror (Hugging Face)
+2017-11-16,3.79,379.0,-18.0,Archived FRED mirror (Hugging Face)
+2017-11-17,3.76,376.0,-3.0,Archived FRED mirror (Hugging Face)
+2017-11-20,3.7,370.0,-6.0,Archived FRED mirror (Hugging Face)
+2017-11-21,3.66,366.0,-4.0,Archived FRED mirror (Hugging Face)
+2017-11-22,3.7,370.0,4.0,Archived FRED mirror (Hugging Face)
+2017-11-23,3.7,370.0,0.0,Archived FRED mirror (Hugging Face)
+2017-11-24,3.67,367.0,-3.0,Archived FRED mirror (Hugging Face)
+2017-11-27,3.66,366.0,-1.0,Archived FRED mirror (Hugging Face)
+2017-11-28,3.67,367.0,1.0,Archived FRED mirror (Hugging Face)
+2017-11-29,3.64,364.0,-3.0,Archived FRED mirror (Hugging Face)
+2017-11-30,3.61,361.0,-3.0,Archived FRED mirror (Hugging Face)
+2017-12-01,3.63,363.0,2.0,Archived FRED mirror (Hugging Face)
+2017-12-04,3.58,358.0,-5.0,Archived FRED mirror (Hugging Face)
+2017-12-05,3.57,357.0,-1.0,Archived FRED mirror (Hugging Face)
+2017-12-06,3.63,363.0,6.0,Archived FRED mirror (Hugging Face)
+2017-12-07,3.63,363.0,0.0,Archived FRED mirror (Hugging Face)
+2017-12-08,3.63,363.0,0.0,Archived FRED mirror (Hugging Face)
+2017-12-11,3.61,361.0,-2.0,Archived FRED mirror (Hugging Face)
+2017-12-12,3.58,358.0,-3.0,Archived FRED mirror (Hugging Face)
+2017-12-13,3.64,364.0,6.0,Archived FRED mirror (Hugging Face)
+2017-12-14,3.63,363.0,-1.0,Archived FRED mirror (Hugging Face)
+2017-12-15,3.64,364.0,1.0,Archived FRED mirror (Hugging Face)
+2017-12-18,3.64,364.0,0.0,Archived FRED mirror (Hugging Face)
+2017-12-19,3.6,360.0,-4.0,Archived FRED mirror (Hugging Face)
+2017-12-20,3.58,358.0,-2.0,Archived FRED mirror (Hugging Face)
+2017-12-21,3.57,357.0,-1.0,Archived FRED mirror (Hugging Face)
+2017-12-22,3.56,356.0,-1.0,Archived FRED mirror (Hugging Face)
+2017-12-26,3.57,357.0,1.0,Archived FRED mirror (Hugging Face)
+2017-12-27,3.59,359.0,2.0,Archived FRED mirror (Hugging Face)
+2017-12-28,3.55,355.0,-4.0,Archived FRED mirror (Hugging Face)
+2017-12-29,3.58,358.0,3.0,Archived FRED mirror (Hugging Face)
+2017-12-31,3.63,363.0,5.0,Archived FRED mirror (Hugging Face)
+2018-01-02,3.55,355.0,-8.0,Archived FRED mirror (Hugging Face)
+2018-01-03,3.48,348.0,-7.0,Archived FRED mirror (Hugging Face)
+2018-01-04,3.4,340.0,-8.0,Archived FRED mirror (Hugging Face)
+2018-01-05,3.36,336.0,-4.0,Archived FRED mirror (Hugging Face)
+2018-01-08,3.35,335.0,-1.0,Archived FRED mirror (Hugging Face)
+2018-01-09,3.33,333.0,-2.0,Archived FRED mirror (Hugging Face)
+2018-01-10,3.42,342.0,9.0,Archived FRED mirror (Hugging Face)
+2018-01-11,3.4,340.0,-2.0,Archived FRED mirror (Hugging Face)
+2018-01-12,3.37,337.0,-3.0,Archived FRED mirror (Hugging Face)
+2018-01-15,3.35,335.0,-2.0,Archived FRED mirror (Hugging Face)
+2018-01-16,3.34,334.0,-1.0,Archived FRED mirror (Hugging Face)
+2018-01-17,3.34,334.0,0.0,Archived FRED mirror (Hugging Face)
+2018-01-18,3.35,335.0,1.0,Archived FRED mirror (Hugging Face)
+2018-01-19,3.35,335.0,0.0,Archived FRED mirror (Hugging Face)
+2018-01-22,3.32,332.0,-3.0,Archived FRED mirror (Hugging Face)
+2018-01-23,3.31,331.0,-1.0,Archived FRED mirror (Hugging Face)
+2018-01-24,3.28,328.0,-3.0,Archived FRED mirror (Hugging Face)
+2018-01-25,3.28,328.0,0.0,Archived FRED mirror (Hugging Face)
+2018-01-26,3.23,323.0,-5.0,Archived FRED mirror (Hugging Face)
+2018-01-29,3.26,326.0,3.0,Archived FRED mirror (Hugging Face)
+2018-01-30,3.33,333.0,7.0,Archived FRED mirror (Hugging Face)
+2018-01-31,3.29,329.0,-4.0,Archived FRED mirror (Hugging Face)
+2018-02-01,3.29,329.0,0.0,Archived FRED mirror (Hugging Face)
+2018-02-02,3.36,336.0,7.0,Archived FRED mirror (Hugging Face)
+2018-02-05,3.48,348.0,12.0,Archived FRED mirror (Hugging Face)
+2018-02-06,3.6,360.0,12.0,Archived FRED mirror (Hugging Face)
+2018-02-07,3.46,346.0,-14.0,Archived FRED mirror (Hugging Face)
+2018-02-08,3.59,359.0,13.0,Archived FRED mirror (Hugging Face)
+2018-02-09,3.82,382.0,23.0,Archived FRED mirror (Hugging Face)
+2018-02-12,3.71,371.0,-11.0,Archived FRED mirror (Hugging Face)
+2018-02-13,3.78,378.0,7.0,Archived FRED mirror (Hugging Face)
+2018-02-14,3.69,369.0,-9.0,Archived FRED mirror (Hugging Face)
+2018-02-15,3.57,357.0,-12.0,Archived FRED mirror (Hugging Face)
+2018-02-16,3.5,350.0,-7.0,Archived FRED mirror (Hugging Face)
+2018-02-19,3.5,350.0,0.0,Archived FRED mirror (Hugging Face)
+2018-02-20,3.48,348.0,-2.0,Archived FRED mirror (Hugging Face)
+2018-02-21,3.46,346.0,-2.0,Archived FRED mirror (Hugging Face)
+2018-02-22,3.53,353.0,7.0,Archived FRED mirror (Hugging Face)
+2018-02-23,3.58,358.0,5.0,Archived FRED mirror (Hugging Face)
+2018-02-26,3.5,350.0,-8.0,Archived FRED mirror (Hugging Face)
+2018-02-27,3.47,347.0,-3.0,Archived FRED mirror (Hugging Face)
+2018-02-28,3.47,347.0,0.0,Archived FRED mirror (Hugging Face)
+2018-03-01,3.59,359.0,12.0,Archived FRED mirror (Hugging Face)
+2018-03-02,3.65,365.0,6.0,Archived FRED mirror (Hugging Face)
+2018-03-05,3.59,359.0,-6.0,Archived FRED mirror (Hugging Face)
+2018-03-06,3.53,353.0,-6.0,Archived FRED mirror (Hugging Face)
+2018-03-07,3.56,356.0,3.0,Archived FRED mirror (Hugging Face)
+2018-03-08,3.56,356.0,0.0,Archived FRED mirror (Hugging Face)
+2018-03-09,3.53,353.0,-3.0,Archived FRED mirror (Hugging Face)
+2018-03-12,3.55,355.0,2.0,Archived FRED mirror (Hugging Face)
+2018-03-13,3.58,358.0,3.0,Archived FRED mirror (Hugging Face)
+2018-03-14,3.62,362.0,4.0,Archived FRED mirror (Hugging Face)
+2018-03-15,3.62,362.0,0.0,Archived FRED mirror (Hugging Face)
+2018-03-16,3.6,360.0,-2.0,Archived FRED mirror (Hugging Face)
+2018-03-19,3.65,365.0,5.0,Archived FRED mirror (Hugging Face)
+2018-03-20,3.62,362.0,-3.0,Archived FRED mirror (Hugging Face)
+2018-03-21,3.6,360.0,-2.0,Archived FRED mirror (Hugging Face)
+2018-03-22,3.7,370.0,10.0,Archived FRED mirror (Hugging Face)
+2018-03-23,3.74,374.0,4.0,Archived FRED mirror (Hugging Face)
+2018-03-26,3.73,373.0,-1.0,Archived FRED mirror (Hugging Face)
+2018-03-27,3.75,375.0,2.0,Archived FRED mirror (Hugging Face)
+2018-03-28,3.77,377.0,2.0,Archived FRED mirror (Hugging Face)
+2018-03-29,3.79,379.0,2.0,Archived FRED mirror (Hugging Face)
+2018-03-31,3.72,372.0,-7.0,Archived FRED mirror (Hugging Face)
+2018-04-02,3.77,377.0,5.0,Archived FRED mirror (Hugging Face)
+2018-04-03,3.71,371.0,-6.0,Archived FRED mirror (Hugging Face)
+2018-04-04,3.71,371.0,0.0,Archived FRED mirror (Hugging Face)
+2018-04-05,3.59,359.0,-12.0,Archived FRED mirror (Hugging Face)
+2018-04-06,3.64,364.0,5.0,Archived FRED mirror (Hugging Face)
+2018-04-09,3.61,361.0,-3.0,Archived FRED mirror (Hugging Face)
+2018-04-10,3.52,352.0,-9.0,Archived FRED mirror (Hugging Face)
+2018-04-11,3.5,350.0,-2.0,Archived FRED mirror (Hugging Face)
+2018-04-12,3.42,342.0,-8.0,Archived FRED mirror (Hugging Face)
+2018-04-13,3.38,338.0,-4.0,Archived FRED mirror (Hugging Face)
+2018-04-16,3.33,333.0,-5.0,Archived FRED mirror (Hugging Face)
+2018-04-17,3.29,329.0,-4.0,Archived FRED mirror (Hugging Face)
+2018-04-18,3.24,324.0,-5.0,Archived FRED mirror (Hugging Face)
+2018-04-19,3.33,333.0,9.0,Archived FRED mirror (Hugging Face)
+2018-04-20,3.33,333.0,0.0,Archived FRED mirror (Hugging Face)
+2018-04-23,3.36,336.0,3.0,Archived FRED mirror (Hugging Face)
+2018-04-24,3.41,341.0,5.0,Archived FRED mirror (Hugging Face)
+2018-04-25,3.47,347.0,6.0,Archived FRED mirror (Hugging Face)
+2018-04-26,3.43,343.0,-4.0,Archived FRED mirror (Hugging Face)
+2018-04-27,3.44,344.0,1.0,Archived FRED mirror (Hugging Face)
+2018-04-30,3.46,346.0,2.0,Archived FRED mirror (Hugging Face)
+2018-05-01,3.47,347.0,1.0,Archived FRED mirror (Hugging Face)
+2018-05-02,3.45,345.0,-2.0,Archived FRED mirror (Hugging Face)
+2018-05-03,3.5,350.0,5.0,Archived FRED mirror (Hugging Face)
+2018-05-04,3.49,349.0,-1.0,Archived FRED mirror (Hugging Face)
+2018-05-07,3.46,346.0,-3.0,Archived FRED mirror (Hugging Face)
+2018-05-08,3.46,346.0,0.0,Archived FRED mirror (Hugging Face)
+2018-05-09,3.43,343.0,-3.0,Archived FRED mirror (Hugging Face)
+2018-05-10,3.41,341.0,-2.0,Archived FRED mirror (Hugging Face)
+2018-05-11,3.4,340.0,-1.0,Archived FRED mirror (Hugging Face)
+2018-05-14,3.37,337.0,-3.0,Archived FRED mirror (Hugging Face)
+2018-05-15,3.36,336.0,-1.0,Archived FRED mirror (Hugging Face)
+2018-05-16,3.37,337.0,1.0,Archived FRED mirror (Hugging Face)
+2018-05-17,3.36,336.0,-1.0,Archived FRED mirror (Hugging Face)
+2018-05-18,3.41,341.0,5.0,Archived FRED mirror (Hugging Face)
+2018-05-21,3.4,340.0,-1.0,Archived FRED mirror (Hugging Face)
+2018-05-22,3.39,339.0,-1.0,Archived FRED mirror (Hugging Face)
+2018-05-23,3.48,348.0,9.0,Archived FRED mirror (Hugging Face)
+2018-05-24,3.49,349.0,1.0,Archived FRED mirror (Hugging Face)
+2018-05-25,3.53,353.0,4.0,Archived FRED mirror (Hugging Face)
+2018-05-28,3.53,353.0,0.0,Archived FRED mirror (Hugging Face)
+2018-05-29,3.75,375.0,22.0,Archived FRED mirror (Hugging Face)
+2018-05-30,3.64,364.0,-11.0,Archived FRED mirror (Hugging Face)
+2018-05-31,3.63,363.0,-1.0,Archived FRED mirror (Hugging Face)
+2018-06-01,3.55,355.0,-8.0,Archived FRED mirror (Hugging Face)
+2018-06-04,3.49,349.0,-6.0,Archived FRED mirror (Hugging Face)
+2018-06-05,3.5,350.0,1.0,Archived FRED mirror (Hugging Face)
+2018-06-06,3.44,344.0,-6.0,Archived FRED mirror (Hugging Face)
+2018-06-07,3.44,344.0,0.0,Archived FRED mirror (Hugging Face)
+2018-06-08,3.45,345.0,1.0,Archived FRED mirror (Hugging Face)
+2018-06-11,3.39,339.0,-6.0,Archived FRED mirror (Hugging Face)
+2018-06-12,3.38,338.0,-1.0,Archived FRED mirror (Hugging Face)
+2018-06-13,3.33,333.0,-5.0,Archived FRED mirror (Hugging Face)
+2018-06-14,3.31,331.0,-2.0,Archived FRED mirror (Hugging Face)
+2018-06-15,3.33,333.0,2.0,Archived FRED mirror (Hugging Face)
+2018-06-18,3.34,334.0,1.0,Archived FRED mirror (Hugging Face)
+2018-06-19,3.4,340.0,6.0,Archived FRED mirror (Hugging Face)
+2018-06-20,3.34,334.0,-6.0,Archived FRED mirror (Hugging Face)
+2018-06-21,3.39,339.0,5.0,Archived FRED mirror (Hugging Face)
+2018-06-22,3.39,339.0,0.0,Archived FRED mirror (Hugging Face)
+2018-06-25,3.47,347.0,8.0,Archived FRED mirror (Hugging Face)
+2018-06-26,3.48,348.0,1.0,Archived FRED mirror (Hugging Face)
+2018-06-27,3.56,356.0,8.0,Archived FRED mirror (Hugging Face)
+2018-06-28,3.64,364.0,8.0,Archived FRED mirror (Hugging Face)
+2018-06-29,3.61,361.0,-3.0,Archived FRED mirror (Hugging Face)
+2018-06-30,3.71,371.0,10.0,Archived FRED mirror (Hugging Face)
+2018-07-02,3.78,378.0,7.0,Archived FRED mirror (Hugging Face)
+2018-07-03,3.77,377.0,-1.0,Archived FRED mirror (Hugging Face)
+2018-07-04,3.77,377.0,0.0,Archived FRED mirror (Hugging Face)
+2018-07-05,3.74,374.0,-3.0,Archived FRED mirror (Hugging Face)
+2018-07-06,3.74,374.0,0.0,Archived FRED mirror (Hugging Face)
+2018-07-09,3.65,365.0,-9.0,Archived FRED mirror (Hugging Face)
+2018-07-10,3.59,359.0,-6.0,Archived FRED mirror (Hugging Face)
+2018-07-11,3.66,366.0,7.0,Archived FRED mirror (Hugging Face)
+2018-07-12,3.61,361.0,-5.0,Archived FRED mirror (Hugging Face)
+2018-07-13,3.62,362.0,1.0,Archived FRED mirror (Hugging Face)
+2018-07-16,3.59,359.0,-3.0,Archived FRED mirror (Hugging Face)
+2018-07-17,3.58,358.0,-1.0,Archived FRED mirror (Hugging Face)
+2018-07-18,3.56,356.0,-2.0,Archived FRED mirror (Hugging Face)
+2018-07-19,3.59,359.0,3.0,Archived FRED mirror (Hugging Face)
+2018-07-20,3.55,355.0,-4.0,Archived FRED mirror (Hugging Face)
+2018-07-23,3.5,350.0,-5.0,Archived FRED mirror (Hugging Face)
+2018-07-24,3.47,347.0,-3.0,Archived FRED mirror (Hugging Face)
+2018-07-25,3.48,348.0,1.0,Archived FRED mirror (Hugging Face)
+2018-07-26,3.42,342.0,-6.0,Archived FRED mirror (Hugging Face)
+2018-07-27,3.42,342.0,0.0,Archived FRED mirror (Hugging Face)
+2018-07-30,3.43,343.0,1.0,Archived FRED mirror (Hugging Face)
+2018-07-31,3.46,346.0,3.0,Archived FRED mirror (Hugging Face)
+2018-08-01,3.43,343.0,-3.0,Archived FRED mirror (Hugging Face)
+2018-08-02,3.43,343.0,0.0,Archived FRED mirror (Hugging Face)
+2018-08-03,3.43,343.0,0.0,Archived FRED mirror (Hugging Face)
+2018-08-06,3.43,343.0,0.0,Archived FRED mirror (Hugging Face)
+2018-08-07,3.35,335.0,-8.0,Archived FRED mirror (Hugging Face)
+2018-08-08,3.37,337.0,2.0,Archived FRED mirror (Hugging Face)
+2018-08-09,3.38,338.0,1.0,Archived FRED mirror (Hugging Face)
+2018-08-10,3.5,350.0,12.0,Archived FRED mirror (Hugging Face)
+2018-08-13,3.52,352.0,2.0,Archived FRED mirror (Hugging Face)
+2018-08-14,3.48,348.0,-4.0,Archived FRED mirror (Hugging Face)
+2018-08-15,3.55,355.0,7.0,Archived FRED mirror (Hugging Face)
+2018-08-16,3.49,349.0,-6.0,Archived FRED mirror (Hugging Face)
+2018-08-17,3.49,349.0,0.0,Archived FRED mirror (Hugging Face)
+2018-08-20,3.52,352.0,3.0,Archived FRED mirror (Hugging Face)
+2018-08-21,3.48,348.0,-4.0,Archived FRED mirror (Hugging Face)
+2018-08-22,3.48,348.0,0.0,Archived FRED mirror (Hugging Face)
+2018-08-23,3.47,347.0,-1.0,Archived FRED mirror (Hugging Face)
+2018-08-24,3.46,346.0,-1.0,Archived FRED mirror (Hugging Face)
+2018-08-27,3.43,343.0,-3.0,Archived FRED mirror (Hugging Face)
+2018-08-28,3.4,340.0,-3.0,Archived FRED mirror (Hugging Face)
+2018-08-29,3.39,339.0,-1.0,Archived FRED mirror (Hugging Face)
+2018-08-30,3.44,344.0,5.0,Archived FRED mirror (Hugging Face)
+2018-08-31,3.49,349.0,5.0,Archived FRED mirror (Hugging Face)
+2018-09-03,3.49,349.0,0.0,Archived FRED mirror (Hugging Face)
+2018-09-04,3.46,346.0,-3.0,Archived FRED mirror (Hugging Face)
+2018-09-05,3.49,349.0,3.0,Archived FRED mirror (Hugging Face)
+2018-09-06,3.52,352.0,3.0,Archived FRED mirror (Hugging Face)
+2018-09-07,3.48,348.0,-4.0,Archived FRED mirror (Hugging Face)
+2018-09-10,3.46,346.0,-2.0,Archived FRED mirror (Hugging Face)
+2018-09-11,3.4,340.0,-6.0,Archived FRED mirror (Hugging Face)
+2018-09-12,3.38,338.0,-2.0,Archived FRED mirror (Hugging Face)
+2018-09-13,3.35,335.0,-3.0,Archived FRED mirror (Hugging Face)
+2018-09-14,3.29,329.0,-6.0,Archived FRED mirror (Hugging Face)
+2018-09-17,3.29,329.0,0.0,Archived FRED mirror (Hugging Face)
+2018-09-18,3.24,324.0,-5.0,Archived FRED mirror (Hugging Face)
+2018-09-19,3.24,324.0,0.0,Archived FRED mirror (Hugging Face)
+2018-09-20,3.25,325.0,1.0,Archived FRED mirror (Hugging Face)
+2018-09-21,3.25,325.0,0.0,Archived FRED mirror (Hugging Face)
+2018-09-24,3.28,328.0,3.0,Archived FRED mirror (Hugging Face)
+2018-09-25,3.26,326.0,-2.0,Archived FRED mirror (Hugging Face)
+2018-09-26,3.27,327.0,1.0,Archived FRED mirror (Hugging Face)
+2018-09-27,3.25,325.0,-2.0,Archived FRED mirror (Hugging Face)
+2018-09-28,3.24,324.0,-1.0,Archived FRED mirror (Hugging Face)
+2018-09-30,3.28,328.0,4.0,Archived FRED mirror (Hugging Face)
+2018-10-01,3.22,322.0,-6.0,Archived FRED mirror (Hugging Face)
+2018-10-02,3.22,322.0,0.0,Archived FRED mirror (Hugging Face)
+2018-10-03,3.16,316.0,-6.0,Archived FRED mirror (Hugging Face)
+2018-10-04,3.29,329.0,13.0,Archived FRED mirror (Hugging Face)
+2018-10-05,3.32,332.0,3.0,Archived FRED mirror (Hugging Face)
+2018-10-08,3.32,332.0,0.0,Archived FRED mirror (Hugging Face)
+2018-10-09,3.41,341.0,9.0,Archived FRED mirror (Hugging Face)
+2018-10-10,3.51,351.0,10.0,Archived FRED mirror (Hugging Face)
+2018-10-11,3.58,358.0,7.0,Archived FRED mirror (Hugging Face)
+2018-10-12,3.54,354.0,-4.0,Archived FRED mirror (Hugging Face)
+2018-10-15,3.49,349.0,-5.0,Archived FRED mirror (Hugging Face)
+2018-10-16,3.45,345.0,-4.0,Archived FRED mirror (Hugging Face)
+2018-10-17,3.45,345.0,0.0,Archived FRED mirror (Hugging Face)
+2018-10-18,3.51,351.0,6.0,Archived FRED mirror (Hugging Face)
+2018-10-19,3.51,351.0,0.0,Archived FRED mirror (Hugging Face)
+2018-10-22,3.52,352.0,1.0,Archived FRED mirror (Hugging Face)
+2018-10-23,3.65,365.0,13.0,Archived FRED mirror (Hugging Face)
+2018-10-24,3.68,368.0,3.0,Archived FRED mirror (Hugging Face)
+2018-10-25,3.72,372.0,4.0,Archived FRED mirror (Hugging Face)
+2018-10-26,3.85,385.0,13.0,Archived FRED mirror (Hugging Face)
+2018-10-29,3.84,384.0,-1.0,Archived FRED mirror (Hugging Face)
+2018-10-30,3.89,389.0,5.0,Archived FRED mirror (Hugging Face)
+2018-10-31,3.81,381.0,-8.0,Archived FRED mirror (Hugging Face)
+2018-11-01,3.81,381.0,0.0,Archived FRED mirror (Hugging Face)
+2018-11-02,3.72,372.0,-9.0,Archived FRED mirror (Hugging Face)
+2018-11-05,3.72,372.0,0.0,Archived FRED mirror (Hugging Face)
+2018-11-06,3.68,368.0,-4.0,Archived FRED mirror (Hugging Face)
+2018-11-07,3.6,360.0,-8.0,Archived FRED mirror (Hugging Face)
+2018-11-08,3.57,357.0,-3.0,Archived FRED mirror (Hugging Face)
+2018-11-09,3.71,371.0,14.0,Archived FRED mirror (Hugging Face)
+2018-11-12,3.71,371.0,0.0,Archived FRED mirror (Hugging Face)
+2018-11-13,3.89,389.0,18.0,Archived FRED mirror (Hugging Face)
+2018-11-14,3.99,399.0,10.0,Archived FRED mirror (Hugging Face)
+2018-11-15,4.11,411.00000000000006,12.000000000000057,Archived FRED mirror (Hugging Face)
+2018-11-16,4.18,418.0,6.999999999999943,Archived FRED mirror (Hugging Face)
+2018-11-19,4.25,425.0,7.0,Archived FRED mirror (Hugging Face)
+2018-11-20,4.33,433.0,8.0,Archived FRED mirror (Hugging Face)
+2018-11-21,4.24,424.0,-9.0,Archived FRED mirror (Hugging Face)
+2018-11-22,4.25,425.0,1.0,Archived FRED mirror (Hugging Face)
+2018-11-23,4.29,429.0,4.0,Archived FRED mirror (Hugging Face)
+2018-11-26,4.26,426.0,-3.0,Archived FRED mirror (Hugging Face)
+2018-11-27,4.31,430.99999999999994,4.999999999999943,Archived FRED mirror (Hugging Face)
+2018-11-28,4.25,425.0,-5.999999999999943,Archived FRED mirror (Hugging Face)
+2018-11-29,4.22,422.0,-3.0,Archived FRED mirror (Hugging Face)
+2018-11-30,4.29,429.0,7.0,Archived FRED mirror (Hugging Face)
+2018-12-03,4.2,420.0,-9.0,Archived FRED mirror (Hugging Face)
+2018-12-04,4.29,429.0,9.0,Archived FRED mirror (Hugging Face)
+2018-12-05,4.29,429.0,0.0,Archived FRED mirror (Hugging Face)
+2018-12-06,4.5,450.0,21.0,Archived FRED mirror (Hugging Face)
+2018-12-07,4.5,450.0,0.0,Archived FRED mirror (Hugging Face)
+2018-12-10,4.56,455.99999999999994,5.999999999999943,Archived FRED mirror (Hugging Face)
+2018-12-11,4.48,448.00000000000006,-7.999999999999886,Archived FRED mirror (Hugging Face)
+2018-12-12,4.4,440.00000000000006,-8.0,Archived FRED mirror (Hugging Face)
+2018-12-13,4.39,438.99999999999994,-1.0000000000001137,Archived FRED mirror (Hugging Face)
+2018-12-14,4.46,446.0,7.000000000000057,Archived FRED mirror (Hugging Face)
+2018-12-17,4.58,458.0,12.0,Archived FRED mirror (Hugging Face)
+2018-12-18,4.72,472.0,14.0,Archived FRED mirror (Hugging Face)
+2018-12-19,4.84,484.0,12.0,Archived FRED mirror (Hugging Face)
+2018-12-20,5.11,511.00000000000006,27.000000000000057,Archived FRED mirror (Hugging Face)
+2018-12-21,5.22,522.0,10.999999999999943,Archived FRED mirror (Hugging Face)
+2018-12-24,5.35,535.0,13.0,Archived FRED mirror (Hugging Face)
+2018-12-26,5.37,537.0,2.0,Archived FRED mirror (Hugging Face)
+2018-12-27,5.38,538.0,1.0,Archived FRED mirror (Hugging Face)
+2018-12-28,5.3,530.0,-8.0,Archived FRED mirror (Hugging Face)
+2018-12-31,5.33,533.0,3.0,Archived FRED mirror (Hugging Face)
+2019-01-02,5.35,535.0,2.0,Archived FRED mirror (Hugging Face)
+2019-01-03,5.44,544.0,9.0,Archived FRED mirror (Hugging Face)
+2019-01-04,5.05,505.0,-39.0,Archived FRED mirror (Hugging Face)
+2019-01-07,4.83,483.0,-22.0,Archived FRED mirror (Hugging Face)
+2019-01-08,4.65,465.00000000000006,-17.999999999999943,Archived FRED mirror (Hugging Face)
+2019-01-09,4.52,451.99999999999994,-13.000000000000114,Archived FRED mirror (Hugging Face)
+2019-01-10,4.54,454.0,2.000000000000057,Archived FRED mirror (Hugging Face)
+2019-01-11,4.55,455.0,1.0,Archived FRED mirror (Hugging Face)
+2019-01-14,4.6,459.99999999999994,4.999999999999943,Archived FRED mirror (Hugging Face)
+2019-01-15,4.55,455.0,-4.999999999999943,Archived FRED mirror (Hugging Face)
+2019-01-16,4.44,444.00000000000006,-10.999999999999943,Archived FRED mirror (Hugging Face)
+2019-01-17,4.4,440.00000000000006,-4.0,Archived FRED mirror (Hugging Face)
+2019-01-18,4.27,426.99999999999994,-13.000000000000114,Archived FRED mirror (Hugging Face)
+2019-01-21,4.27,426.99999999999994,0.0,Archived FRED mirror (Hugging Face)
+2019-01-22,4.41,441.0,14.000000000000057,Archived FRED mirror (Hugging Face)
+2019-01-23,4.39,438.99999999999994,-2.000000000000057,Archived FRED mirror (Hugging Face)
+2019-01-24,4.45,445.0,6.000000000000057,Archived FRED mirror (Hugging Face)
+2019-01-25,4.34,434.0,-11.0,Archived FRED mirror (Hugging Face)
+2019-01-28,4.41,441.0,7.0,Archived FRED mirror (Hugging Face)
+2019-01-29,4.4,440.00000000000006,-0.9999999999999432,Archived FRED mirror (Hugging Face)
+2019-01-30,4.36,436.00000000000006,-4.0,Archived FRED mirror (Hugging Face)
+2019-01-31,4.37,437.0,0.9999999999999432,Archived FRED mirror (Hugging Face)
+2019-02-01,4.29,429.0,-8.0,Archived FRED mirror (Hugging Face)
+2019-02-04,4.25,425.0,-4.0,Archived FRED mirror (Hugging Face)
+2019-02-05,4.15,415.00000000000006,-9.999999999999943,Archived FRED mirror (Hugging Face)
+2019-02-06,4.13,413.0,-2.000000000000057,Archived FRED mirror (Hugging Face)
+2019-02-07,4.29,429.0,16.0,Archived FRED mirror (Hugging Face)
+2019-02-08,4.32,432.0,3.0,Archived FRED mirror (Hugging Face)
+2019-02-11,4.28,428.0,-4.0,Archived FRED mirror (Hugging Face)
+2019-02-12,4.17,417.0,-11.0,Archived FRED mirror (Hugging Face)
+2019-02-13,4.12,412.0,-5.0,Archived FRED mirror (Hugging Face)
+2019-02-14,4.17,417.0,5.0,Archived FRED mirror (Hugging Face)
+2019-02-15,4.12,412.0,-5.0,Archived FRED mirror (Hugging Face)
+2019-02-18,4.12,412.0,0.0,Archived FRED mirror (Hugging Face)
+2019-02-19,4.11,411.00000000000006,-0.9999999999999432,Archived FRED mirror (Hugging Face)
+2019-02-20,4.08,408.0,-3.000000000000057,Archived FRED mirror (Hugging Face)
+2019-02-21,4.04,404.0,-4.0,Archived FRED mirror (Hugging Face)
+2019-02-22,4.05,405.0,1.0,Archived FRED mirror (Hugging Face)
+2019-02-25,4.0,400.0,-5.0,Archived FRED mirror (Hugging Face)
+2019-02-26,4.01,401.0,1.0,Archived FRED mirror (Hugging Face)
+2019-02-27,3.94,394.0,-7.0,Archived FRED mirror (Hugging Face)
+2019-02-28,3.92,392.0,-2.0,Archived FRED mirror (Hugging Face)
+2019-03-01,3.86,386.0,-6.0,Archived FRED mirror (Hugging Face)
+2019-03-04,3.9,390.0,4.0,Archived FRED mirror (Hugging Face)
+2019-03-05,3.91,391.0,1.0,Archived FRED mirror (Hugging Face)
+2019-03-06,3.98,398.0,7.0,Archived FRED mirror (Hugging Face)
+2019-03-07,4.1,409.99999999999994,11.999999999999943,Archived FRED mirror (Hugging Face)
+2019-03-08,4.18,418.0,8.000000000000057,Archived FRED mirror (Hugging Face)
+2019-03-11,4.12,412.0,-6.0,Archived FRED mirror (Hugging Face)
+2019-03-12,4.08,408.0,-4.0,Archived FRED mirror (Hugging Face)
+2019-03-13,3.99,399.0,-9.0,Archived FRED mirror (Hugging Face)
+2019-03-14,3.95,395.0,-4.0,Archived FRED mirror (Hugging Face)
+2019-03-15,3.95,395.0,0.0,Archived FRED mirror (Hugging Face)
+2019-03-18,3.95,395.0,0.0,Archived FRED mirror (Hugging Face)
+2019-03-19,3.91,391.0,-4.0,Archived FRED mirror (Hugging Face)
+2019-03-20,3.97,397.0,6.0,Archived FRED mirror (Hugging Face)
+2019-03-21,3.92,392.0,-5.0,Archived FRED mirror (Hugging Face)
+2019-03-22,4.03,403.0,11.0,Archived FRED mirror (Hugging Face)
+2019-03-25,4.13,413.0,10.0,Archived FRED mirror (Hugging Face)
+2019-03-26,4.09,409.0,-4.0,Archived FRED mirror (Hugging Face)
+2019-03-27,4.09,409.0,0.0,Archived FRED mirror (Hugging Face)
+2019-03-28,4.08,408.0,-1.0,Archived FRED mirror (Hugging Face)
+2019-03-29,3.99,399.0,-9.0,Archived FRED mirror (Hugging Face)
+2019-03-31,4.05,405.0,6.0,Archived FRED mirror (Hugging Face)
+2019-04-01,3.94,394.0,-11.0,Archived FRED mirror (Hugging Face)
+2019-04-02,3.95,395.0,1.0,Archived FRED mirror (Hugging Face)
+2019-04-03,3.9,390.0,-5.0,Archived FRED mirror (Hugging Face)
+2019-04-04,3.9,390.0,0.0,Archived FRED mirror (Hugging Face)
+2019-04-05,3.86,386.0,-4.0,Archived FRED mirror (Hugging Face)
+2019-04-08,3.84,384.0,-2.0,Archived FRED mirror (Hugging Face)
+2019-04-09,3.86,386.0,2.0,Archived FRED mirror (Hugging Face)
+2019-04-10,3.86,386.0,0.0,Archived FRED mirror (Hugging Face)
+2019-04-11,3.79,379.0,-7.0,Archived FRED mirror (Hugging Face)
+2019-04-12,3.68,368.0,-11.0,Archived FRED mirror (Hugging Face)
+2019-04-15,3.68,368.0,0.0,Archived FRED mirror (Hugging Face)
+2019-04-16,3.64,364.0,-4.0,Archived FRED mirror (Hugging Face)
+2019-04-17,3.67,367.0,3.0,Archived FRED mirror (Hugging Face)
+2019-04-18,3.73,373.0,6.0,Archived FRED mirror (Hugging Face)
+2019-04-22,3.73,373.0,0.0,Archived FRED mirror (Hugging Face)
+2019-04-23,3.72,372.0,-1.0,Archived FRED mirror (Hugging Face)
+2019-04-24,3.73,373.0,1.0,Archived FRED mirror (Hugging Face)
+2019-04-25,3.75,375.0,2.0,Archived FRED mirror (Hugging Face)
+2019-04-26,3.76,376.0,1.0,Archived FRED mirror (Hugging Face)
+2019-04-29,3.73,373.0,-3.0,Archived FRED mirror (Hugging Face)
+2019-04-30,3.73,373.0,0.0,Archived FRED mirror (Hugging Face)
+2019-05-01,3.71,371.0,-2.0,Archived FRED mirror (Hugging Face)
+2019-05-02,3.74,374.0,3.0,Archived FRED mirror (Hugging Face)
+2019-05-03,3.72,372.0,-2.0,Archived FRED mirror (Hugging Face)
+2019-05-06,3.82,382.0,10.0,Archived FRED mirror (Hugging Face)
+2019-05-07,3.89,389.0,7.0,Archived FRED mirror (Hugging Face)
+2019-05-08,3.87,387.0,-2.0,Archived FRED mirror (Hugging Face)
+2019-05-09,3.99,399.0,12.0,Archived FRED mirror (Hugging Face)
+2019-05-10,4.01,401.0,2.0,Archived FRED mirror (Hugging Face)
+2019-05-13,4.2,420.0,19.0,Archived FRED mirror (Hugging Face)
+2019-05-14,4.13,413.0,-7.0,Archived FRED mirror (Hugging Face)
+2019-05-15,4.17,417.0,4.0,Archived FRED mirror (Hugging Face)
+2019-05-16,4.06,405.99999999999994,-11.000000000000057,Archived FRED mirror (Hugging Face)
+2019-05-17,4.07,407.0,1.0000000000000568,Archived FRED mirror (Hugging Face)
+2019-05-20,4.06,405.99999999999994,-1.0000000000000568,Archived FRED mirror (Hugging Face)
+2019-05-21,3.99,399.0,-6.999999999999943,Archived FRED mirror (Hugging Face)
+2019-05-22,4.03,403.0,4.0,Archived FRED mirror (Hugging Face)
+2019-05-23,4.22,422.0,19.0,Archived FRED mirror (Hugging Face)
+2019-05-24,4.16,416.0,-6.0,Archived FRED mirror (Hugging Face)
+2019-05-27,4.16,416.0,0.0,Archived FRED mirror (Hugging Face)
+2019-05-28,4.19,419.00000000000006,3.000000000000057,Archived FRED mirror (Hugging Face)
+2019-05-29,4.36,436.00000000000006,17.0,Archived FRED mirror (Hugging Face)
+2019-05-30,4.33,433.0,-3.000000000000057,Archived FRED mirror (Hugging Face)
+2019-05-31,4.59,459.0,26.0,Archived FRED mirror (Hugging Face)
+2019-06-03,4.7,470.0,11.0,Archived FRED mirror (Hugging Face)
+2019-06-04,4.53,453.0,-17.0,Archived FRED mirror (Hugging Face)
+2019-06-05,4.48,448.00000000000006,-4.999999999999943,Archived FRED mirror (Hugging Face)
+2019-06-06,4.42,442.0,-6.000000000000057,Archived FRED mirror (Hugging Face)
+2019-06-07,4.37,437.0,-5.0,Archived FRED mirror (Hugging Face)
+2019-06-10,4.23,423.00000000000006,-13.999999999999943,Archived FRED mirror (Hugging Face)
+2019-06-11,4.2,420.0,-3.000000000000057,Archived FRED mirror (Hugging Face)
+2019-06-12,4.22,422.0,2.0,Archived FRED mirror (Hugging Face)
+2019-06-13,4.24,424.0,2.0,Archived FRED mirror (Hugging Face)
+2019-06-14,4.23,423.00000000000006,-0.9999999999999432,Archived FRED mirror (Hugging Face)
+2019-06-17,4.23,423.00000000000006,0.0,Archived FRED mirror (Hugging Face)
+2019-06-18,4.14,413.99999999999994,-9.000000000000114,Archived FRED mirror (Hugging Face)
+2019-06-19,4.16,416.0,2.000000000000057,Archived FRED mirror (Hugging Face)
+2019-06-20,4.03,403.0,-13.0,Archived FRED mirror (Hugging Face)
+2019-06-21,3.95,395.0,-8.0,Archived FRED mirror (Hugging Face)
+2019-06-24,4.0,400.0,5.0,Archived FRED mirror (Hugging Face)
+2019-06-25,4.09,409.0,9.0,Archived FRED mirror (Hugging Face)
+2019-06-26,4.05,405.0,-4.0,Archived FRED mirror (Hugging Face)
+2019-06-27,4.09,409.0,4.0,Archived FRED mirror (Hugging Face)
+2019-06-28,4.07,407.0,-2.0,Archived FRED mirror (Hugging Face)
+2019-06-30,4.07,407.0,0.0,Archived FRED mirror (Hugging Face)
+2019-07-01,3.99,399.0,-8.0,Archived FRED mirror (Hugging Face)
+2019-07-02,4.04,404.0,5.0,Archived FRED mirror (Hugging Face)
+2019-07-03,4.02,401.99999999999994,-2.000000000000057,Archived FRED mirror (Hugging Face)
+2019-07-04,4.02,401.99999999999994,0.0,Archived FRED mirror (Hugging Face)
+2019-07-05,3.98,398.0,-3.999999999999943,Archived FRED mirror (Hugging Face)
+2019-07-08,4.0,400.0,2.0,Archived FRED mirror (Hugging Face)
+2019-07-09,4.03,403.0,3.0,Archived FRED mirror (Hugging Face)
+2019-07-10,4.01,401.0,-2.0,Archived FRED mirror (Hugging Face)
+2019-07-11,4.0,400.0,-1.0,Archived FRED mirror (Hugging Face)
+2019-07-12,4.02,401.99999999999994,1.9999999999999432,Archived FRED mirror (Hugging Face)
+2019-07-15,4.0,400.0,-1.9999999999999432,Archived FRED mirror (Hugging Face)
+2019-07-16,3.96,396.0,-4.0,Archived FRED mirror (Hugging Face)
+2019-07-17,4.01,401.0,5.0,Archived FRED mirror (Hugging Face)
+2019-07-18,4.11,411.00000000000006,10.000000000000057,Archived FRED mirror (Hugging Face)
+2019-07-19,4.07,407.0,-4.000000000000057,Archived FRED mirror (Hugging Face)
+2019-07-22,4.06,405.99999999999994,-1.0000000000000568,Archived FRED mirror (Hugging Face)
+2019-07-23,3.99,399.0,-6.999999999999943,Archived FRED mirror (Hugging Face)
+2019-07-24,3.98,398.0,-1.0,Archived FRED mirror (Hugging Face)
+2019-07-25,3.93,393.0,-5.0,Archived FRED mirror (Hugging Face)
+2019-07-26,3.89,389.0,-4.0,Archived FRED mirror (Hugging Face)
+2019-07-29,3.93,393.0,4.0,Archived FRED mirror (Hugging Face)
+2019-07-30,3.97,397.0,4.0,Archived FRED mirror (Hugging Face)
+2019-07-31,3.93,393.0,-4.0,Archived FRED mirror (Hugging Face)
+2019-08-01,4.1,409.99999999999994,16.999999999999943,Archived FRED mirror (Hugging Face)
+2019-08-02,4.19,419.00000000000006,9.000000000000114,Archived FRED mirror (Hugging Face)
+2019-08-05,4.53,453.0,33.99999999999994,Archived FRED mirror (Hugging Face)
+2019-08-06,4.46,446.0,-7.0,Archived FRED mirror (Hugging Face)
+2019-08-07,4.52,451.99999999999994,5.999999999999943,Archived FRED mirror (Hugging Face)
+2019-08-08,4.31,430.99999999999994,-21.0,Archived FRED mirror (Hugging Face)
+2019-08-09,4.31,430.99999999999994,0.0,Archived FRED mirror (Hugging Face)
+2019-08-12,4.4,440.00000000000006,9.000000000000114,Archived FRED mirror (Hugging Face)
+2019-08-13,4.25,425.0,-15.000000000000057,Archived FRED mirror (Hugging Face)
+2019-08-14,4.49,449.0,24.0,Archived FRED mirror (Hugging Face)
+2019-08-15,4.52,451.99999999999994,2.999999999999943,Archived FRED mirror (Hugging Face)
+2019-08-16,4.47,447.0,-4.999999999999943,Archived FRED mirror (Hugging Face)
+2019-08-19,4.36,436.00000000000006,-10.999999999999943,Archived FRED mirror (Hugging Face)
+2019-08-20,4.35,434.99999999999994,-1.0000000000001137,Archived FRED mirror (Hugging Face)
+2019-08-21,4.21,421.0,-13.999999999999943,Archived FRED mirror (Hugging Face)
+2019-08-22,4.16,416.0,-5.0,Archived FRED mirror (Hugging Face)
+2019-08-23,4.25,425.0,9.0,Archived FRED mirror (Hugging Face)
+2019-08-26,4.22,422.0,-3.0,Archived FRED mirror (Hugging Face)
+2019-08-27,4.19,419.00000000000006,-2.999999999999943,Archived FRED mirror (Hugging Face)
+2019-08-28,4.17,417.0,-2.000000000000057,Archived FRED mirror (Hugging Face)
+2019-08-29,4.08,408.0,-9.0,Archived FRED mirror (Hugging Face)
+2019-08-30,4.09,409.0,1.0,Archived FRED mirror (Hugging Face)
+2019-08-31,4.13,413.0,4.0,Archived FRED mirror (Hugging Face)
+2019-09-02,4.13,413.0,0.0,Archived FRED mirror (Hugging Face)
+2019-09-03,4.23,423.00000000000006,10.000000000000057,Archived FRED mirror (Hugging Face)
+2019-09-04,4.23,423.00000000000006,0.0,Archived FRED mirror (Hugging Face)
+2019-09-05,4.07,407.0,-16.000000000000057,Archived FRED mirror (Hugging Face)
+2019-09-06,4.05,405.0,-2.0,Archived FRED mirror (Hugging Face)
+2019-09-09,3.99,399.0,-6.0,Archived FRED mirror (Hugging Face)
+2019-09-10,3.9,390.0,-9.0,Archived FRED mirror (Hugging Face)
+2019-09-11,3.92,392.0,2.0,Archived FRED mirror (Hugging Face)
+2019-09-12,3.85,385.0,-7.0,Archived FRED mirror (Hugging Face)
+2019-09-13,3.83,383.0,-2.0,Archived FRED mirror (Hugging Face)
+2019-09-16,3.8,380.0,-3.0,Archived FRED mirror (Hugging Face)
+2019-09-17,3.81,381.0,1.0,Archived FRED mirror (Hugging Face)
+2019-09-18,3.82,382.0,1.0,Archived FRED mirror (Hugging Face)
+2019-09-19,3.77,377.0,-5.0,Archived FRED mirror (Hugging Face)
+2019-09-20,3.81,381.0,4.0,Archived FRED mirror (Hugging Face)
+2019-09-23,3.84,384.0,3.0,Archived FRED mirror (Hugging Face)
+2019-09-24,3.9,390.0,6.0,Archived FRED mirror (Hugging Face)
+2019-09-25,3.91,391.0,1.0,Archived FRED mirror (Hugging Face)
+2019-09-26,3.95,395.0,4.0,Archived FRED mirror (Hugging Face)
+2019-09-27,3.99,399.0,4.0,Archived FRED mirror (Hugging Face)
+2019-09-30,4.02,401.99999999999994,2.999999999999943,Archived FRED mirror (Hugging Face)
+2019-10-01,4.08,408.0,6.000000000000057,Archived FRED mirror (Hugging Face)
+2019-10-02,4.28,428.0,20.0,Archived FRED mirror (Hugging Face)
+2019-10-03,4.4,440.00000000000006,12.000000000000057,Archived FRED mirror (Hugging Face)
+2019-10-04,4.38,438.0,-2.000000000000057,Archived FRED mirror (Hugging Face)
+2019-10-07,4.31,430.99999999999994,-7.000000000000057,Archived FRED mirror (Hugging Face)
+2019-10-08,4.39,438.99999999999994,8.0,Archived FRED mirror (Hugging Face)
+2019-10-09,4.32,432.0,-6.999999999999943,Archived FRED mirror (Hugging Face)
+2019-10-10,4.26,426.0,-6.0,Archived FRED mirror (Hugging Face)
+2019-10-11,4.1,409.99999999999994,-16.000000000000057,Archived FRED mirror (Hugging Face)
+2019-10-14,4.08,408.0,-1.9999999999999432,Archived FRED mirror (Hugging Face)
+2019-10-15,4.01,401.0,-7.0,Archived FRED mirror (Hugging Face)
+2019-10-16,4.01,401.0,0.0,Archived FRED mirror (Hugging Face)
+2019-10-17,4.0,400.0,-1.0,Archived FRED mirror (Hugging Face)
+2019-10-18,4.02,401.99999999999994,1.9999999999999432,Archived FRED mirror (Hugging Face)
+2019-10-21,3.98,398.0,-3.999999999999943,Archived FRED mirror (Hugging Face)
+2019-10-22,3.99,399.0,1.0,Archived FRED mirror (Hugging Face)
+2019-10-23,3.98,398.0,-1.0,Archived FRED mirror (Hugging Face)
+2019-10-24,3.96,396.0,-2.0,Archived FRED mirror (Hugging Face)
+2019-10-25,3.89,389.0,-7.0,Archived FRED mirror (Hugging Face)
+2019-10-28,3.85,385.0,-4.0,Archived FRED mirror (Hugging Face)
+2019-10-29,3.86,386.0,1.0,Archived FRED mirror (Hugging Face)
+2019-10-30,3.96,396.0,10.0,Archived FRED mirror (Hugging Face)
+2019-10-31,4.15,415.00000000000006,19.000000000000057,Archived FRED mirror (Hugging Face)
+2019-11-01,4.09,409.0,-6.000000000000057,Archived FRED mirror (Hugging Face)
+2019-11-04,3.99,399.0,-10.0,Archived FRED mirror (Hugging Face)
+2019-11-05,3.97,397.0,-2.0,Archived FRED mirror (Hugging Face)
+2019-11-06,4.02,401.99999999999994,4.999999999999943,Archived FRED mirror (Hugging Face)
+2019-11-07,3.96,396.0,-5.999999999999943,Archived FRED mirror (Hugging Face)
+2019-11-08,4.0,400.0,4.0,Archived FRED mirror (Hugging Face)
+2019-11-11,3.99,399.0,-1.0,Archived FRED mirror (Hugging Face)
+2019-11-12,4.0,400.0,1.0,Archived FRED mirror (Hugging Face)
+2019-11-13,4.05,405.0,5.0,Archived FRED mirror (Hugging Face)
+2019-11-14,4.08,408.0,3.0,Archived FRED mirror (Hugging Face)
+2019-11-15,4.06,405.99999999999994,-2.000000000000057,Archived FRED mirror (Hugging Face)
+2019-11-18,4.09,409.0,3.000000000000057,Archived FRED mirror (Hugging Face)
+2019-11-19,4.12,412.0,3.0,Archived FRED mirror (Hugging Face)
+2019-11-20,4.18,418.0,6.0,Archived FRED mirror (Hugging Face)
+2019-11-21,4.17,417.0,-1.0,Archived FRED mirror (Hugging Face)
+2019-11-22,4.13,413.0,-4.0,Archived FRED mirror (Hugging Face)
+2019-11-25,4.08,408.0,-5.0,Archived FRED mirror (Hugging Face)
+2019-11-26,4.05,405.0,-3.0,Archived FRED mirror (Hugging Face)
+2019-11-27,3.99,399.0,-6.0,Archived FRED mirror (Hugging Face)
+2019-11-29,4.01,401.0,2.0,Archived FRED mirror (Hugging Face)
+2019-11-30,4.02,401.99999999999994,0.9999999999999432,Archived FRED mirror (Hugging Face)
+2019-12-02,4.03,403.0,1.0000000000000568,Archived FRED mirror (Hugging Face)
+2019-12-03,4.14,413.99999999999994,10.999999999999943,Archived FRED mirror (Hugging Face)
+2019-12-04,4.02,401.99999999999994,-12.0,Archived FRED mirror (Hugging Face)
+2019-12-05,4.0,400.0,-1.9999999999999432,Archived FRED mirror (Hugging Face)
+2019-12-06,3.89,389.0,-11.0,Archived FRED mirror (Hugging Face)
+2019-12-09,3.88,388.0,-1.0,Archived FRED mirror (Hugging Face)
+2019-12-10,3.84,384.0,-4.0,Archived FRED mirror (Hugging Face)
+2019-12-11,3.83,383.0,-1.0,Archived FRED mirror (Hugging Face)
+2019-12-12,3.7,370.0,-13.0,Archived FRED mirror (Hugging Face)
+2019-12-13,3.71,371.0,1.0,Archived FRED mirror (Hugging Face)
+2019-12-16,3.62,362.0,-9.0,Archived FRED mirror (Hugging Face)
+2019-12-17,3.58,358.0,-4.0,Archived FRED mirror (Hugging Face)
+2019-12-18,3.51,351.0,-7.0,Archived FRED mirror (Hugging Face)
+2019-12-19,3.54,354.0,3.0,Archived FRED mirror (Hugging Face)
+2019-12-20,3.53,353.0,-1.0,Archived FRED mirror (Hugging Face)
+2019-12-23,3.52,352.0,-1.0,Archived FRED mirror (Hugging Face)
+2019-12-24,3.53,353.0,1.0,Archived FRED mirror (Hugging Face)
+2019-12-26,3.53,353.0,0.0,Archived FRED mirror (Hugging Face)
+2019-12-27,3.56,356.0,3.0,Archived FRED mirror (Hugging Face)
+2019-12-30,3.6,360.0,4.0,Archived FRED mirror (Hugging Face)
+2019-12-31,3.6,360.0,0.0,Archived FRED mirror (Hugging Face)
+2020-01-02,3.56,356.0,-4.0,Archived FRED mirror (Hugging Face)
+2020-01-03,3.61,361.0,5.0,Archived FRED mirror (Hugging Face)
+2020-01-06,3.57,357.0,-4.0,Archived FRED mirror (Hugging Face)
+2020-01-07,3.54,354.0,-3.0,Archived FRED mirror (Hugging Face)
+2020-01-08,3.5,350.0,-4.0,Archived FRED mirror (Hugging Face)
+2020-01-09,3.49,349.0,-1.0,Archived FRED mirror (Hugging Face)
+2020-01-10,3.48,348.0,-1.0,Archived FRED mirror (Hugging Face)
+2020-01-13,3.48,348.0,0.0,Archived FRED mirror (Hugging Face)
+2020-01-14,3.45,345.0,-3.0,Archived FRED mirror (Hugging Face)
+2020-01-15,3.44,344.0,-1.0,Archived FRED mirror (Hugging Face)
+2020-01-16,3.42,342.0,-2.0,Archived FRED mirror (Hugging Face)
+2020-01-17,3.39,339.0,-3.0,Archived FRED mirror (Hugging Face)
+2020-01-20,3.38,338.0,-1.0,Archived FRED mirror (Hugging Face)
+2020-01-21,3.47,347.0,9.0,Archived FRED mirror (Hugging Face)
+2020-01-22,3.49,349.0,2.0,Archived FRED mirror (Hugging Face)
+2020-01-23,3.58,358.0,9.0,Archived FRED mirror (Hugging Face)
+2020-01-24,3.68,368.0,10.0,Archived FRED mirror (Hugging Face)
+2020-01-27,4.03,403.0,35.0,Archived FRED mirror (Hugging Face)
+2020-01-28,3.86,386.0,-17.0,Archived FRED mirror (Hugging Face)
+2020-01-29,3.83,383.0,-3.0,Archived FRED mirror (Hugging Face)
+2020-01-30,3.95,395.0,12.0,Archived FRED mirror (Hugging Face)
+2020-01-31,4.03,403.0,8.0,Archived FRED mirror (Hugging Face)
+2020-02-03,3.97,397.0,-6.0,Archived FRED mirror (Hugging Face)
+2020-02-04,3.85,385.0,-12.0,Archived FRED mirror (Hugging Face)
+2020-02-05,3.75,375.0,-10.0,Archived FRED mirror (Hugging Face)
+2020-02-06,3.7,370.0,-5.0,Archived FRED mirror (Hugging Face)
+2020-02-07,3.75,375.0,5.0,Archived FRED mirror (Hugging Face)
+2020-02-10,3.75,375.0,0.0,Archived FRED mirror (Hugging Face)
+2020-02-11,3.65,365.0,-10.0,Archived FRED mirror (Hugging Face)
+2020-02-12,3.59,359.0,-6.0,Archived FRED mirror (Hugging Face)
+2020-02-13,3.57,357.0,-2.0,Archived FRED mirror (Hugging Face)
+2020-02-14,3.56,356.0,-1.0,Archived FRED mirror (Hugging Face)
+2020-02-17,3.56,356.0,0.0,Archived FRED mirror (Hugging Face)
+2020-02-18,3.61,361.0,5.0,Archived FRED mirror (Hugging Face)
+2020-02-19,3.57,357.0,-4.0,Archived FRED mirror (Hugging Face)
+2020-02-20,3.62,362.0,5.0,Archived FRED mirror (Hugging Face)
+2020-02-21,3.66,366.0,4.0,Archived FRED mirror (Hugging Face)
+2020-02-24,4.03,403.0,37.0,Archived FRED mirror (Hugging Face)
+2020-02-25,4.18,418.0,15.0,Archived FRED mirror (Hugging Face)
+2020-02-26,4.27,426.99999999999994,8.999999999999943,Archived FRED mirror (Hugging Face)
+2020-02-27,4.62,462.0,35.00000000000006,Archived FRED mirror (Hugging Face)
+2020-02-28,5.04,504.0,42.0,Archived FRED mirror (Hugging Face)
+2020-02-29,5.06,505.99999999999994,1.9999999999999432,Archived FRED mirror (Hugging Face)
+2020-03-02,4.97,497.0,-8.999999999999943,Archived FRED mirror (Hugging Face)
+2020-03-03,4.84,484.0,-13.0,Archived FRED mirror (Hugging Face)
+2020-03-04,4.75,475.0,-9.0,Archived FRED mirror (Hugging Face)
+2020-03-05,5.05,505.0,30.0,Archived FRED mirror (Hugging Face)
+2020-03-06,5.64,564.0,59.0,Archived FRED mirror (Hugging Face)
+2020-03-09,6.68,668.0,104.0,Archived FRED mirror (Hugging Face)
+2020-03-10,6.38,638.0,-30.0,Archived FRED mirror (Hugging Face)
+2020-03-11,6.61,661.0,23.0,Archived FRED mirror (Hugging Face)
+2020-03-12,7.42,742.0,81.0,Archived FRED mirror (Hugging Face)
+2020-03-13,7.31,731.0,-11.0,Archived FRED mirror (Hugging Face)
+2020-03-16,8.38,838.0000000000001,107.00000000000011,Archived FRED mirror (Hugging Face)
+2020-03-17,8.41,841.0,2.9999999999998863,Archived FRED mirror (Hugging Face)
+2020-03-18,9.04,903.9999999999999,62.999999999999886,Archived FRED mirror (Hugging Face)
+2020-03-19,9.82,982.0,78.00000000000011,Archived FRED mirror (Hugging Face)
+2020-03-20,10.09,1009.0,27.0,Archived FRED mirror (Hugging Face)
+2020-03-23,10.87,1087.0,78.0,Archived FRED mirror (Hugging Face)
+2020-03-24,10.55,1055.0,-32.0,Archived FRED mirror (Hugging Face)
+2020-03-25,10.11,1011.0,-44.0,Archived FRED mirror (Hugging Face)
+2020-03-26,9.29,928.9999999999999,-82.00000000000011,Archived FRED mirror (Hugging Face)
+2020-03-27,8.99,899.0,-29.999999999999886,Archived FRED mirror (Hugging Face)
+2020-03-30,8.82,882.0,-17.0,Archived FRED mirror (Hugging Face)
+2020-03-31,8.77,877.0,-5.0,Archived FRED mirror (Hugging Face)
+2020-04-01,9.11,911.0,34.0,Archived FRED mirror (Hugging Face)
+2020-04-02,9.17,917.0,6.0,Archived FRED mirror (Hugging Face)
+2020-04-03,9.43,943.0,26.0,Archived FRED mirror (Hugging Face)
+2020-04-06,9.26,926.0,-17.0,Archived FRED mirror (Hugging Face)
+2020-04-07,8.88,888.0000000000001,-37.999999999999886,Archived FRED mirror (Hugging Face)
+2020-04-08,8.81,881.0,-7.000000000000114,Archived FRED mirror (Hugging Face)
+2020-04-09,7.96,796.0,-85.0,Archived FRED mirror (Hugging Face)
+2020-04-13,7.7,770.0,-26.0,Archived FRED mirror (Hugging Face)
+2020-04-14,7.35,735.0,-35.0,Archived FRED mirror (Hugging Face)
+2020-04-15,7.64,764.0,29.0,Archived FRED mirror (Hugging Face)
+2020-04-16,7.58,758.0,-6.0,Archived FRED mirror (Hugging Face)
+2020-04-17,7.31,731.0,-27.0,Archived FRED mirror (Hugging Face)
+2020-04-20,7.52,752.0,21.0,Archived FRED mirror (Hugging Face)
+2020-04-21,7.9,790.0,38.0,Archived FRED mirror (Hugging Face)
+2020-04-22,7.85,785.0,-5.0,Archived FRED mirror (Hugging Face)
+2020-04-23,7.87,787.0,2.0,Archived FRED mirror (Hugging Face)
+2020-04-24,8.03,802.9999999999999,15.999999999999886,Archived FRED mirror (Hugging Face)
+2020-04-27,8.01,801.0,-1.9999999999998863,Archived FRED mirror (Hugging Face)
+2020-04-28,8.02,802.0,1.0,Archived FRED mirror (Hugging Face)
+2020-04-29,7.87,787.0,-15.0,Archived FRED mirror (Hugging Face)
+2020-04-30,7.63,763.0,-24.0,Archived FRED mirror (Hugging Face)
+2020-05-01,7.7,770.0,7.0,Archived FRED mirror (Hugging Face)
+2020-05-04,7.79,779.0,9.0,Archived FRED mirror (Hugging Face)
+2020-05-05,7.6,760.0,-19.0,Archived FRED mirror (Hugging Face)
+2020-05-06,7.6,760.0,0.0,Archived FRED mirror (Hugging Face)
+2020-05-07,7.6,760.0,0.0,Archived FRED mirror (Hugging Face)
+2020-05-08,7.52,752.0,-8.0,Archived FRED mirror (Hugging Face)
+2020-05-11,7.51,751.0,-1.0,Archived FRED mirror (Hugging Face)
+2020-05-12,7.42,742.0,-9.0,Archived FRED mirror (Hugging Face)
+2020-05-13,7.61,761.0,19.0,Archived FRED mirror (Hugging Face)
+2020-05-14,7.77,777.0,16.0,Archived FRED mirror (Hugging Face)
+2020-05-15,7.78,778.0,1.0,Archived FRED mirror (Hugging Face)
+2020-05-18,7.41,741.0,-37.0,Archived FRED mirror (Hugging Face)
+2020-05-19,7.35,735.0,-6.0,Archived FRED mirror (Hugging Face)
+2020-05-20,7.16,716.0,-19.0,Archived FRED mirror (Hugging Face)
+2020-05-21,7.08,708.0,-8.0,Archived FRED mirror (Hugging Face)
+2020-05-22,7.06,706.0,-2.0,Archived FRED mirror (Hugging Face)
+2020-05-25,7.06,706.0,0.0,Archived FRED mirror (Hugging Face)
+2020-05-26,6.75,675.0,-31.0,Archived FRED mirror (Hugging Face)
+2020-05-27,6.7,670.0,-5.0,Archived FRED mirror (Hugging Face)
+2020-05-28,6.6,660.0,-10.0,Archived FRED mirror (Hugging Face)
+2020-05-29,6.71,671.0,11.0,Archived FRED mirror (Hugging Face)
+2020-05-31,6.54,654.0,-17.0,Archived FRED mirror (Hugging Face)
+2020-06-01,6.43,643.0,-11.0,Archived FRED mirror (Hugging Face)
+2020-06-02,6.18,618.0,-25.0,Archived FRED mirror (Hugging Face)
+2020-06-03,5.8,580.0,-38.0,Archived FRED mirror (Hugging Face)
+2020-06-04,5.83,583.0,3.0,Archived FRED mirror (Hugging Face)
+2020-06-05,5.5,550.0,-33.0,Archived FRED mirror (Hugging Face)
+2020-06-08,5.51,551.0,1.0,Archived FRED mirror (Hugging Face)
+2020-06-09,5.75,575.0,24.0,Archived FRED mirror (Hugging Face)
+2020-06-10,5.92,592.0,17.0,Archived FRED mirror (Hugging Face)
+2020-06-11,6.4,640.0,48.0,Archived FRED mirror (Hugging Face)
+2020-06-12,6.28,628.0,-12.0,Archived FRED mirror (Hugging Face)
+2020-06-15,6.25,625.0,-3.0,Archived FRED mirror (Hugging Face)
+2020-06-16,5.78,578.0,-47.0,Archived FRED mirror (Hugging Face)
+2020-06-17,5.85,585.0,7.0,Archived FRED mirror (Hugging Face)
+2020-06-18,6.01,601.0,16.0,Archived FRED mirror (Hugging Face)
+2020-06-19,6.02,602.0,1.0,Archived FRED mirror (Hugging Face)
+2020-06-22,6.03,603.0,1.0,Archived FRED mirror (Hugging Face)
+2020-06-23,6.02,602.0,-1.0,Archived FRED mirror (Hugging Face)
+2020-06-24,6.23,623.0,21.0,Archived FRED mirror (Hugging Face)
+2020-06-25,6.3,630.0,7.0,Archived FRED mirror (Hugging Face)
+2020-06-26,6.41,641.0,11.0,Archived FRED mirror (Hugging Face)
+2020-06-29,6.52,652.0,11.0,Archived FRED mirror (Hugging Face)
+2020-06-30,6.44,644.0,-8.0,Archived FRED mirror (Hugging Face)
+2020-07-01,6.33,633.0,-11.0,Archived FRED mirror (Hugging Face)
+2020-07-02,6.17,617.0,-16.0,Archived FRED mirror (Hugging Face)
+2020-07-03,6.17,617.0,0.0,Archived FRED mirror (Hugging Face)
+2020-07-06,6.03,603.0,-14.0,Archived FRED mirror (Hugging Face)
+2020-07-07,6.04,604.0,1.0,Archived FRED mirror (Hugging Face)
+2020-07-08,6.06,606.0,2.0,Archived FRED mirror (Hugging Face)
+2020-07-09,6.14,614.0,8.0,Archived FRED mirror (Hugging Face)
+2020-07-10,6.14,614.0,0.0,Archived FRED mirror (Hugging Face)
+2020-07-13,6.01,601.0,-13.0,Archived FRED mirror (Hugging Face)
+2020-07-14,6.03,603.0,2.0,Archived FRED mirror (Hugging Face)
+2020-07-15,5.81,581.0,-22.0,Archived FRED mirror (Hugging Face)
+2020-07-16,5.76,576.0,-5.0,Archived FRED mirror (Hugging Face)
+2020-07-17,5.74,574.0,-2.0,Archived FRED mirror (Hugging Face)
+2020-07-20,5.54,554.0,-20.0,Archived FRED mirror (Hugging Face)
+2020-07-21,5.33,533.0,-21.0,Archived FRED mirror (Hugging Face)
+2020-07-22,5.28,528.0,-5.0,Archived FRED mirror (Hugging Face)
+2020-07-23,5.26,526.0,-2.0,Archived FRED mirror (Hugging Face)
+2020-07-24,5.29,529.0,3.0,Archived FRED mirror (Hugging Face)
+2020-07-27,5.24,524.0,-5.0,Archived FRED mirror (Hugging Face)
+2020-07-28,5.27,527.0,3.0,Archived FRED mirror (Hugging Face)
+2020-07-29,5.15,515.0,-12.0,Archived FRED mirror (Hugging Face)
+2020-07-30,5.14,514.0,-1.0,Archived FRED mirror (Hugging Face)
+2020-07-31,5.16,516.0,2.0,Archived FRED mirror (Hugging Face)
+2020-08-03,5.08,508.0,-8.0,Archived FRED mirror (Hugging Face)
+2020-08-04,5.13,513.0,5.0,Archived FRED mirror (Hugging Face)
+2020-08-05,5.04,504.0,-9.0,Archived FRED mirror (Hugging Face)
+2020-08-06,5.06,505.99999999999994,1.9999999999999432,Archived FRED mirror (Hugging Face)
+2020-08-07,5.06,505.99999999999994,0.0,Archived FRED mirror (Hugging Face)
+2020-08-10,5.09,509.0,3.000000000000057,Archived FRED mirror (Hugging Face)
+2020-08-11,5.03,503.0,-6.0,Archived FRED mirror (Hugging Face)
+2020-08-12,5.1,509.99999999999994,6.999999999999943,Archived FRED mirror (Hugging Face)
+2020-08-13,5.16,516.0,6.000000000000057,Archived FRED mirror (Hugging Face)
+2020-08-14,5.26,526.0,10.0,Archived FRED mirror (Hugging Face)
+2020-08-17,5.29,529.0,3.0,Archived FRED mirror (Hugging Face)
+2020-08-18,5.26,526.0,-3.0,Archived FRED mirror (Hugging Face)
+2020-08-19,5.25,525.0,-1.0,Archived FRED mirror (Hugging Face)
+2020-08-20,5.28,528.0,3.0,Archived FRED mirror (Hugging Face)
+2020-08-21,5.25,525.0,-3.0,Archived FRED mirror (Hugging Face)
+2020-08-24,5.17,517.0,-8.0,Archived FRED mirror (Hugging Face)
+2020-08-25,5.07,507.0,-10.0,Archived FRED mirror (Hugging Face)
+2020-08-26,5.02,501.99999999999994,-5.000000000000057,Archived FRED mirror (Hugging Face)
+2020-08-27,4.98,498.00000000000006,-3.9999999999998863,Archived FRED mirror (Hugging Face)
+2020-08-28,5.0,500.0,1.9999999999999432,Archived FRED mirror (Hugging Face)
+2020-08-31,5.02,501.99999999999994,1.9999999999999432,Archived FRED mirror (Hugging Face)
+2020-09-01,4.97,497.0,-4.999999999999943,Archived FRED mirror (Hugging Face)
+2020-09-02,4.93,493.0,-4.0,Archived FRED mirror (Hugging Face)
+2020-09-03,5.04,504.0,11.0,Archived FRED mirror (Hugging Face)
+2020-09-04,5.13,513.0,9.0,Archived FRED mirror (Hugging Face)
+2020-09-07,5.13,513.0,0.0,Archived FRED mirror (Hugging Face)
+2020-09-08,5.25,525.0,12.0,Archived FRED mirror (Hugging Face)
+2020-09-09,5.16,516.0,-9.0,Archived FRED mirror (Hugging Face)
+2020-09-10,5.16,516.0,0.0,Archived FRED mirror (Hugging Face)
+2020-09-11,5.21,521.0,5.0,Archived FRED mirror (Hugging Face)
+2020-09-14,5.18,518.0,-3.0,Archived FRED mirror (Hugging Face)
+2020-09-15,5.14,514.0,-4.0,Archived FRED mirror (Hugging Face)
+2020-09-16,5.07,507.0,-7.0,Archived FRED mirror (Hugging Face)
+2020-09-17,5.14,514.0,7.0,Archived FRED mirror (Hugging Face)
+2020-09-18,5.16,516.0,2.0,Archived FRED mirror (Hugging Face)
+2020-09-21,5.42,542.0,26.0,Archived FRED mirror (Hugging Face)
+2020-09-22,5.45,545.0,3.0,Archived FRED mirror (Hugging Face)
+2020-09-23,5.47,547.0,2.0,Archived FRED mirror (Hugging Face)
+2020-09-24,5.64,564.0,17.0,Archived FRED mirror (Hugging Face)
+2020-09-25,5.64,564.0,0.0,Archived FRED mirror (Hugging Face)
+2020-09-28,5.52,552.0,-12.0,Archived FRED mirror (Hugging Face)
+2020-09-29,5.5,550.0,-2.0,Archived FRED mirror (Hugging Face)
+2020-09-30,5.41,541.0,-9.0,Archived FRED mirror (Hugging Face)
+2020-10-01,5.36,536.0,-5.0,Archived FRED mirror (Hugging Face)
+2020-10-02,5.38,538.0,2.0,Archived FRED mirror (Hugging Face)
+2020-10-05,5.18,518.0,-20.0,Archived FRED mirror (Hugging Face)
+2020-10-06,5.06,505.99999999999994,-12.000000000000057,Archived FRED mirror (Hugging Face)
+2020-10-07,5.02,501.99999999999994,-4.0,Archived FRED mirror (Hugging Face)
+2020-10-08,4.97,497.0,-4.999999999999943,Archived FRED mirror (Hugging Face)
+2020-10-09,4.92,492.0,-5.0,Archived FRED mirror (Hugging Face)
+2020-10-12,4.92,492.0,0.0,Archived FRED mirror (Hugging Face)
+2020-10-13,4.88,488.0,-4.0,Archived FRED mirror (Hugging Face)
+2020-10-14,4.89,488.99999999999994,0.9999999999999432,Archived FRED mirror (Hugging Face)
+2020-10-15,5.01,501.0,12.000000000000057,Archived FRED mirror (Hugging Face)
+2020-10-16,4.94,494.00000000000006,-6.999999999999943,Archived FRED mirror (Hugging Face)
+2020-10-19,4.91,491.0,-3.000000000000057,Archived FRED mirror (Hugging Face)
+2020-10-20,4.9,490.00000000000006,-0.9999999999999432,Archived FRED mirror (Hugging Face)
+2020-10-21,4.91,491.0,0.9999999999999432,Archived FRED mirror (Hugging Face)
+2020-10-22,4.88,488.0,-3.0,Archived FRED mirror (Hugging Face)
+2020-10-23,4.87,487.0,-1.0,Archived FRED mirror (Hugging Face)
+2020-10-26,5.03,503.0,16.0,Archived FRED mirror (Hugging Face)
+2020-10-27,5.06,505.99999999999994,2.999999999999943,Archived FRED mirror (Hugging Face)
+2020-10-28,5.29,529.0,23.000000000000057,Archived FRED mirror (Hugging Face)
+2020-10-29,5.25,525.0,-4.0,Archived FRED mirror (Hugging Face)
+2020-10-30,5.25,525.0,0.0,Archived FRED mirror (Hugging Face)
+2020-10-31,5.32,532.0,7.0,Archived FRED mirror (Hugging Face)
+2020-11-02,5.25,525.0,-7.0,Archived FRED mirror (Hugging Face)
+2020-11-03,5.07,507.0,-18.0,Archived FRED mirror (Hugging Face)
+2020-11-04,4.79,479.0,-28.0,Archived FRED mirror (Hugging Face)
+2020-11-05,4.59,459.0,-20.0,Archived FRED mirror (Hugging Face)
+2020-11-06,4.67,467.0,8.0,Archived FRED mirror (Hugging Face)
+2020-11-09,4.22,422.0,-45.0,Archived FRED mirror (Hugging Face)
+2020-11-10,4.37,437.0,15.0,Archived FRED mirror (Hugging Face)
+2020-11-11,4.37,437.0,0.0,Archived FRED mirror (Hugging Face)
+2020-11-12,4.62,462.0,25.0,Archived FRED mirror (Hugging Face)
+2020-11-13,4.63,463.0,1.0,Archived FRED mirror (Hugging Face)
+2020-11-16,4.5,450.0,-13.0,Archived FRED mirror (Hugging Face)
+2020-11-17,4.48,448.00000000000006,-1.9999999999999432,Archived FRED mirror (Hugging Face)
+2020-11-18,4.42,442.0,-6.000000000000057,Archived FRED mirror (Hugging Face)
+2020-11-19,4.48,448.00000000000006,6.000000000000057,Archived FRED mirror (Hugging Face)
+2020-11-20,4.49,449.0,0.9999999999999432,Archived FRED mirror (Hugging Face)
+2020-11-23,4.43,443.0,-6.0,Archived FRED mirror (Hugging Face)
+2020-11-24,4.31,430.99999999999994,-12.000000000000057,Archived FRED mirror (Hugging Face)
+2020-11-25,4.33,433.0,2.000000000000057,Archived FRED mirror (Hugging Face)
+2020-11-26,4.33,433.0,0.0,Archived FRED mirror (Hugging Face)
+2020-11-27,4.35,434.99999999999994,1.9999999999999432,Archived FRED mirror (Hugging Face)
+2020-11-30,4.33,433.0,-1.9999999999999432,Archived FRED mirror (Hugging Face)
+2020-12-01,4.21,421.0,-12.0,Archived FRED mirror (Hugging Face)
+2020-12-02,4.17,417.0,-4.0,Archived FRED mirror (Hugging Face)
+2020-12-03,4.1,409.99999999999994,-7.000000000000057,Archived FRED mirror (Hugging Face)
+2020-12-04,4.03,403.0,-6.999999999999943,Archived FRED mirror (Hugging Face)
+2020-12-07,4.03,403.0,0.0,Archived FRED mirror (Hugging Face)
+2020-12-08,4.03,403.0,0.0,Archived FRED mirror (Hugging Face)
+2020-12-09,4.04,404.0,1.0,Archived FRED mirror (Hugging Face)
+2020-12-10,4.08,408.0,4.0,Archived FRED mirror (Hugging Face)
+2020-12-11,4.13,413.0,5.0,Archived FRED mirror (Hugging Face)
+2020-12-14,4.07,407.0,-6.0,Archived FRED mirror (Hugging Face)
+2020-12-15,4.06,405.99999999999994,-1.0000000000000568,Archived FRED mirror (Hugging Face)
+2020-12-16,4.06,405.99999999999994,0.0,Archived FRED mirror (Hugging Face)
+2020-12-17,4.05,405.0,-0.9999999999999432,Archived FRED mirror (Hugging Face)
+2020-12-18,4.03,403.0,-2.0,Archived FRED mirror (Hugging Face)
+2020-12-21,4.18,418.0,15.0,Archived FRED mirror (Hugging Face)
+2020-12-22,4.12,412.0,-6.0,Archived FRED mirror (Hugging Face)
+2020-12-23,4.07,407.0,-5.0,Archived FRED mirror (Hugging Face)
+2020-12-24,4.05,405.0,-2.0,Archived FRED mirror (Hugging Face)
+2020-12-28,3.89,389.0,-16.0,Archived FRED mirror (Hugging Face)
+2020-12-29,3.85,385.0,-4.0,Archived FRED mirror (Hugging Face)
+2020-12-30,3.87,387.0,2.0,Archived FRED mirror (Hugging Face)
+2020-12-31,3.86,386.0,-1.0,Archived FRED mirror (Hugging Face)
+2021-01-04,3.93,393.0,7.0,Archived FRED mirror (Hugging Face)
+2021-01-05,3.92,392.0,-1.0,Archived FRED mirror (Hugging Face)
+2021-01-06,3.8,380.0,-12.0,Archived FRED mirror (Hugging Face)
+2021-01-07,3.78,378.0,-2.0,Archived FRED mirror (Hugging Face)
+2021-01-08,3.76,376.0,-2.0,Archived FRED mirror (Hugging Face)
+2021-01-11,3.82,382.0,6.0,Archived FRED mirror (Hugging Face)
+2021-01-12,3.85,385.0,3.0,Archived FRED mirror (Hugging Face)
+2021-01-13,3.82,382.0,-3.0,Archived FRED mirror (Hugging Face)
+2021-01-14,3.73,373.0,-9.0,Archived FRED mirror (Hugging Face)
+2021-01-15,3.74,374.0,1.0,Archived FRED mirror (Hugging Face)
+2021-01-18,3.73,373.0,-1.0,Archived FRED mirror (Hugging Face)
+2021-01-19,3.71,371.0,-2.0,Archived FRED mirror (Hugging Face)
+2021-01-20,3.67,367.0,-4.0,Archived FRED mirror (Hugging Face)
+2021-01-21,3.65,365.0,-2.0,Archived FRED mirror (Hugging Face)
+2021-01-22,3.75,375.0,10.0,Archived FRED mirror (Hugging Face)
+2021-01-25,3.75,375.0,0.0,Archived FRED mirror (Hugging Face)
+2021-01-26,3.74,374.0,-1.0,Archived FRED mirror (Hugging Face)
+2021-01-27,3.85,385.0,11.0,Archived FRED mirror (Hugging Face)
+2021-01-28,3.76,376.0,-9.0,Archived FRED mirror (Hugging Face)
+2021-01-29,3.79,379.0,3.0,Archived FRED mirror (Hugging Face)
+2021-01-31,3.84,384.0,5.0,Archived FRED mirror (Hugging Face)
+2021-02-01,3.83,383.0,-1.0,Archived FRED mirror (Hugging Face)
+2021-02-02,3.75,375.0,-8.0,Archived FRED mirror (Hugging Face)
+2021-02-03,3.68,368.0,-7.0,Archived FRED mirror (Hugging Face)
+2021-02-04,3.64,364.0,-4.0,Archived FRED mirror (Hugging Face)
+2021-02-05,3.58,358.0,-6.0,Archived FRED mirror (Hugging Face)
+2021-02-08,3.54,354.0,-4.0,Archived FRED mirror (Hugging Face)
+2021-02-09,3.51,351.0,-3.0,Archived FRED mirror (Hugging Face)
+2021-02-10,3.51,351.0,0.0,Archived FRED mirror (Hugging Face)
+2021-02-11,3.5,350.0,-1.0,Archived FRED mirror (Hugging Face)
+2021-02-12,3.48,348.0,-2.0,Archived FRED mirror (Hugging Face)
+2021-02-15,3.47,347.0,-1.0,Archived FRED mirror (Hugging Face)
+2021-02-16,3.41,341.0,-6.0,Archived FRED mirror (Hugging Face)
+2021-02-17,3.44,344.0,3.0,Archived FRED mirror (Hugging Face)
+2021-02-18,3.46,346.0,2.0,Archived FRED mirror (Hugging Face)
+2021-02-19,3.41,341.0,-5.0,Archived FRED mirror (Hugging Face)
+2021-02-22,3.44,344.0,3.0,Archived FRED mirror (Hugging Face)
+2021-02-23,3.47,347.0,3.0,Archived FRED mirror (Hugging Face)
+2021-02-24,3.42,342.0,-5.0,Archived FRED mirror (Hugging Face)
+2021-02-25,3.42,342.0,0.0,Archived FRED mirror (Hugging Face)
+2021-02-26,3.52,352.0,10.0,Archived FRED mirror (Hugging Face)
+2021-02-28,3.57,357.0,5.0,Archived FRED mirror (Hugging Face)
+2021-03-01,3.54,354.0,-3.0,Archived FRED mirror (Hugging Face)
+2021-03-02,3.53,353.0,-1.0,Archived FRED mirror (Hugging Face)
+2021-03-03,3.51,351.0,-2.0,Archived FRED mirror (Hugging Face)
+2021-03-04,3.54,354.0,3.0,Archived FRED mirror (Hugging Face)
+2021-03-05,3.6,360.0,6.0,Archived FRED mirror (Hugging Face)
+2021-03-08,3.57,357.0,-3.0,Archived FRED mirror (Hugging Face)
+2021-03-09,3.62,362.0,5.0,Archived FRED mirror (Hugging Face)
+2021-03-10,3.63,363.0,1.0,Archived FRED mirror (Hugging Face)
+2021-03-11,3.52,352.0,-11.0,Archived FRED mirror (Hugging Face)
+2021-03-12,3.55,355.0,3.0,Archived FRED mirror (Hugging Face)
+2021-03-15,3.55,355.0,0.0,Archived FRED mirror (Hugging Face)
+2021-03-16,3.55,355.0,0.0,Archived FRED mirror (Hugging Face)
+2021-03-17,3.65,365.0,10.0,Archived FRED mirror (Hugging Face)
+2021-03-18,3.66,366.0,1.0,Archived FRED mirror (Hugging Face)
+2021-03-19,3.67,367.0,1.0,Archived FRED mirror (Hugging Face)
+2021-03-22,3.58,358.0,-9.0,Archived FRED mirror (Hugging Face)
+2021-03-23,3.57,357.0,-1.0,Archived FRED mirror (Hugging Face)
+2021-03-24,3.51,351.0,-6.0,Archived FRED mirror (Hugging Face)
+2021-03-25,3.53,353.0,2.0,Archived FRED mirror (Hugging Face)
+2021-03-26,3.48,348.0,-5.0,Archived FRED mirror (Hugging Face)
+2021-03-29,3.43,343.0,-5.0,Archived FRED mirror (Hugging Face)
+2021-03-30,3.44,344.0,1.0,Archived FRED mirror (Hugging Face)
+2021-03-31,3.36,336.0,-8.0,Archived FRED mirror (Hugging Face)
+2021-04-01,3.33,333.0,-3.0,Archived FRED mirror (Hugging Face)
+2021-04-05,3.25,325.0,-8.0,Archived FRED mirror (Hugging Face)
+2021-04-06,3.25,325.0,0.0,Archived FRED mirror (Hugging Face)
+2021-04-07,3.22,322.0,-3.0,Archived FRED mirror (Hugging Face)
+2021-04-08,3.21,321.0,-1.0,Archived FRED mirror (Hugging Face)
+2021-04-09,3.24,324.0,3.0,Archived FRED mirror (Hugging Face)
+2021-04-12,3.24,324.0,0.0,Archived FRED mirror (Hugging Face)
+2021-04-13,3.32,332.0,8.0,Archived FRED mirror (Hugging Face)
+2021-04-14,3.25,325.0,-7.0,Archived FRED mirror (Hugging Face)
+2021-04-15,3.25,325.0,0.0,Archived FRED mirror (Hugging Face)
+2021-04-16,3.22,322.0,-3.0,Archived FRED mirror (Hugging Face)
+2021-04-19,3.25,325.0,3.0,Archived FRED mirror (Hugging Face)
+2021-04-20,3.35,335.0,10.0,Archived FRED mirror (Hugging Face)
+2021-04-21,3.34,334.0,-1.0,Archived FRED mirror (Hugging Face)
+2021-04-22,3.34,334.0,0.0,Archived FRED mirror (Hugging Face)
+2021-04-23,3.29,329.0,-5.0,Archived FRED mirror (Hugging Face)
+2021-04-26,3.26,326.0,-3.0,Archived FRED mirror (Hugging Face)
+2021-04-27,3.24,324.0,-2.0,Archived FRED mirror (Hugging Face)
+2021-04-28,3.26,326.0,2.0,Archived FRED mirror (Hugging Face)
+2021-04-29,3.24,324.0,-2.0,Archived FRED mirror (Hugging Face)
+2021-04-30,3.28,328.0,4.0,Archived FRED mirror (Hugging Face)
+2021-05-03,3.27,327.0,-1.0,Archived FRED mirror (Hugging Face)
+2021-05-04,3.32,332.0,5.0,Archived FRED mirror (Hugging Face)
+2021-05-05,3.29,329.0,-3.0,Archived FRED mirror (Hugging Face)
+2021-05-06,3.3,330.0,1.0,Archived FRED mirror (Hugging Face)
+2021-05-07,3.27,327.0,-3.0,Archived FRED mirror (Hugging Face)
+2021-05-10,3.26,326.0,-1.0,Archived FRED mirror (Hugging Face)
+2021-05-11,3.36,336.0,10.0,Archived FRED mirror (Hugging Face)
+2021-05-12,3.34,334.0,-2.0,Archived FRED mirror (Hugging Face)
+2021-05-13,3.37,337.0,3.0,Archived FRED mirror (Hugging Face)
+2021-05-14,3.35,335.0,-2.0,Archived FRED mirror (Hugging Face)
+2021-05-17,3.35,335.0,0.0,Archived FRED mirror (Hugging Face)
+2021-05-18,3.35,335.0,0.0,Archived FRED mirror (Hugging Face)
+2021-05-19,3.4,340.0,5.0,Archived FRED mirror (Hugging Face)
+2021-05-20,3.42,342.0,2.0,Archived FRED mirror (Hugging Face)
+2021-05-21,3.37,337.0,-5.0,Archived FRED mirror (Hugging Face)
+2021-05-24,3.37,337.0,0.0,Archived FRED mirror (Hugging Face)
+2021-05-25,3.34,334.0,-3.0,Archived FRED mirror (Hugging Face)
+2021-05-26,3.35,335.0,1.0,Archived FRED mirror (Hugging Face)
+2021-05-27,3.3,330.0,-5.0,Archived FRED mirror (Hugging Face)
+2021-05-28,3.29,329.0,-1.0,Archived FRED mirror (Hugging Face)
+2021-05-31,3.34,334.0,5.0,Archived FRED mirror (Hugging Face)
+2021-06-01,3.33,333.0,-1.0,Archived FRED mirror (Hugging Face)
+2021-06-02,3.31,331.0,-2.0,Archived FRED mirror (Hugging Face)
+2021-06-03,3.28,328.0,-3.0,Archived FRED mirror (Hugging Face)
+2021-06-04,3.28,328.0,0.0,Archived FRED mirror (Hugging Face)
+2021-06-07,3.27,327.0,-1.0,Archived FRED mirror (Hugging Face)
+2021-06-08,3.26,326.0,-1.0,Archived FRED mirror (Hugging Face)
+2021-06-09,3.22,322.0,-4.0,Archived FRED mirror (Hugging Face)
+2021-06-10,3.23,323.0,1.0,Archived FRED mirror (Hugging Face)
+2021-06-11,3.21,321.0,-2.0,Archived FRED mirror (Hugging Face)
+2021-06-14,3.17,317.0,-4.0,Archived FRED mirror (Hugging Face)
+2021-06-15,3.17,317.0,0.0,Archived FRED mirror (Hugging Face)
+2021-06-16,3.12,312.0,-5.0,Archived FRED mirror (Hugging Face)
+2021-06-17,3.15,315.0,3.0,Archived FRED mirror (Hugging Face)
+2021-06-18,3.18,318.0,3.0,Archived FRED mirror (Hugging Face)
+2021-06-21,3.14,314.0,-4.0,Archived FRED mirror (Hugging Face)
+2021-06-22,3.15,315.0,1.0,Archived FRED mirror (Hugging Face)
+2021-06-23,3.13,313.0,-2.0,Archived FRED mirror (Hugging Face)
+2021-06-24,3.08,308.0,-5.0,Archived FRED mirror (Hugging Face)
+2021-06-25,3.04,304.0,-4.0,Archived FRED mirror (Hugging Face)
+2021-06-28,3.05,305.0,1.0,Archived FRED mirror (Hugging Face)
+2021-06-29,3.03,303.0,-2.0,Archived FRED mirror (Hugging Face)
+2021-06-30,3.04,304.0,1.0,Archived FRED mirror (Hugging Face)
+2021-07-01,3.02,302.0,-2.0,Archived FRED mirror (Hugging Face)
+2021-07-02,3.04,304.0,2.0,Archived FRED mirror (Hugging Face)
+2021-07-05,3.03,303.0,-1.0,Archived FRED mirror (Hugging Face)
+2021-07-06,3.05,305.0,2.0,Archived FRED mirror (Hugging Face)
+2021-07-07,3.05,305.0,0.0,Archived FRED mirror (Hugging Face)
+2021-07-08,3.14,314.0,9.0,Archived FRED mirror (Hugging Face)
+2021-07-09,3.07,307.0,-7.0,Archived FRED mirror (Hugging Face)
+2021-07-12,3.05,305.0,-2.0,Archived FRED mirror (Hugging Face)
+2021-07-13,3.04,304.0,-1.0,Archived FRED mirror (Hugging Face)
+2021-07-14,3.1,310.0,6.0,Archived FRED mirror (Hugging Face)
+2021-07-15,3.14,314.0,4.0,Archived FRED mirror (Hugging Face)
+2021-07-16,3.18,318.0,4.0,Archived FRED mirror (Hugging Face)
+2021-07-19,3.44,344.0,26.0,Archived FRED mirror (Hugging Face)
+2021-07-20,3.38,338.0,-6.0,Archived FRED mirror (Hugging Face)
+2021-07-21,3.24,324.0,-14.0,Archived FRED mirror (Hugging Face)
+2021-07-22,3.24,324.0,0.0,Archived FRED mirror (Hugging Face)
+2021-07-23,3.22,322.0,-2.0,Archived FRED mirror (Hugging Face)
+2021-07-26,3.21,321.0,-1.0,Archived FRED mirror (Hugging Face)
+2021-07-27,3.27,327.0,6.0,Archived FRED mirror (Hugging Face)
+2021-07-28,3.26,326.0,-1.0,Archived FRED mirror (Hugging Face)
+2021-07-29,3.23,323.0,-3.0,Archived FRED mirror (Hugging Face)
+2021-07-30,3.26,326.0,3.0,Archived FRED mirror (Hugging Face)
+2021-07-31,3.32,332.0,6.0,Archived FRED mirror (Hugging Face)
+2021-08-02,3.36,336.0,4.0,Archived FRED mirror (Hugging Face)
+2021-08-03,3.42,342.0,6.0,Archived FRED mirror (Hugging Face)
+2021-08-04,3.42,342.0,0.0,Archived FRED mirror (Hugging Face)
+2021-08-05,3.37,337.0,-5.0,Archived FRED mirror (Hugging Face)
+2021-08-06,3.32,332.0,-5.0,Archived FRED mirror (Hugging Face)
+2021-08-09,3.34,334.0,2.0,Archived FRED mirror (Hugging Face)
+2021-08-10,3.32,332.0,-2.0,Archived FRED mirror (Hugging Face)
+2021-08-11,3.37,337.0,5.0,Archived FRED mirror (Hugging Face)
+2021-08-12,3.34,334.0,-3.0,Archived FRED mirror (Hugging Face)
+2021-08-13,3.36,336.0,2.0,Archived FRED mirror (Hugging Face)
+2021-08-16,3.38,338.0,2.0,Archived FRED mirror (Hugging Face)
+2021-08-17,3.37,337.0,-1.0,Archived FRED mirror (Hugging Face)
+2021-08-18,3.35,335.0,-2.0,Archived FRED mirror (Hugging Face)
+2021-08-19,3.42,342.0,7.0,Archived FRED mirror (Hugging Face)
+2021-08-20,3.37,337.0,-5.0,Archived FRED mirror (Hugging Face)
+2021-08-23,3.34,334.0,-3.0,Archived FRED mirror (Hugging Face)
+2021-08-24,3.26,326.0,-8.0,Archived FRED mirror (Hugging Face)
+2021-08-25,3.22,322.0,-4.0,Archived FRED mirror (Hugging Face)
+2021-08-26,3.2,320.0,-2.0,Archived FRED mirror (Hugging Face)
+2021-08-27,3.17,317.0,-3.0,Archived FRED mirror (Hugging Face)
+2021-08-30,3.16,316.0,-1.0,Archived FRED mirror (Hugging Face)
+2021-08-31,3.21,321.0,5.0,Archived FRED mirror (Hugging Face)
+2021-09-01,3.19,319.0,-2.0,Archived FRED mirror (Hugging Face)
+2021-09-02,3.16,316.0,-3.0,Archived FRED mirror (Hugging Face)
+2021-09-03,3.14,314.0,-2.0,Archived FRED mirror (Hugging Face)
+2021-09-06,3.13,313.0,-1.0,Archived FRED mirror (Hugging Face)
+2021-09-07,3.16,316.0,3.0,Archived FRED mirror (Hugging Face)
+2021-09-08,3.16,316.0,0.0,Archived FRED mirror (Hugging Face)
+2021-09-09,3.15,315.0,-1.0,Archived FRED mirror (Hugging Face)
+2021-09-10,3.11,311.0,-4.0,Archived FRED mirror (Hugging Face)
+2021-09-13,3.09,309.0,-2.0,Archived FRED mirror (Hugging Face)
+2021-09-14,3.11,311.0,2.0,Archived FRED mirror (Hugging Face)
+2021-09-15,3.08,308.0,-3.0,Archived FRED mirror (Hugging Face)
+2021-09-16,3.06,306.0,-2.0,Archived FRED mirror (Hugging Face)
+2021-09-17,3.04,304.0,-2.0,Archived FRED mirror (Hugging Face)
+2021-09-20,3.23,323.0,19.0,Archived FRED mirror (Hugging Face)
+2021-09-21,3.17,317.0,-6.0,Archived FRED mirror (Hugging Face)
+2021-09-22,3.09,309.0,-8.0,Archived FRED mirror (Hugging Face)
+2021-09-23,3.03,303.0,-6.0,Archived FRED mirror (Hugging Face)
+2021-09-24,3.05,305.0,2.0,Archived FRED mirror (Hugging Face)
+2021-09-27,3.06,306.0,1.0,Archived FRED mirror (Hugging Face)
+2021-09-28,3.13,313.0,7.0,Archived FRED mirror (Hugging Face)
+2021-09-29,3.09,309.0,-4.0,Archived FRED mirror (Hugging Face)
+2021-09-30,3.15,315.0,6.0,Archived FRED mirror (Hugging Face)
+2021-10-01,3.2,320.0,5.0,Archived FRED mirror (Hugging Face)
+2021-10-04,3.21,321.0,1.0,Archived FRED mirror (Hugging Face)
+2021-10-05,3.17,317.0,-4.0,Archived FRED mirror (Hugging Face)
+2021-10-06,3.29,329.0,12.0,Archived FRED mirror (Hugging Face)
+2021-10-07,3.19,319.0,-10.0,Archived FRED mirror (Hugging Face)
+2021-10-08,3.2,320.0,1.0,Archived FRED mirror (Hugging Face)
+2021-10-11,3.2,320.0,0.0,Archived FRED mirror (Hugging Face)
+2021-10-12,3.28,328.0,8.0,Archived FRED mirror (Hugging Face)
+2021-10-13,3.25,325.0,-3.0,Archived FRED mirror (Hugging Face)
+2021-10-14,3.18,318.0,-7.0,Archived FRED mirror (Hugging Face)
+2021-10-15,3.12,312.0,-6.0,Archived FRED mirror (Hugging Face)
+2021-10-18,3.11,311.0,-1.0,Archived FRED mirror (Hugging Face)
+2021-10-19,3.09,309.0,-2.0,Archived FRED mirror (Hugging Face)
+2021-10-20,3.07,307.0,-2.0,Archived FRED mirror (Hugging Face)
+2021-10-21,3.03,303.0,-4.0,Archived FRED mirror (Hugging Face)
+2021-10-22,3.07,307.0,4.0,Archived FRED mirror (Hugging Face)
+2021-10-25,3.11,311.0,4.0,Archived FRED mirror (Hugging Face)
+2021-10-26,3.09,309.0,-2.0,Archived FRED mirror (Hugging Face)
+2021-10-27,3.11,311.0,2.0,Archived FRED mirror (Hugging Face)
+2021-10-28,3.08,308.0,-3.0,Archived FRED mirror (Hugging Face)
+2021-10-29,3.08,308.0,0.0,Archived FRED mirror (Hugging Face)
+2021-10-31,3.15,315.0,7.0,Archived FRED mirror (Hugging Face)
+2021-11-01,3.16,316.0,1.0,Archived FRED mirror (Hugging Face)
+2021-11-02,3.21,321.0,5.0,Archived FRED mirror (Hugging Face)
+2021-11-03,3.18,318.0,-3.0,Archived FRED mirror (Hugging Face)
+2021-11-04,3.19,319.0,1.0,Archived FRED mirror (Hugging Face)
+2021-11-05,3.12,312.0,-7.0,Archived FRED mirror (Hugging Face)
+2021-11-08,3.03,303.0,-9.0,Archived FRED mirror (Hugging Face)
+2021-11-09,3.08,308.0,5.0,Archived FRED mirror (Hugging Face)
+2021-11-10,3.06,306.0,-2.0,Archived FRED mirror (Hugging Face)
+2021-11-11,3.06,306.0,0.0,Archived FRED mirror (Hugging Face)
+2021-11-12,3.09,309.0,3.0,Archived FRED mirror (Hugging Face)
+2021-11-15,3.1,310.0,1.0,Archived FRED mirror (Hugging Face)
+2021-11-16,3.12,312.0,2.0,Archived FRED mirror (Hugging Face)
+2021-11-17,3.17,317.0,5.0,Archived FRED mirror (Hugging Face)
+2021-11-18,3.19,319.0,2.0,Archived FRED mirror (Hugging Face)
+2021-11-19,3.24,324.0,5.0,Archived FRED mirror (Hugging Face)
+2021-11-22,3.18,318.0,-6.0,Archived FRED mirror (Hugging Face)
+2021-11-23,3.3,330.0,12.0,Archived FRED mirror (Hugging Face)
+2021-11-24,3.32,332.0,2.0,Archived FRED mirror (Hugging Face)
+2021-11-25,3.32,332.0,0.0,Archived FRED mirror (Hugging Face)
+2021-11-26,3.62,362.0,30.0,Archived FRED mirror (Hugging Face)
+2021-11-29,3.53,353.0,-9.0,Archived FRED mirror (Hugging Face)
+2021-11-30,3.67,367.0,14.0,Archived FRED mirror (Hugging Face)
+2021-12-01,3.58,358.0,-9.0,Archived FRED mirror (Hugging Face)
+2021-12-02,3.54,354.0,-4.0,Archived FRED mirror (Hugging Face)
+2021-12-03,3.56,356.0,2.0,Archived FRED mirror (Hugging Face)
+2021-12-06,3.41,341.0,-15.0,Archived FRED mirror (Hugging Face)
+2021-12-07,3.16,316.0,-25.0,Archived FRED mirror (Hugging Face)
+2021-12-08,3.21,321.0,5.0,Archived FRED mirror (Hugging Face)
+2021-12-09,3.25,325.0,4.0,Archived FRED mirror (Hugging Face)
+2021-12-10,3.29,329.0,4.0,Archived FRED mirror (Hugging Face)
+2021-12-13,3.33,333.0,4.0,Archived FRED mirror (Hugging Face)
+2021-12-14,3.35,335.0,2.0,Archived FRED mirror (Hugging Face)
+2021-12-15,3.33,333.0,-2.0,Archived FRED mirror (Hugging Face)
+2021-12-16,3.32,332.0,-1.0,Archived FRED mirror (Hugging Face)
+2021-12-17,3.36,336.0,4.0,Archived FRED mirror (Hugging Face)
+2021-12-20,3.41,341.0,5.0,Archived FRED mirror (Hugging Face)
+2021-12-21,3.25,325.0,-16.0,Archived FRED mirror (Hugging Face)
+2021-12-22,3.21,321.0,-4.0,Archived FRED mirror (Hugging Face)
+2021-12-23,3.12,312.0,-9.0,Archived FRED mirror (Hugging Face)
+2021-12-27,3.02,302.0,-10.0,Archived FRED mirror (Hugging Face)
+2021-12-28,3.01,301.0,-1.0,Archived FRED mirror (Hugging Face)
+2021-12-29,3.03,303.0,2.0,Archived FRED mirror (Hugging Face)
+2021-12-30,3.09,309.0,6.0,Archived FRED mirror (Hugging Face)
+2021-12-31,3.1,310.0,1.0,Archived FRED mirror (Hugging Face)
+2022-01-03,3.05,305.0,-5.0,Archived FRED mirror (Hugging Face)
+2022-01-04,3.09,309.0,4.0,Archived FRED mirror (Hugging Face)
+2022-01-05,3.07,307.0,-2.0,Archived FRED mirror (Hugging Face)
+2022-01-06,3.15,315.0,8.0,Archived FRED mirror (Hugging Face)
+2022-01-07,3.2,320.0,5.0,Archived FRED mirror (Hugging Face)
+2022-01-10,3.24,324.0,4.0,Archived FRED mirror (Hugging Face)
+2022-01-11,3.18,318.0,-6.0,Archived FRED mirror (Hugging Face)
+2022-01-12,3.06,306.0,-12.0,Archived FRED mirror (Hugging Face)
+2022-01-13,3.1,310.0,4.0,Archived FRED mirror (Hugging Face)
+2022-01-14,3.09,309.0,-1.0,Archived FRED mirror (Hugging Face)
+2022-01-17,3.09,309.0,0.0,Archived FRED mirror (Hugging Face)
+2022-01-18,3.12,312.0,3.0,Archived FRED mirror (Hugging Face)
+2022-01-19,3.11,311.0,-1.0,Archived FRED mirror (Hugging Face)
+2022-01-20,3.1,310.0,-1.0,Archived FRED mirror (Hugging Face)
+2022-01-21,3.29,329.0,19.0,Archived FRED mirror (Hugging Face)
+2022-01-24,3.44,344.0,15.0,Archived FRED mirror (Hugging Face)
+2022-01-25,3.39,339.0,-5.0,Archived FRED mirror (Hugging Face)
+2022-01-26,3.25,325.0,-14.0,Archived FRED mirror (Hugging Face)
+2022-01-27,3.46,346.0,21.0,Archived FRED mirror (Hugging Face)
+2022-01-28,3.61,361.0,15.0,Archived FRED mirror (Hugging Face)
+2022-01-31,3.63,363.0,2.0,Archived FRED mirror (Hugging Face)
+2022-02-01,3.51,351.0,-12.0,Archived FRED mirror (Hugging Face)
+2022-02-02,3.45,345.0,-6.0,Archived FRED mirror (Hugging Face)
+2022-02-03,3.51,351.0,6.0,Archived FRED mirror (Hugging Face)
+2022-02-04,3.56,356.0,5.0,Archived FRED mirror (Hugging Face)
+2022-02-07,3.6,360.0,4.0,Archived FRED mirror (Hugging Face)
+2022-02-08,3.55,355.0,-5.0,Archived FRED mirror (Hugging Face)
+2022-02-09,3.46,346.0,-9.0,Archived FRED mirror (Hugging Face)
+2022-02-10,3.44,344.0,-2.0,Archived FRED mirror (Hugging Face)
+2022-02-11,3.66,366.0,22.0,Archived FRED mirror (Hugging Face)
+2022-02-14,3.74,374.0,8.0,Archived FRED mirror (Hugging Face)
+2022-02-15,3.67,367.0,-7.0,Archived FRED mirror (Hugging Face)
+2022-02-16,3.68,368.0,1.0,Archived FRED mirror (Hugging Face)
+2022-02-17,3.74,374.0,6.0,Archived FRED mirror (Hugging Face)
+2022-02-18,3.78,378.0,4.0,Archived FRED mirror (Hugging Face)
+2022-02-21,3.78,378.0,0.0,Archived FRED mirror (Hugging Face)
+2022-02-22,3.75,375.0,-3.0,Archived FRED mirror (Hugging Face)
+2022-02-23,3.72,372.0,-3.0,Archived FRED mirror (Hugging Face)
+2022-02-24,3.93,393.0,21.0,Archived FRED mirror (Hugging Face)
+2022-02-25,3.62,362.0,-31.0,Archived FRED mirror (Hugging Face)
+2022-02-28,3.77,377.0,15.0,Archived FRED mirror (Hugging Face)
+2022-03-01,3.89,389.0,12.0,Archived FRED mirror (Hugging Face)
+2022-03-02,3.71,371.0,-18.0,Archived FRED mirror (Hugging Face)
+2022-03-03,3.71,371.0,0.0,Archived FRED mirror (Hugging Face)
+2022-03-04,3.9,390.0,19.0,Archived FRED mirror (Hugging Face)
+2022-03-07,4.01,401.0,11.0,Archived FRED mirror (Hugging Face)
+2022-03-08,4.03,403.0,2.0,Archived FRED mirror (Hugging Face)
+2022-03-09,3.94,394.0,-9.0,Archived FRED mirror (Hugging Face)
+2022-03-10,4.0,400.0,6.0,Archived FRED mirror (Hugging Face)
+2022-03-11,4.05,405.0,5.0,Archived FRED mirror (Hugging Face)
+2022-03-14,4.16,416.0,11.0,Archived FRED mirror (Hugging Face)
+2022-03-15,4.21,421.0,5.0,Archived FRED mirror (Hugging Face)
+2022-03-16,3.96,396.0,-25.0,Archived FRED mirror (Hugging Face)
+2022-03-17,3.81,381.0,-15.0,Archived FRED mirror (Hugging Face)
+2022-03-18,3.81,381.0,0.0,Archived FRED mirror (Hugging Face)
+2022-03-21,3.67,367.0,-14.0,Archived FRED mirror (Hugging Face)
+2022-03-22,3.7,370.0,3.0,Archived FRED mirror (Hugging Face)
+2022-03-23,3.72,372.0,2.0,Archived FRED mirror (Hugging Face)
+2022-03-24,3.67,367.0,-5.0,Archived FRED mirror (Hugging Face)
+2022-03-25,3.51,351.0,-16.0,Archived FRED mirror (Hugging Face)
+2022-03-28,3.54,354.0,3.0,Archived FRED mirror (Hugging Face)
+2022-03-29,3.38,338.0,-16.0,Archived FRED mirror (Hugging Face)
+2022-03-30,3.33,333.0,-5.0,Archived FRED mirror (Hugging Face)
+2022-03-31,3.43,343.0,10.0,Archived FRED mirror (Hugging Face)
+2022-04-01,3.4,340.0,-3.0,Archived FRED mirror (Hugging Face)
+2022-04-04,3.33,333.0,-7.0,Archived FRED mirror (Hugging Face)
+2022-04-05,3.27,327.0,-6.0,Archived FRED mirror (Hugging Face)
+2022-04-06,3.48,348.0,21.0,Archived FRED mirror (Hugging Face)
+2022-04-07,3.54,354.0,6.0,Archived FRED mirror (Hugging Face)
+2022-04-08,3.57,357.0,3.0,Archived FRED mirror (Hugging Face)
+2022-04-11,3.73,373.0,16.0,Archived FRED mirror (Hugging Face)
+2022-04-12,3.75,375.0,2.0,Archived FRED mirror (Hugging Face)
+2022-04-13,3.77,377.0,2.0,Archived FRED mirror (Hugging Face)
+2022-04-14,3.68,368.0,-9.0,Archived FRED mirror (Hugging Face)
+2022-04-18,3.64,364.0,-4.0,Archived FRED mirror (Hugging Face)
+2022-04-19,3.58,358.0,-6.0,Archived FRED mirror (Hugging Face)
+2022-04-20,3.56,356.0,-2.0,Archived FRED mirror (Hugging Face)
+2022-04-21,3.5,350.0,-6.0,Archived FRED mirror (Hugging Face)
+2022-04-22,3.65,365.0,15.0,Archived FRED mirror (Hugging Face)
+2022-04-25,3.8,380.0,15.0,Archived FRED mirror (Hugging Face)
+2022-04-26,3.83,383.0,3.0,Archived FRED mirror (Hugging Face)
+2022-04-27,3.89,389.0,6.0,Archived FRED mirror (Hugging Face)
+2022-04-28,3.83,383.0,-6.0,Archived FRED mirror (Hugging Face)
+2022-04-29,3.93,393.0,10.0,Archived FRED mirror (Hugging Face)
+2022-04-30,3.97,397.0,4.0,Archived FRED mirror (Hugging Face)
+2022-05-02,4.05,405.0,8.0,Archived FRED mirror (Hugging Face)
+2022-05-03,3.97,397.0,-8.0,Archived FRED mirror (Hugging Face)
+2022-05-04,4.1,409.99999999999994,12.999999999999943,Archived FRED mirror (Hugging Face)
+2022-05-05,4.03,403.0,-6.999999999999943,Archived FRED mirror (Hugging Face)
+2022-05-06,4.18,418.0,15.0,Archived FRED mirror (Hugging Face)
+2022-05-09,4.47,447.0,29.0,Archived FRED mirror (Hugging Face)
+2022-05-10,4.52,451.99999999999994,4.999999999999943,Archived FRED mirror (Hugging Face)
+2022-05-11,4.55,455.0,3.000000000000057,Archived FRED mirror (Hugging Face)
+2022-05-12,4.77,476.99999999999994,21.999999999999943,Archived FRED mirror (Hugging Face)
+2022-05-13,4.63,463.0,-13.999999999999943,Archived FRED mirror (Hugging Face)
+2022-05-16,4.71,471.0,8.0,Archived FRED mirror (Hugging Face)
+2022-05-17,4.6,459.99999999999994,-11.000000000000057,Archived FRED mirror (Hugging Face)
+2022-05-18,4.84,484.0,24.000000000000057,Archived FRED mirror (Hugging Face)
+2022-05-19,4.92,492.0,8.0,Archived FRED mirror (Hugging Face)
+2022-05-20,4.91,491.0,-1.0,Archived FRED mirror (Hugging Face)
+2022-05-23,4.82,482.0,-9.0,Archived FRED mirror (Hugging Face)
+2022-05-24,4.94,494.00000000000006,12.000000000000057,Archived FRED mirror (Hugging Face)
+2022-05-25,4.74,474.0,-20.000000000000057,Archived FRED mirror (Hugging Face)
+2022-05-26,4.38,438.0,-36.0,Archived FRED mirror (Hugging Face)
+2022-05-27,4.19,419.00000000000006,-18.999999999999943,Archived FRED mirror (Hugging Face)
+2022-05-30,4.19,419.00000000000006,0.0,Archived FRED mirror (Hugging Face)
+2022-05-31,4.22,422.0,2.999999999999943,Archived FRED mirror (Hugging Face)
+2022-06-01,4.13,413.0,-9.0,Archived FRED mirror (Hugging Face)
+2022-06-02,4.15,415.00000000000006,2.000000000000057,Archived FRED mirror (Hugging Face)
+2022-06-03,4.21,421.0,5.999999999999943,Archived FRED mirror (Hugging Face)
+2022-06-06,4.19,419.00000000000006,-1.9999999999999432,Archived FRED mirror (Hugging Face)
+2022-06-07,4.34,434.0,14.999999999999943,Archived FRED mirror (Hugging Face)
+2022-06-08,4.34,434.0,0.0,Archived FRED mirror (Hugging Face)
+2022-06-09,4.42,442.0,8.0,Archived FRED mirror (Hugging Face)
+2022-06-10,4.51,451.0,9.0,Archived FRED mirror (Hugging Face)
+2022-06-13,4.87,487.0,36.0,Archived FRED mirror (Hugging Face)
+2022-06-14,4.9,490.00000000000006,3.000000000000057,Archived FRED mirror (Hugging Face)
+2022-06-15,4.82,482.0,-8.000000000000057,Archived FRED mirror (Hugging Face)
+2022-06-16,5.17,517.0,35.0,Archived FRED mirror (Hugging Face)
+2022-06-17,5.15,515.0,-2.0,Archived FRED mirror (Hugging Face)
+2022-06-20,5.15,515.0,0.0,Archived FRED mirror (Hugging Face)
+2022-06-21,5.05,505.0,-10.0,Archived FRED mirror (Hugging Face)
+2022-06-22,5.32,532.0,27.0,Archived FRED mirror (Hugging Face)
+2022-06-23,5.38,538.0,6.0,Archived FRED mirror (Hugging Face)
+2022-06-24,5.18,518.0,-20.0,Archived FRED mirror (Hugging Face)
+2022-06-27,5.11,511.00000000000006,-6.999999999999943,Archived FRED mirror (Hugging Face)
+2022-06-28,5.26,526.0,14.999999999999943,Archived FRED mirror (Hugging Face)
+2022-06-29,5.62,562.0,36.0,Archived FRED mirror (Hugging Face)
+2022-06-30,5.87,587.0,25.0,Archived FRED mirror (Hugging Face)
+2022-07-01,5.92,592.0,5.0,Archived FRED mirror (Hugging Face)
+2022-07-04,5.93,593.0,1.0,Archived FRED mirror (Hugging Face)
+2022-07-05,5.99,599.0,6.0,Archived FRED mirror (Hugging Face)
+2022-07-06,5.8,580.0,-19.0,Archived FRED mirror (Hugging Face)
+2022-07-07,5.5,550.0,-30.0,Archived FRED mirror (Hugging Face)
+2022-07-08,5.36,536.0,-14.0,Archived FRED mirror (Hugging Face)
+2022-07-11,5.44,544.0,8.0,Archived FRED mirror (Hugging Face)
+2022-07-12,5.43,543.0,-1.0,Archived FRED mirror (Hugging Face)
+2022-07-13,5.47,547.0,4.0,Archived FRED mirror (Hugging Face)
+2022-07-14,5.53,553.0,6.0,Archived FRED mirror (Hugging Face)
+2022-07-15,5.39,539.0,-14.0,Archived FRED mirror (Hugging Face)
+2022-07-18,5.25,525.0,-14.0,Archived FRED mirror (Hugging Face)
+2022-07-19,5.1,509.99999999999994,-15.000000000000057,Archived FRED mirror (Hugging Face)
+2022-07-20,4.9,490.00000000000006,-19.999999999999886,Archived FRED mirror (Hugging Face)
+2022-07-21,4.99,499.0,8.999999999999943,Archived FRED mirror (Hugging Face)
+2022-07-22,4.96,496.0,-3.0,Archived FRED mirror (Hugging Face)
+2022-07-25,4.95,495.0,-1.0,Archived FRED mirror (Hugging Face)
+2022-07-26,5.06,505.99999999999994,10.999999999999943,Archived FRED mirror (Hugging Face)
+2022-07-27,5.07,507.0,1.0000000000000568,Archived FRED mirror (Hugging Face)
+2022-07-28,4.98,498.00000000000006,-8.999999999999943,Archived FRED mirror (Hugging Face)
+2022-07-29,4.77,476.99999999999994,-21.000000000000114,Archived FRED mirror (Hugging Face)
+2022-07-31,4.83,483.0,6.000000000000057,Archived FRED mirror (Hugging Face)
+2022-08-01,4.8,480.0,-3.0,Archived FRED mirror (Hugging Face)
+2022-08-02,4.61,461.00000000000006,-18.999999999999943,Archived FRED mirror (Hugging Face)
+2022-08-03,4.54,454.0,-7.000000000000057,Archived FRED mirror (Hugging Face)
+2022-08-04,4.55,455.0,1.0,Archived FRED mirror (Hugging Face)
+2022-08-05,4.44,444.00000000000006,-10.999999999999943,Archived FRED mirror (Hugging Face)
+2022-08-08,4.41,441.0,-3.000000000000057,Archived FRED mirror (Hugging Face)
+2022-08-09,4.46,446.0,5.0,Archived FRED mirror (Hugging Face)
+2022-08-10,4.33,433.0,-13.0,Archived FRED mirror (Hugging Face)
+2022-08-11,4.21,421.0,-12.0,Archived FRED mirror (Hugging Face)
+2022-08-12,4.25,425.0,4.0,Archived FRED mirror (Hugging Face)
+2022-08-15,4.24,424.0,-1.0,Archived FRED mirror (Hugging Face)
+2022-08-16,4.25,425.0,1.0,Archived FRED mirror (Hugging Face)
+2022-08-17,4.33,433.0,8.0,Archived FRED mirror (Hugging Face)
+2022-08-18,4.37,437.0,4.0,Archived FRED mirror (Hugging Face)
+2022-08-19,4.45,445.0,8.0,Archived FRED mirror (Hugging Face)
+2022-08-22,4.62,462.0,17.0,Archived FRED mirror (Hugging Face)
+2022-08-23,4.68,468.0,6.0,Archived FRED mirror (Hugging Face)
+2022-08-24,4.61,461.00000000000006,-6.999999999999943,Archived FRED mirror (Hugging Face)
+2022-08-25,4.6,459.99999999999994,-1.0000000000001137,Archived FRED mirror (Hugging Face)
+2022-08-26,4.65,465.00000000000006,5.000000000000114,Archived FRED mirror (Hugging Face)
+2022-08-29,4.78,478.0,12.999999999999943,Archived FRED mirror (Hugging Face)
+2022-08-30,4.9,490.00000000000006,12.000000000000057,Archived FRED mirror (Hugging Face)
+2022-08-31,5.03,503.0,12.999999999999943,Archived FRED mirror (Hugging Face)
+2022-09-01,5.08,508.0,5.0,Archived FRED mirror (Hugging Face)
+2022-09-02,5.06,505.99999999999994,-2.000000000000057,Archived FRED mirror (Hugging Face)
+2022-09-05,5.07,507.0,1.0000000000000568,Archived FRED mirror (Hugging Face)
+2022-09-06,4.98,498.00000000000006,-8.999999999999943,Archived FRED mirror (Hugging Face)
+2022-09-07,4.97,497.0,-1.0000000000000568,Archived FRED mirror (Hugging Face)
+2022-09-08,4.8,480.0,-17.0,Archived FRED mirror (Hugging Face)
+2022-09-09,4.57,457.0,-23.0,Archived FRED mirror (Hugging Face)
+2022-09-12,4.5,450.0,-7.0,Archived FRED mirror (Hugging Face)
+2022-09-13,4.68,468.0,18.0,Archived FRED mirror (Hugging Face)
+2022-09-14,4.74,474.0,6.0,Archived FRED mirror (Hugging Face)
+2022-09-15,4.77,476.99999999999994,2.999999999999943,Archived FRED mirror (Hugging Face)
+2022-09-16,5.0,500.0,23.000000000000057,Archived FRED mirror (Hugging Face)
+2022-09-19,4.88,488.0,-12.0,Archived FRED mirror (Hugging Face)
+2022-09-20,4.88,488.0,0.0,Archived FRED mirror (Hugging Face)
+2022-09-21,4.87,487.0,-1.0,Archived FRED mirror (Hugging Face)
+2022-09-22,4.91,491.0,4.0,Archived FRED mirror (Hugging Face)
+2022-09-23,5.12,512.0,21.0,Archived FRED mirror (Hugging Face)
+2022-09-26,5.18,518.0,6.0,Archived FRED mirror (Hugging Face)
+2022-09-27,5.22,522.0,4.0,Archived FRED mirror (Hugging Face)
+2022-09-28,5.47,547.0,25.0,Archived FRED mirror (Hugging Face)
+2022-09-29,5.5,550.0,3.0,Archived FRED mirror (Hugging Face)
+2022-09-30,5.43,543.0,-7.0,Archived FRED mirror (Hugging Face)
+2022-10-03,5.43,543.0,0.0,Archived FRED mirror (Hugging Face)
+2022-10-04,5.12,512.0,-31.0,Archived FRED mirror (Hugging Face)
+2022-10-05,5.09,509.0,-3.0,Archived FRED mirror (Hugging Face)
+2022-10-06,4.95,495.0,-14.0,Archived FRED mirror (Hugging Face)
+2022-10-07,5.02,501.99999999999994,6.999999999999943,Archived FRED mirror (Hugging Face)
+2022-10-10,5.03,503.0,1.0000000000000568,Archived FRED mirror (Hugging Face)
+2022-10-11,5.25,525.0,22.0,Archived FRED mirror (Hugging Face)
+2022-10-12,5.31,531.0,6.0,Archived FRED mirror (Hugging Face)
+2022-10-13,5.25,525.0,-6.0,Archived FRED mirror (Hugging Face)
+2022-10-14,5.15,515.0,-10.0,Archived FRED mirror (Hugging Face)
+2022-10-17,5.04,504.0,-11.0,Archived FRED mirror (Hugging Face)
+2022-10-18,4.95,495.0,-9.0,Archived FRED mirror (Hugging Face)
+2022-10-19,4.97,497.0,2.0,Archived FRED mirror (Hugging Face)
+2022-10-20,4.89,488.99999999999994,-8.000000000000057,Archived FRED mirror (Hugging Face)
+2022-10-21,4.99,499.0,10.000000000000057,Archived FRED mirror (Hugging Face)
+2022-10-24,4.91,491.0,-8.0,Archived FRED mirror (Hugging Face)
+2022-10-25,4.88,488.0,-3.0,Archived FRED mirror (Hugging Face)
+2022-10-26,4.8,480.0,-8.0,Archived FRED mirror (Hugging Face)
+2022-10-27,4.76,476.0,-4.0,Archived FRED mirror (Hugging Face)
+2022-10-28,4.54,454.0,-22.0,Archived FRED mirror (Hugging Face)
+2022-10-31,4.63,463.0,9.0,Archived FRED mirror (Hugging Face)
+2022-11-01,4.61,461.00000000000006,-1.9999999999999432,Archived FRED mirror (Hugging Face)
+2022-11-02,4.62,462.0,0.9999999999999432,Archived FRED mirror (Hugging Face)
+2022-11-03,4.81,480.99999999999994,18.999999999999943,Archived FRED mirror (Hugging Face)
+2022-11-04,4.77,476.99999999999994,-4.0,Archived FRED mirror (Hugging Face)
+2022-11-07,4.71,471.0,-5.999999999999943,Archived FRED mirror (Hugging Face)
+2022-11-08,4.79,479.0,8.0,Archived FRED mirror (Hugging Face)
+2022-11-09,4.99,499.0,20.0,Archived FRED mirror (Hugging Face)
+2022-11-10,4.8,480.0,-19.0,Archived FRED mirror (Hugging Face)
+2022-11-11,4.81,480.99999999999994,0.9999999999999432,Archived FRED mirror (Hugging Face)
+2022-11-14,4.67,467.0,-13.999999999999943,Archived FRED mirror (Hugging Face)
+2022-11-15,4.64,463.99999999999994,-3.000000000000057,Archived FRED mirror (Hugging Face)
+2022-11-16,4.71,471.0,7.000000000000057,Archived FRED mirror (Hugging Face)
+2022-11-17,4.75,475.0,4.0,Archived FRED mirror (Hugging Face)
+2022-11-18,4.65,465.00000000000006,-9.999999999999943,Archived FRED mirror (Hugging Face)
+2022-11-21,4.64,463.99999999999994,-1.0000000000001137,Archived FRED mirror (Hugging Face)
+2022-11-22,4.57,457.0,-6.999999999999943,Archived FRED mirror (Hugging Face)
+2022-11-23,4.51,451.0,-6.0,Archived FRED mirror (Hugging Face)
+2022-11-24,4.51,451.0,0.0,Archived FRED mirror (Hugging Face)
+2022-11-25,4.52,451.99999999999994,0.9999999999999432,Archived FRED mirror (Hugging Face)
+2022-11-28,4.63,463.0,11.000000000000057,Archived FRED mirror (Hugging Face)
+2022-11-29,4.63,463.0,0.0,Archived FRED mirror (Hugging Face)
+2022-11-30,4.55,455.0,-8.0,Archived FRED mirror (Hugging Face)
+2022-12-01,4.48,448.00000000000006,-6.999999999999943,Archived FRED mirror (Hugging Face)
+2022-12-02,4.5,450.0,1.9999999999999432,Archived FRED mirror (Hugging Face)
+2022-12-05,4.43,443.0,-7.0,Archived FRED mirror (Hugging Face)
+2022-12-06,4.57,457.0,14.0,Archived FRED mirror (Hugging Face)
+2022-12-07,4.68,468.0,11.0,Archived FRED mirror (Hugging Face)
+2022-12-08,4.55,455.0,-13.0,Archived FRED mirror (Hugging Face)
+2022-12-09,4.46,446.0,-9.0,Archived FRED mirror (Hugging Face)
+2022-12-12,4.4,440.00000000000006,-5.999999999999943,Archived FRED mirror (Hugging Face)
+2022-12-13,4.34,434.0,-6.000000000000057,Archived FRED mirror (Hugging Face)
+2022-12-14,4.37,437.0,3.0,Archived FRED mirror (Hugging Face)
+2022-12-15,4.54,454.0,17.0,Archived FRED mirror (Hugging Face)
+2022-12-16,4.67,467.0,13.0,Archived FRED mirror (Hugging Face)
+2022-12-19,4.67,467.0,0.0,Archived FRED mirror (Hugging Face)
+2022-12-20,4.68,468.0,1.0,Archived FRED mirror (Hugging Face)
+2022-12-21,4.56,455.99999999999994,-12.000000000000057,Archived FRED mirror (Hugging Face)
+2022-12-22,4.61,461.00000000000006,5.000000000000114,Archived FRED mirror (Hugging Face)
+2022-12-23,4.59,459.0,-2.000000000000057,Archived FRED mirror (Hugging Face)
+2022-12-27,4.55,455.0,-4.0,Archived FRED mirror (Hugging Face)
+2022-12-28,4.77,476.99999999999994,21.999999999999943,Archived FRED mirror (Hugging Face)
+2022-12-29,4.81,480.99999999999994,4.0,Archived FRED mirror (Hugging Face)
+2022-12-30,4.79,479.0,-1.9999999999999432,Archived FRED mirror (Hugging Face)
+2022-12-31,4.81,480.99999999999994,1.9999999999999432,Archived FRED mirror (Hugging Face)
+2023-01-03,4.7,470.0,-10.999999999999943,Archived FRED mirror (Hugging Face)
+2023-01-04,4.62,462.0,-8.0,Archived FRED mirror (Hugging Face)
+2023-01-05,4.58,458.0,-4.0,Archived FRED mirror (Hugging Face)
+2023-01-06,4.47,447.0,-11.0,Archived FRED mirror (Hugging Face)
+2023-01-09,4.37,437.0,-10.0,Archived FRED mirror (Hugging Face)
+2023-01-10,4.33,433.0,-4.0,Archived FRED mirror (Hugging Face)
+2023-01-11,4.3,430.0,-3.0,Archived FRED mirror (Hugging Face)
+2023-01-12,4.29,429.0,-1.0,Archived FRED mirror (Hugging Face)
+2023-01-13,4.21,421.0,-8.0,Archived FRED mirror (Hugging Face)
+2023-01-16,4.19,419.00000000000006,-1.9999999999999432,Archived FRED mirror (Hugging Face)
+2023-01-17,4.19,419.00000000000006,0.0,Archived FRED mirror (Hugging Face)
+2023-01-18,4.25,425.0,5.999999999999943,Archived FRED mirror (Hugging Face)
+2023-01-19,4.39,438.99999999999994,13.999999999999943,Archived FRED mirror (Hugging Face)
+2023-01-20,4.35,434.99999999999994,-4.0,Archived FRED mirror (Hugging Face)
+2023-01-23,4.27,426.99999999999994,-8.0,Archived FRED mirror (Hugging Face)
+2023-01-24,4.33,433.0,6.000000000000057,Archived FRED mirror (Hugging Face)
+2023-01-25,4.35,434.99999999999994,1.9999999999999432,Archived FRED mirror (Hugging Face)
+2023-01-26,4.24,424.0,-10.999999999999943,Archived FRED mirror (Hugging Face)
+2023-01-27,4.23,423.00000000000006,-0.9999999999999432,Archived FRED mirror (Hugging Face)
+2023-01-30,4.26,426.0,2.999999999999943,Archived FRED mirror (Hugging Face)
+2023-01-31,4.3,430.0,4.0,Archived FRED mirror (Hugging Face)
+2023-02-01,4.31,430.99999999999994,0.9999999999999432,Archived FRED mirror (Hugging Face)
+2023-02-02,3.94,394.0,-36.99999999999994,Archived FRED mirror (Hugging Face)
+2023-02-03,3.95,395.0,1.0,Archived FRED mirror (Hugging Face)
+2023-02-06,3.99,399.0,4.0,Archived FRED mirror (Hugging Face)
+2023-02-07,3.99,399.0,0.0,Archived FRED mirror (Hugging Face)
+2023-02-08,4.07,407.0,8.0,Archived FRED mirror (Hugging Face)
+2023-02-09,4.05,405.0,-2.0,Archived FRED mirror (Hugging Face)
+2023-02-10,4.24,424.0,19.0,Archived FRED mirror (Hugging Face)
+2023-02-13,4.23,423.00000000000006,-0.9999999999999432,Archived FRED mirror (Hugging Face)
+2023-02-14,4.15,415.00000000000006,-8.0,Archived FRED mirror (Hugging Face)
+2023-02-15,4.18,418.0,2.999999999999943,Archived FRED mirror (Hugging Face)
+2023-02-16,4.24,424.0,6.0,Archived FRED mirror (Hugging Face)
+2023-02-17,4.38,438.0,14.0,Archived FRED mirror (Hugging Face)
+2023-02-20,4.38,438.0,0.0,Archived FRED mirror (Hugging Face)
+2023-02-21,4.49,449.0,11.0,Archived FRED mirror (Hugging Face)
+2023-02-22,4.41,441.0,-8.0,Archived FRED mirror (Hugging Face)
+2023-02-23,4.3,430.0,-11.0,Archived FRED mirror (Hugging Face)
+2023-02-24,4.28,428.0,-2.0,Archived FRED mirror (Hugging Face)
+2023-02-27,4.21,421.0,-7.0,Archived FRED mirror (Hugging Face)
+2023-02-28,4.22,422.0,1.0,Archived FRED mirror (Hugging Face)
+2023-03-01,4.17,417.0,-5.0,Archived FRED mirror (Hugging Face)
+2023-03-02,4.18,418.0,1.0,Archived FRED mirror (Hugging Face)
+2023-03-03,4.05,405.0,-13.0,Archived FRED mirror (Hugging Face)
+2023-03-06,3.97,397.0,-8.0,Archived FRED mirror (Hugging Face)
+2023-03-07,3.98,398.0,1.0,Archived FRED mirror (Hugging Face)
+2023-03-08,4.09,409.0,11.0,Archived FRED mirror (Hugging Face)
+2023-03-09,4.27,426.99999999999994,17.999999999999943,Archived FRED mirror (Hugging Face)
+2023-03-10,4.61,461.00000000000006,34.000000000000114,Archived FRED mirror (Hugging Face)
+2023-03-13,5.03,503.0,41.99999999999994,Archived FRED mirror (Hugging Face)
+2023-03-14,4.74,474.0,-29.0,Archived FRED mirror (Hugging Face)
+2023-03-15,5.2,520.0,46.0,Archived FRED mirror (Hugging Face)
+2023-03-16,4.93,493.0,-27.0,Archived FRED mirror (Hugging Face)
+2023-03-17,5.17,517.0,24.0,Archived FRED mirror (Hugging Face)
+2023-03-20,5.15,515.0,-2.0,Archived FRED mirror (Hugging Face)
+2023-03-21,4.85,484.99999999999994,-30.000000000000057,Archived FRED mirror (Hugging Face)
+2023-03-22,5.0,500.0,15.000000000000057,Archived FRED mirror (Hugging Face)
+2023-03-23,5.1,509.99999999999994,9.999999999999943,Archived FRED mirror (Hugging Face)
+2023-03-24,5.22,522.0,12.000000000000057,Archived FRED mirror (Hugging Face)
+2023-03-27,5.03,503.0,-19.0,Archived FRED mirror (Hugging Face)
+2023-03-28,5.01,501.0,-2.0,Archived FRED mirror (Hugging Face)
+2023-03-29,4.83,483.0,-18.0,Archived FRED mirror (Hugging Face)
+2023-03-30,4.74,474.0,-9.0,Archived FRED mirror (Hugging Face)
+2023-03-31,4.58,458.0,-16.0,Archived FRED mirror (Hugging Face)
+2023-04-03,4.58,458.0,0.0,Archived FRED mirror (Hugging Face)
+2023-04-04,4.73,473.00000000000006,15.000000000000057,Archived FRED mirror (Hugging Face)
+2023-04-05,4.84,484.0,10.999999999999943,Archived FRED mirror (Hugging Face)
+2023-04-06,4.84,484.0,0.0,Archived FRED mirror (Hugging Face)
+2023-04-10,4.7,470.0,-14.0,Archived FRED mirror (Hugging Face)
+2023-04-11,4.63,463.0,-7.0,Archived FRED mirror (Hugging Face)
+2023-04-12,4.62,462.0,-1.0,Archived FRED mirror (Hugging Face)
+2023-04-13,4.49,449.0,-13.0,Archived FRED mirror (Hugging Face)
+2023-04-14,4.43,443.0,-6.0,Archived FRED mirror (Hugging Face)
+2023-04-17,4.41,441.0,-2.0,Archived FRED mirror (Hugging Face)
+2023-04-18,4.37,437.0,-4.0,Archived FRED mirror (Hugging Face)
+2023-04-19,4.41,441.0,4.0,Archived FRED mirror (Hugging Face)
+2023-04-20,4.54,454.0,13.0,Archived FRED mirror (Hugging Face)
+2023-04-21,4.46,446.0,-8.0,Archived FRED mirror (Hugging Face)
+2023-04-24,4.48,448.00000000000006,2.000000000000057,Archived FRED mirror (Hugging Face)
+2023-04-25,4.64,463.99999999999994,15.999999999999886,Archived FRED mirror (Hugging Face)
+2023-04-26,4.63,463.0,-0.9999999999999432,Archived FRED mirror (Hugging Face)
+2023-04-27,4.48,448.00000000000006,-14.999999999999943,Archived FRED mirror (Hugging Face)
+2023-04-28,4.5,450.0,1.9999999999999432,Archived FRED mirror (Hugging Face)
+2023-04-30,4.53,453.0,3.0,Archived FRED mirror (Hugging Face)
+2023-05-01,4.45,445.0,-8.0,Archived FRED mirror (Hugging Face)
+2023-05-02,4.7,470.0,25.0,Archived FRED mirror (Hugging Face)
+2023-05-03,4.79,479.0,9.0,Archived FRED mirror (Hugging Face)
+2023-05-04,4.95,495.0,16.0,Archived FRED mirror (Hugging Face)
+2023-05-05,4.77,476.99999999999994,-18.000000000000057,Archived FRED mirror (Hugging Face)
+2023-05-08,4.72,472.0,-4.999999999999943,Archived FRED mirror (Hugging Face)
+2023-05-09,4.74,474.0,2.0,Archived FRED mirror (Hugging Face)
+2023-05-10,4.78,478.0,4.0,Archived FRED mirror (Hugging Face)
+2023-05-11,4.81,480.99999999999994,2.999999999999943,Archived FRED mirror (Hugging Face)
+2023-05-12,4.76,476.0,-4.999999999999943,Archived FRED mirror (Hugging Face)
+2023-05-15,4.77,476.99999999999994,0.9999999999999432,Archived FRED mirror (Hugging Face)
+2023-05-16,4.79,479.0,2.000000000000057,Archived FRED mirror (Hugging Face)
+2023-05-17,4.75,475.0,-4.0,Archived FRED mirror (Hugging Face)
+2023-05-18,4.69,469.00000000000006,-5.999999999999943,Archived FRED mirror (Hugging Face)
+2023-05-19,4.62,462.0,-7.000000000000057,Archived FRED mirror (Hugging Face)
+2023-05-22,4.54,454.0,-8.0,Archived FRED mirror (Hugging Face)
+2023-05-23,4.6,459.99999999999994,5.999999999999943,Archived FRED mirror (Hugging Face)
+2023-05-24,4.68,468.0,8.000000000000057,Archived FRED mirror (Hugging Face)
+2023-05-25,4.58,458.0,-10.0,Archived FRED mirror (Hugging Face)
+2023-05-26,4.53,453.0,-5.0,Archived FRED mirror (Hugging Face)
+2023-05-29,4.54,454.0,1.0,Archived FRED mirror (Hugging Face)
+2023-05-30,4.58,458.0,4.0,Archived FRED mirror (Hugging Face)
+2023-05-31,4.69,469.00000000000006,11.000000000000057,Archived FRED mirror (Hugging Face)
+2023-06-01,4.65,465.00000000000006,-4.0,Archived FRED mirror (Hugging Face)
+2023-06-02,4.37,437.0,-28.000000000000057,Archived FRED mirror (Hugging Face)
+2023-06-05,4.39,438.99999999999994,1.9999999999999432,Archived FRED mirror (Hugging Face)
+2023-06-06,4.39,438.99999999999994,0.0,Archived FRED mirror (Hugging Face)
+2023-06-07,4.33,433.0,-5.999999999999943,Archived FRED mirror (Hugging Face)
+2023-06-08,4.39,438.99999999999994,5.999999999999943,Archived FRED mirror (Hugging Face)
+2023-06-09,4.29,429.0,-9.999999999999943,Archived FRED mirror (Hugging Face)
+2023-06-12,4.34,434.0,5.0,Archived FRED mirror (Hugging Face)
+2023-06-13,4.18,418.0,-16.0,Archived FRED mirror (Hugging Face)
+2023-06-14,4.18,418.0,0.0,Archived FRED mirror (Hugging Face)
+2023-06-15,4.21,421.0,3.0,Archived FRED mirror (Hugging Face)
+2023-06-16,4.15,415.00000000000006,-5.999999999999943,Archived FRED mirror (Hugging Face)
+2023-06-19,4.15,415.00000000000006,0.0,Archived FRED mirror (Hugging Face)
+2023-06-20,4.22,422.0,6.999999999999943,Archived FRED mirror (Hugging Face)
+2023-06-21,4.32,432.0,10.0,Archived FRED mirror (Hugging Face)
+2023-06-22,4.3,430.0,-2.0,Archived FRED mirror (Hugging Face)
+2023-06-23,4.4,440.00000000000006,10.000000000000057,Archived FRED mirror (Hugging Face)
+2023-06-26,4.45,445.0,4.999999999999943,Archived FRED mirror (Hugging Face)
+2023-06-27,4.3,430.0,-15.0,Archived FRED mirror (Hugging Face)
+2023-06-28,4.27,426.99999999999994,-3.000000000000057,Archived FRED mirror (Hugging Face)
+2023-06-29,4.14,413.99999999999994,-13.0,Archived FRED mirror (Hugging Face)
+2023-06-30,4.05,405.0,-8.999999999999943,Archived FRED mirror (Hugging Face)
+2023-07-03,3.99,399.0,-6.0,Archived FRED mirror (Hugging Face)
+2023-07-04,3.99,399.0,0.0,Archived FRED mirror (Hugging Face)
+2023-07-05,4.01,401.0,2.0,Archived FRED mirror (Hugging Face)
+2023-07-06,4.1,409.99999999999994,8.999999999999943,Archived FRED mirror (Hugging Face)
+2023-07-07,4.08,408.0,-1.9999999999999432,Archived FRED mirror (Hugging Face)
+2023-07-10,4.13,413.0,5.0,Archived FRED mirror (Hugging Face)
+2023-07-11,4.05,405.0,-8.0,Archived FRED mirror (Hugging Face)
+2023-07-12,3.95,395.0,-10.0,Archived FRED mirror (Hugging Face)
+2023-07-13,3.97,397.0,2.0,Archived FRED mirror (Hugging Face)
+2023-07-14,3.9,390.0,-7.0,Archived FRED mirror (Hugging Face)
+2023-07-17,3.97,397.0,7.0,Archived FRED mirror (Hugging Face)
+2023-07-18,3.9,390.0,-7.0,Archived FRED mirror (Hugging Face)
+2023-07-19,3.89,389.0,-1.0,Archived FRED mirror (Hugging Face)
+2023-07-20,3.9,390.0,1.0,Archived FRED mirror (Hugging Face)
+2023-07-21,3.89,389.0,-1.0,Archived FRED mirror (Hugging Face)
+2023-07-24,3.82,382.0,-7.0,Archived FRED mirror (Hugging Face)
+2023-07-25,3.84,384.0,2.0,FRED current rolling window
+2023-07-26,3.91,391.0,7.0,FRED current rolling window
+2023-07-27,3.78,378.0,-13.0,FRED current rolling window
+2023-07-28,3.82,382.0,4.0,FRED current rolling window
+2023-07-31,3.79,379.0,-3.0,FRED current rolling window
+2023-08-01,3.82,382.0,3.0,FRED current rolling window
+2023-08-02,3.96,396.0,14.0,FRED current rolling window
+2023-08-03,3.98,398.0,2.0,FRED current rolling window
+2023-08-04,4.01,401.0,3.0,FRED current rolling window
+2023-08-07,3.97,397.0,-4.0,FRED current rolling window
+2023-08-08,4.0,400.0,3.0,FRED current rolling window
+2023-08-09,3.94,394.0,-6.0,FRED current rolling window
+2023-08-10,3.83,383.0,-11.0,FRED current rolling window
+2023-08-11,3.83,383.0,0.0,FRED current rolling window
+2023-08-14,3.79,379.0,-4.0,FRED current rolling window
+2023-08-15,3.85,385.0,6.0,FRED current rolling window
+2023-08-16,3.81,381.0,-4.0,FRED current rolling window
+2023-08-17,3.95,395.0,14.0,FRED current rolling window
+2023-08-18,4.02,401.99999999999994,6.999999999999943,FRED current rolling window
+2023-08-21,3.97,397.0,-4.999999999999943,FRED current rolling window
+2023-08-22,3.93,393.0,-4.0,FRED current rolling window
+2023-08-23,3.92,392.0,-1.0,FRED current rolling window
+2023-08-24,3.91,391.0,-1.0,FRED current rolling window
+2023-08-25,3.9,390.0,-1.0,FRED current rolling window
+2023-08-28,3.86,386.0,-4.0,FRED current rolling window
+2023-08-29,3.87,387.0,1.0,FRED current rolling window
+2023-08-30,3.8,380.0,-7.0,FRED current rolling window
+2023-08-31,3.85,385.0,5.0,FRED current rolling window
+2023-09-01,3.81,381.0,-4.0,FRED current rolling window
+2023-09-04,3.81,381.0,0.0,FRED current rolling window
+2023-09-05,3.83,383.0,2.0,FRED current rolling window
+2023-09-06,3.86,386.0,3.0,FRED current rolling window
+2023-09-07,3.9,390.0,4.0,FRED current rolling window
+2023-09-08,3.85,385.0,-5.0,FRED current rolling window
+2023-09-11,3.82,382.0,-3.0,FRED current rolling window
+2023-09-12,3.84,384.0,2.0,FRED current rolling window
+2023-09-13,3.85,385.0,1.0,FRED current rolling window
+2023-09-14,3.78,378.0,-7.0,FRED current rolling window
+2023-09-15,3.79,379.0,1.0,FRED current rolling window
+2023-09-18,3.82,382.0,3.0,FRED current rolling window
+2023-09-19,3.82,382.0,0.0,FRED current rolling window
+2023-09-20,3.77,377.0,-5.0,FRED current rolling window
+2023-09-21,3.89,389.0,12.0,FRED current rolling window
+2023-09-22,3.93,393.0,4.0,FRED current rolling window
+2023-09-25,3.97,397.0,4.0,FRED current rolling window
+2023-09-26,4.04,404.0,7.0,FRED current rolling window
+2023-09-27,4.03,403.0,-1.0,FRED current rolling window
+2023-09-28,4.09,409.0,6.0,FRED current rolling window
+2023-09-29,4.03,403.0,-6.0,FRED current rolling window
+2023-09-30,4.03,403.0,0.0,FRED current rolling window
+2023-10-02,4.11,411.00000000000006,8.000000000000057,FRED current rolling window
+2023-10-03,4.26,426.0,14.999999999999943,FRED current rolling window
+2023-10-04,4.37,437.0,11.0,FRED current rolling window
+2023-10-05,4.38,438.0,1.0,FRED current rolling window
+2023-10-06,4.33,433.0,-5.0,FRED current rolling window
+2023-10-09,4.34,434.0,1.0,FRED current rolling window
+2023-10-10,4.26,426.0,-8.0,FRED current rolling window
+2023-10-11,4.25,425.0,-1.0,FRED current rolling window
+2023-10-12,4.25,425.0,0.0,FRED current rolling window
+2023-10-13,4.3,430.0,5.0,FRED current rolling window
+2023-10-16,4.27,426.99999999999994,-3.000000000000057,FRED current rolling window
+2023-10-17,4.25,425.0,-1.9999999999999432,FRED current rolling window
+2023-10-18,4.32,432.0,7.0,FRED current rolling window
+2023-10-19,4.37,437.0,5.0,FRED current rolling window
+2023-10-20,4.52,451.99999999999994,14.999999999999943,FRED current rolling window
+2023-10-23,4.51,451.0,-0.9999999999999432,FRED current rolling window
+2023-10-24,4.41,441.0,-10.0,FRED current rolling window
+2023-10-25,4.37,437.0,-4.0,FRED current rolling window
+2023-10-26,4.5,450.0,13.0,FRED current rolling window
+2023-10-27,4.53,453.0,3.0,FRED current rolling window
+2023-10-30,4.5,450.0,-3.0,FRED current rolling window
+2023-10-31,4.42,442.0,-8.0,FRED current rolling window
+2023-11-01,4.47,447.0,5.0,FRED current rolling window
+2023-11-02,4.15,415.00000000000006,-31.999999999999943,FRED current rolling window
+2023-11-03,4.04,404.0,-11.000000000000057,FRED current rolling window
+2023-11-06,4.0,400.0,-4.0,FRED current rolling window
+2023-11-07,4.08,408.0,8.0,FRED current rolling window
+2023-11-08,4.08,408.0,0.0,FRED current rolling window
+2023-11-09,4.04,404.0,-4.0,FRED current rolling window
+2023-11-10,4.03,403.0,-1.0,FRED current rolling window
+2023-11-13,4.03,403.0,0.0,FRED current rolling window
+2023-11-14,3.92,392.0,-11.0,FRED current rolling window
+2023-11-15,3.89,389.0,-3.0,FRED current rolling window
+2023-11-16,4.02,401.99999999999994,12.999999999999943,FRED current rolling window
+2023-11-17,3.99,399.0,-2.999999999999943,FRED current rolling window
+2023-11-20,3.92,392.0,-7.0,FRED current rolling window
+2023-11-21,3.95,395.0,3.0,FRED current rolling window
+2023-11-22,3.9,390.0,-5.0,FRED current rolling window
+2023-11-23,3.9,390.0,0.0,FRED current rolling window
+2023-11-24,3.85,385.0,-5.0,FRED current rolling window
+2023-11-27,3.89,389.0,4.0,FRED current rolling window
+2023-11-28,3.9,390.0,1.0,FRED current rolling window
+2023-11-29,3.8,380.0,-10.0,FRED current rolling window
+2023-11-30,3.84,384.0,4.0,FRED current rolling window
+2023-12-01,3.87,387.0,3.0,FRED current rolling window
+2023-12-04,3.8,380.0,-7.0,FRED current rolling window
+2023-12-05,3.8,380.0,0.0,FRED current rolling window
+2023-12-06,3.79,379.0,-1.0,FRED current rolling window
+2023-12-07,3.77,377.0,-2.0,FRED current rolling window
+2023-12-08,3.75,375.0,-2.0,FRED current rolling window
+2023-12-11,3.79,379.0,4.0,FRED current rolling window
+2023-12-12,3.76,376.0,-3.0,FRED current rolling window
+2023-12-13,3.79,379.0,3.0,FRED current rolling window
+2023-12-14,3.47,347.0,-32.0,FRED current rolling window
+2023-12-15,3.51,351.0,4.0,FRED current rolling window
+2023-12-18,3.51,351.0,0.0,FRED current rolling window
+2023-12-19,3.46,346.0,-5.0,FRED current rolling window
+2023-12-20,3.43,343.0,-3.0,FRED current rolling window
+2023-12-21,3.41,341.0,-2.0,FRED current rolling window
+2023-12-22,3.39,339.0,-2.0,FRED current rolling window
+2023-12-26,3.37,337.0,-2.0,FRED current rolling window
+2023-12-27,3.34,334.0,-3.0,FRED current rolling window
+2023-12-28,3.32,332.0,-2.0,FRED current rolling window
+2023-12-29,3.34,334.0,2.0,FRED current rolling window
+2023-12-31,3.39,339.0,5.0,FRED current rolling window
+2024-01-02,3.54,354.0,15.0,FRED current rolling window
+2024-01-03,3.71,371.0,17.0,FRED current rolling window
+2024-01-04,3.69,369.0,-2.0,FRED current rolling window
+2024-01-05,3.68,368.0,-1.0,FRED current rolling window
+2024-01-08,3.63,363.0,-5.0,FRED current rolling window
+2024-01-09,3.59,359.0,-4.0,FRED current rolling window
+2024-01-10,3.5,350.0,-9.0,FRED current rolling window
+2024-01-11,3.55,355.0,5.0,FRED current rolling window
+2024-01-12,3.56,356.0,1.0,FRED current rolling window
+2024-01-15,3.54,354.0,-2.0,FRED current rolling window
+2024-01-16,3.58,358.0,4.0,FRED current rolling window
+2024-01-17,3.62,362.0,4.0,FRED current rolling window
+2024-01-18,3.58,358.0,-4.0,FRED current rolling window
+2024-01-19,3.54,354.0,-4.0,FRED current rolling window
+2024-01-22,3.49,349.0,-5.0,FRED current rolling window
+2024-01-23,3.51,351.0,2.0,FRED current rolling window
+2024-01-24,3.44,344.0,-7.0,FRED current rolling window
+2024-01-25,3.45,345.0,1.0,FRED current rolling window
+2024-01-26,3.39,339.0,-6.0,FRED current rolling window
+2024-01-29,3.41,341.0,2.0,FRED current rolling window
+2024-01-30,3.42,342.0,1.0,FRED current rolling window
+2024-01-31,3.59,359.0,17.0,FRED current rolling window
+2024-02-01,3.56,356.0,-3.0,FRED current rolling window
+2024-02-02,3.47,347.0,-9.0,FRED current rolling window
+2024-02-05,3.5,350.0,3.0,FRED current rolling window
+2024-02-06,3.52,352.0,2.0,FRED current rolling window
+2024-02-07,3.43,343.0,-9.0,FRED current rolling window
+2024-02-08,3.38,338.0,-5.0,FRED current rolling window
+2024-02-09,3.33,333.0,-5.0,FRED current rolling window
+2024-02-12,3.35,335.0,2.0,FRED current rolling window
+2024-02-13,3.36,336.0,1.0,FRED current rolling window
+2024-02-14,3.38,338.0,2.0,FRED current rolling window
+2024-02-15,3.35,335.0,-3.0,FRED current rolling window
+2024-02-16,3.34,334.0,-1.0,FRED current rolling window
+2024-02-19,3.34,334.0,0.0,FRED current rolling window
+2024-02-20,3.37,337.0,3.0,FRED current rolling window
+2024-02-21,3.34,334.0,-3.0,FRED current rolling window
+2024-02-22,3.22,322.0,-12.0,FRED current rolling window
+2024-02-23,3.23,323.0,1.0,FRED current rolling window
+2024-02-26,3.23,323.0,0.0,FRED current rolling window
+2024-02-27,3.26,326.0,3.0,FRED current rolling window
+2024-02-28,3.31,331.0,5.0,FRED current rolling window
+2024-02-29,3.29,329.0,-2.0,FRED current rolling window
+2024-03-01,3.32,332.0,3.0,FRED current rolling window
+2024-03-04,3.26,326.0,-6.0,FRED current rolling window
+2024-03-05,3.31,331.0,5.0,FRED current rolling window
+2024-03-06,3.27,327.0,-4.0,FRED current rolling window
+2024-03-07,3.27,327.0,0.0,FRED current rolling window
+2024-03-08,3.26,326.0,-1.0,FRED current rolling window
+2024-03-11,3.26,326.0,0.0,FRED current rolling window
+2024-03-12,3.2,320.0,-6.0,FRED current rolling window
+2024-03-13,3.15,315.0,-5.0,FRED current rolling window
+2024-03-14,3.15,315.0,0.0,FRED current rolling window
+2024-03-15,3.16,316.0,1.0,FRED current rolling window
+2024-03-18,3.13,313.0,-3.0,FRED current rolling window
+2024-03-19,3.1,310.0,-3.0,FRED current rolling window
+2024-03-20,3.14,314.0,4.0,FRED current rolling window
+2024-03-21,3.05,305.0,-9.0,FRED current rolling window
+2024-03-22,3.08,308.0,3.0,FRED current rolling window
+2024-03-25,3.11,311.0,3.0,FRED current rolling window
+2024-03-26,3.15,315.0,4.0,FRED current rolling window
+2024-03-27,3.15,315.0,0.0,FRED current rolling window
+2024-03-28,3.12,312.0,-3.0,FRED current rolling window
+2024-03-31,3.15,315.0,3.0,FRED current rolling window
+2024-04-01,3.12,312.0,-3.0,FRED current rolling window
+2024-04-02,3.23,323.0,11.0,FRED current rolling window
+2024-04-03,3.23,323.0,0.0,FRED current rolling window
+2024-04-04,3.24,324.0,1.0,FRED current rolling window
+2024-04-05,3.18,318.0,-6.0,FRED current rolling window
+2024-04-08,3.15,315.0,-3.0,FRED current rolling window
+2024-04-09,3.14,314.0,-1.0,FRED current rolling window
+2024-04-10,3.1,310.0,-4.0,FRED current rolling window
+2024-04-11,3.16,316.0,6.0,FRED current rolling window
+2024-04-12,3.25,325.0,9.0,FRED current rolling window
+2024-04-15,3.28,328.0,3.0,FRED current rolling window
+2024-04-16,3.36,336.0,8.0,FRED current rolling window
+2024-04-17,3.42,342.0,6.0,FRED current rolling window
+2024-04-18,3.39,339.0,-3.0,FRED current rolling window
+2024-04-19,3.37,337.0,-2.0,FRED current rolling window
+2024-04-22,3.29,329.0,-8.0,FRED current rolling window
+2024-04-23,3.2,320.0,-9.0,FRED current rolling window
+2024-04-24,3.19,319.0,-1.0,FRED current rolling window
+2024-04-25,3.24,324.0,5.0,FRED current rolling window
+2024-04-26,3.16,316.0,-8.0,FRED current rolling window
+2024-04-29,3.12,312.0,-4.0,FRED current rolling window
+2024-04-30,3.18,318.0,6.0,FRED current rolling window
+2024-05-01,3.21,321.0,3.0,FRED current rolling window
+2024-05-02,3.16,316.0,-5.0,FRED current rolling window
+2024-05-03,3.08,308.0,-8.0,FRED current rolling window
+2024-05-06,3.03,303.0,-5.0,FRED current rolling window
+2024-05-07,3.06,306.0,3.0,FRED current rolling window
+2024-05-08,3.1,310.0,4.0,FRED current rolling window
+2024-05-09,3.14,314.0,4.0,FRED current rolling window
+2024-05-10,3.12,312.0,-2.0,FRED current rolling window
+2024-05-13,3.14,314.0,2.0,FRED current rolling window
+2024-05-14,3.14,314.0,0.0,FRED current rolling window
+2024-05-15,3.13,313.0,-1.0,FRED current rolling window
+2024-05-16,3.08,308.0,-5.0,FRED current rolling window
+2024-05-17,3.09,309.0,1.0,FRED current rolling window
+2024-05-20,3.07,307.0,-2.0,FRED current rolling window
+2024-05-21,3.07,307.0,0.0,FRED current rolling window
+2024-05-22,3.11,311.0,4.0,FRED current rolling window
+2024-05-23,3.1,310.0,-1.0,FRED current rolling window
+2024-05-24,3.11,311.0,1.0,FRED current rolling window
+2024-05-27,3.12,312.0,1.0,FRED current rolling window
+2024-05-28,3.09,309.0,-3.0,FRED current rolling window
+2024-05-29,3.15,315.0,6.0,FRED current rolling window
+2024-05-30,3.19,319.0,4.0,FRED current rolling window
+2024-05-31,3.2,320.0,1.0,FRED current rolling window
+2024-06-03,3.17,317.0,-3.0,FRED current rolling window
+2024-06-04,3.22,322.0,5.0,FRED current rolling window
+2024-06-05,3.2,320.0,-2.0,FRED current rolling window
+2024-06-06,3.2,320.0,0.0,FRED current rolling window
+2024-06-07,3.15,315.0,-5.0,FRED current rolling window
+2024-06-10,3.15,315.0,0.0,FRED current rolling window
+2024-06-11,3.19,319.0,4.0,FRED current rolling window
+2024-06-12,3.09,309.0,-10.0,FRED current rolling window
+2024-06-13,3.2,320.0,11.0,FRED current rolling window
+2024-06-14,3.29,329.0,9.0,FRED current rolling window
+2024-06-17,3.26,326.0,-3.0,FRED current rolling window
+2024-06-18,3.24,324.0,-2.0,FRED current rolling window
+2024-06-19,3.24,324.0,0.0,FRED current rolling window
+2024-06-20,3.23,323.0,-1.0,FRED current rolling window
+2024-06-21,3.21,321.0,-2.0,FRED current rolling window
+2024-06-24,3.19,319.0,-2.0,FRED current rolling window
+2024-06-25,3.19,319.0,0.0,FRED current rolling window
+2024-06-26,3.18,318.0,-1.0,FRED current rolling window
+2024-06-27,3.21,321.0,3.0,FRED current rolling window
+2024-06-28,3.18,318.0,-3.0,FRED current rolling window
+2024-06-30,3.21,321.0,3.0,FRED current rolling window
+2024-07-01,3.21,321.0,0.0,FRED current rolling window
+2024-07-02,3.23,323.0,2.0,FRED current rolling window
+2024-07-03,3.25,325.0,2.0,FRED current rolling window
+2024-07-04,3.25,325.0,0.0,FRED current rolling window
+2024-07-05,3.27,327.0,2.0,FRED current rolling window
+2024-07-08,3.2,320.0,-7.0,FRED current rolling window
+2024-07-09,3.21,321.0,1.0,FRED current rolling window
+2024-07-10,3.17,317.0,-4.0,FRED current rolling window
+2024-07-11,3.18,318.0,1.0,FRED current rolling window
+2024-07-12,3.19,319.0,1.0,FRED current rolling window
+2024-07-15,3.13,313.0,-6.0,FRED current rolling window
+2024-07-16,3.08,308.0,-5.0,FRED current rolling window
+2024-07-17,3.09,309.0,1.0,FRED current rolling window
+2024-07-18,3.09,309.0,0.0,FRED current rolling window
+2024-07-19,3.09,309.0,0.0,FRED current rolling window
+2024-07-22,3.05,305.0,-4.0,FRED current rolling window
+2024-07-23,3.02,302.0,-3.0,FRED current rolling window
+2024-07-24,3.1,310.0,8.0,FRED current rolling window
+2024-07-25,3.08,308.0,-2.0,FRED current rolling window
+2024-07-26,3.1,310.0,2.0,FRED current rolling window
+2024-07-29,3.13,313.0,3.0,FRED current rolling window
+2024-07-30,3.2,320.0,7.0,FRED current rolling window
+2024-07-31,3.25,325.0,5.0,FRED current rolling window
+2024-08-01,3.35,335.0,10.0,FRED current rolling window
+2024-08-02,3.72,372.0,37.0,FRED current rolling window
+2024-08-05,3.93,393.0,21.0,FRED current rolling window
+2024-08-06,3.67,367.0,-26.0,FRED current rolling window
+2024-08-07,3.57,357.0,-10.0,FRED current rolling window
+2024-08-08,3.48,348.0,-9.0,FRED current rolling window
+2024-08-09,3.49,349.0,1.0,FRED current rolling window
+2024-08-12,3.52,352.0,3.0,FRED current rolling window
+2024-08-13,3.54,354.0,2.0,FRED current rolling window
+2024-08-14,3.46,346.0,-8.0,FRED current rolling window
+2024-08-15,3.31,331.0,-15.0,FRED current rolling window
+2024-08-16,3.29,329.0,-2.0,FRED current rolling window
+2024-08-19,3.21,321.0,-8.0,FRED current rolling window
+2024-08-20,3.25,325.0,4.0,FRED current rolling window
+2024-08-21,3.27,327.0,2.0,FRED current rolling window
+2024-08-22,3.21,321.0,-6.0,FRED current rolling window
+2024-08-23,3.19,319.0,-2.0,FRED current rolling window
+2024-08-26,3.15,315.0,-4.0,FRED current rolling window
+2024-08-27,3.17,317.0,2.0,FRED current rolling window
+2024-08-28,3.19,319.0,2.0,FRED current rolling window
+2024-08-29,3.15,315.0,-4.0,FRED current rolling window
+2024-08-30,3.13,313.0,-2.0,FRED current rolling window
+2024-08-31,3.17,317.0,4.0,FRED current rolling window
+2024-09-02,3.17,317.0,0.0,FRED current rolling window
+2024-09-03,3.31,331.0,14.0,FRED current rolling window
+2024-09-04,3.35,335.0,4.0,FRED current rolling window
+2024-09-05,3.29,329.0,-6.0,FRED current rolling window
+2024-09-06,3.39,339.0,10.0,FRED current rolling window
+2024-09-09,3.36,336.0,-3.0,FRED current rolling window
+2024-09-10,3.46,346.0,10.0,FRED current rolling window
+2024-09-11,3.44,344.0,-2.0,FRED current rolling window
+2024-09-12,3.39,339.0,-5.0,FRED current rolling window
+2024-09-13,3.37,337.0,-2.0,FRED current rolling window
+2024-09-16,3.32,332.0,-5.0,FRED current rolling window
+2024-09-17,3.25,325.0,-7.0,FRED current rolling window
+2024-09-18,3.21,321.0,-4.0,FRED current rolling window
+2024-09-19,3.1,310.0,-11.0,FRED current rolling window
+2024-09-20,3.15,315.0,5.0,FRED current rolling window
+2024-09-23,3.15,315.0,0.0,FRED current rolling window
+2024-09-24,3.21,321.0,6.0,FRED current rolling window
+2024-09-25,3.19,319.0,-2.0,FRED current rolling window
+2024-09-26,3.14,314.0,-5.0,FRED current rolling window
+2024-09-27,3.14,314.0,0.0,FRED current rolling window
+2024-09-30,3.03,303.0,-11.0,FRED current rolling window
+2024-10-01,3.07,307.0,4.0,FRED current rolling window
+2024-10-02,3.06,306.0,-1.0,FRED current rolling window
+2024-10-03,3.04,304.0,-2.0,FRED current rolling window
+2024-10-04,2.89,289.0,-15.0,FRED current rolling window
+2024-10-07,2.95,295.0,6.0,FRED current rolling window
+2024-10-08,2.99,299.0,4.0,FRED current rolling window
+2024-10-09,2.94,294.0,-5.0,FRED current rolling window
+2024-10-10,2.99,299.0,5.0,FRED current rolling window
+2024-10-11,2.98,298.0,-1.0,FRED current rolling window
+2024-10-14,2.97,297.0,-1.0,FRED current rolling window
+2024-10-15,2.93,293.0,-4.0,FRED current rolling window
+2024-10-16,2.9,290.0,-3.0,FRED current rolling window
+2024-10-17,2.89,289.0,-1.0,FRED current rolling window
+2024-10-18,2.88,288.0,-1.0,FRED current rolling window
+2024-10-21,2.88,288.0,0.0,FRED current rolling window
+2024-10-22,2.92,292.0,4.0,FRED current rolling window
+2024-10-23,2.95,295.0,3.0,FRED current rolling window
+2024-10-24,2.93,293.0,-2.0,FRED current rolling window
+2024-10-25,2.89,289.0,-4.0,FRED current rolling window
+2024-10-28,2.82,282.0,-7.0,FRED current rolling window
+2024-10-29,2.85,285.0,3.0,FRED current rolling window
+2024-10-30,2.8,280.0,-5.0,FRED current rolling window
+2024-10-31,2.88,288.0,8.0,FRED current rolling window
+2024-11-01,2.83,283.0,-5.0,FRED current rolling window
+2024-11-04,2.87,287.0,4.0,FRED current rolling window
+2024-11-05,2.86,286.0,-1.0,FRED current rolling window
+2024-11-06,2.74,274.0,-12.0,FRED current rolling window
+2024-11-07,2.73,273.0,-1.0,FRED current rolling window
+2024-11-08,2.63,263.0,-10.0,FRED current rolling window
+2024-11-11,2.63,263.0,0.0,FRED current rolling window
+2024-11-12,2.61,261.0,-2.0,FRED current rolling window
+2024-11-13,2.64,264.0,3.0,FRED current rolling window
+2024-11-14,2.6,260.0,-4.0,FRED current rolling window
+2024-11-15,2.72,272.0,12.0,FRED current rolling window
+2024-11-18,2.72,272.0,0.0,FRED current rolling window
+2024-11-19,2.69,269.0,-3.0,FRED current rolling window
+2024-11-20,2.67,267.0,-2.0,FRED current rolling window
+2024-11-21,2.61,261.0,-6.0,FRED current rolling window
+2024-11-22,2.61,261.0,0.0,FRED current rolling window
+2024-11-25,2.64,264.0,3.0,FRED current rolling window
+2024-11-26,2.68,268.0,4.0,FRED current rolling window
+2024-11-27,2.69,269.0,1.0,FRED current rolling window
+2024-11-28,2.69,269.0,0.0,FRED current rolling window
+2024-11-29,2.72,272.0,3.0,FRED current rolling window
+2024-11-30,2.74,274.0,2.0,FRED current rolling window
+2024-12-02,2.68,268.0,-6.0,FRED current rolling window
+2024-12-03,2.66,266.0,-2.0,FRED current rolling window
+2024-12-04,2.66,266.0,0.0,FRED current rolling window
+2024-12-05,2.66,266.0,0.0,FRED current rolling window
+2024-12-06,2.67,267.0,1.0,FRED current rolling window
+2024-12-09,2.67,267.0,0.0,FRED current rolling window
+2024-12-10,2.67,267.0,0.0,FRED current rolling window
+2024-12-11,2.64,264.0,-3.0,FRED current rolling window
+2024-12-12,2.66,266.0,2.0,FRED current rolling window
+2024-12-13,2.68,268.0,2.0,FRED current rolling window
+2024-12-16,2.69,269.0,1.0,FRED current rolling window
+2024-12-17,2.75,275.0,6.0,FRED current rolling window
+2024-12-18,2.73,273.0,-2.0,FRED current rolling window
+2024-12-19,2.91,291.0,18.0,FRED current rolling window
+2024-12-20,2.86,286.0,-5.0,FRED current rolling window
+2024-12-23,2.85,285.0,-1.0,FRED current rolling window
+2024-12-24,2.86,286.0,1.0,FRED current rolling window
+2024-12-26,2.86,286.0,0.0,FRED current rolling window
+2024-12-27,2.84,284.0,-2.0,FRED current rolling window
+2024-12-30,2.94,294.0,10.0,FRED current rolling window
+2024-12-31,2.92,292.0,-2.0,FRED current rolling window
+2025-01-02,2.88,288.0,-4.0,FRED current rolling window
+2025-01-03,2.81,281.0,-7.0,FRED current rolling window
+2025-01-06,2.76,276.0,-5.0,FRED current rolling window
+2025-01-07,2.79,279.0,3.0,FRED current rolling window
+2025-01-08,2.84,284.0,5.0,FRED current rolling window
+2025-01-09,2.82,282.0,-2.0,FRED current rolling window
+2025-01-10,2.81,281.0,-1.0,FRED current rolling window
+2025-01-13,2.85,285.0,4.0,FRED current rolling window
+2025-01-14,2.8,280.0,-5.0,FRED current rolling window
+2025-01-15,2.72,272.0,-8.0,FRED current rolling window
+2025-01-16,2.73,273.0,1.0,FRED current rolling window
+2025-01-17,2.64,264.0,-9.0,FRED current rolling window
+2025-01-20,2.64,264.0,0.0,FRED current rolling window
+2025-01-21,2.61,261.0,-3.0,FRED current rolling window
+2025-01-22,2.59,259.0,-2.0,FRED current rolling window
+2025-01-23,2.61,261.0,2.0,FRED current rolling window
+2025-01-24,2.6,260.0,-1.0,FRED current rolling window
+2025-01-27,2.66,266.0,6.0,FRED current rolling window
+2025-01-28,2.66,266.0,0.0,FRED current rolling window
+2025-01-29,2.68,268.0,2.0,FRED current rolling window
+2025-01-30,2.67,267.0,-1.0,FRED current rolling window
+2025-01-31,2.68,268.0,1.0,FRED current rolling window
+2025-02-03,2.73,273.0,5.0,FRED current rolling window
+2025-02-04,2.71,271.0,-2.0,FRED current rolling window
+2025-02-05,2.69,269.0,-2.0,FRED current rolling window
+2025-02-06,2.66,266.0,-3.0,FRED current rolling window
+2025-02-07,2.67,267.0,1.0,FRED current rolling window
+2025-02-10,2.66,266.0,-1.0,FRED current rolling window
+2025-02-11,2.66,266.0,0.0,FRED current rolling window
+2025-02-12,2.65,265.0,-1.0,FRED current rolling window
+2025-02-13,2.65,265.0,0.0,FRED current rolling window
+2025-02-14,2.62,262.0,-3.0,FRED current rolling window
+2025-02-17,2.62,262.0,0.0,FRED current rolling window
+2025-02-18,2.62,262.0,0.0,FRED current rolling window
+2025-02-19,2.68,268.0,6.0,FRED current rolling window
+2025-02-20,2.66,266.0,-2.0,FRED current rolling window
+2025-02-21,2.78,278.0,12.0,FRED current rolling window
+2025-02-24,2.78,278.0,0.0,FRED current rolling window
+2025-02-25,2.84,284.0,6.0,FRED current rolling window
+2025-02-26,2.81,281.0,-3.0,FRED current rolling window
+2025-02-27,2.81,281.0,0.0,FRED current rolling window
+2025-02-28,2.87,287.0,6.0,FRED current rolling window
+2025-03-03,2.94,294.0,7.0,FRED current rolling window
+2025-03-04,2.99,299.0,5.0,FRED current rolling window
+2025-03-05,2.88,288.0,-11.0,FRED current rolling window
+2025-03-06,2.99,299.0,11.0,FRED current rolling window
+2025-03-07,2.97,297.0,-2.0,FRED current rolling window
+2025-03-10,3.16,316.0,19.0,FRED current rolling window
+2025-03-11,3.22,322.0,6.0,FRED current rolling window
+2025-03-12,3.2,320.0,-2.0,FRED current rolling window
+2025-03-13,3.4,340.0,20.0,FRED current rolling window
+2025-03-14,3.25,325.0,-15.0,FRED current rolling window
+2025-03-17,3.18,318.0,-7.0,FRED current rolling window
+2025-03-18,3.23,323.0,5.0,FRED current rolling window
+2025-03-19,3.19,319.0,-4.0,FRED current rolling window
+2025-03-20,3.17,317.0,-2.0,FRED current rolling window
+2025-03-21,3.21,321.0,4.0,FRED current rolling window
+2025-03-24,3.05,305.0,-16.0,FRED current rolling window
+2025-03-25,3.09,309.0,4.0,FRED current rolling window
+2025-03-26,3.19,319.0,10.0,FRED current rolling window
+2025-03-27,3.27,327.0,8.0,FRED current rolling window
+2025-03-28,3.47,347.0,20.0,FRED current rolling window
+2025-03-31,3.55,355.0,8.0,FRED current rolling window
+2025-04-01,3.5,350.0,-5.0,FRED current rolling window
+2025-04-02,3.42,342.0,-8.0,FRED current rolling window
+2025-04-03,4.01,401.0,59.0,FRED current rolling window
+2025-04-04,4.45,445.0,44.0,FRED current rolling window
+2025-04-07,4.61,461.00000000000006,16.000000000000057,FRED current rolling window
+2025-04-08,4.57,457.0,-4.000000000000057,FRED current rolling window
+2025-04-09,4.37,437.0,-20.0,FRED current rolling window
+2025-04-10,4.42,442.0,5.0,FRED current rolling window
+2025-04-11,4.26,426.0,-16.0,FRED current rolling window
+2025-04-14,4.14,413.99999999999994,-12.000000000000057,FRED current rolling window
+2025-04-15,4.09,409.0,-4.999999999999943,FRED current rolling window
+2025-04-16,4.16,416.0,7.0,FRED current rolling window
+2025-04-17,4.02,401.99999999999994,-14.000000000000057,FRED current rolling window
+2025-04-21,4.16,416.0,14.000000000000057,FRED current rolling window
+2025-04-22,3.99,399.0,-17.0,FRED current rolling window
+2025-04-23,3.75,375.0,-24.0,FRED current rolling window
+2025-04-24,3.73,373.0,-2.0,FRED current rolling window
+2025-04-25,3.67,367.0,-6.0,FRED current rolling window
+2025-04-28,3.73,373.0,6.0,FRED current rolling window
+2025-04-29,3.74,374.0,1.0,FRED current rolling window
+2025-04-30,3.94,394.0,20.0,FRED current rolling window
+2025-05-01,3.78,378.0,-16.0,FRED current rolling window
+2025-05-02,3.6,360.0,-18.0,FRED current rolling window
+2025-05-05,3.6,360.0,0.0,FRED current rolling window
+2025-05-06,3.66,366.0,6.0,FRED current rolling window
+2025-05-07,3.67,367.0,1.0,FRED current rolling window
+2025-05-08,3.51,351.0,-16.0,FRED current rolling window
+2025-05-09,3.53,353.0,2.0,FRED current rolling window
+2025-05-12,3.15,315.0,-38.0,FRED current rolling window
+2025-05-13,3.09,309.0,-6.0,FRED current rolling window
+2025-05-14,3.1,310.0,1.0,FRED current rolling window
+2025-05-15,3.2,320.0,10.0,FRED current rolling window
+2025-05-16,3.16,316.0,-4.0,FRED current rolling window
+2025-05-19,3.21,321.0,5.0,FRED current rolling window
+2025-05-20,3.2,320.0,-1.0,FRED current rolling window
+2025-05-21,3.25,325.0,5.0,FRED current rolling window
+2025-05-22,3.32,332.0,7.0,FRED current rolling window
+2025-05-23,3.4,340.0,8.0,FRED current rolling window
+2025-05-26,3.4,340.0,0.0,FRED current rolling window
+2025-05-27,3.24,324.0,-16.0,FRED current rolling window
+2025-05-28,3.23,323.0,-1.0,FRED current rolling window
+2025-05-29,3.22,322.0,-1.0,FRED current rolling window
+2025-05-30,3.31,331.0,9.0,FRED current rolling window
+2025-05-31,3.32,332.0,1.0,FRED current rolling window
+2025-06-02,3.27,327.0,-5.0,FRED current rolling window
+2025-06-03,3.19,319.0,-8.0,FRED current rolling window
+2025-06-04,3.23,323.0,4.0,FRED current rolling window
+2025-06-05,3.18,318.0,-5.0,FRED current rolling window
+2025-06-06,3.09,309.0,-9.0,FRED current rolling window
+2025-06-09,3.12,312.0,3.0,FRED current rolling window
+2025-06-10,3.12,312.0,0.0,FRED current rolling window
+2025-06-11,3.12,312.0,0.0,FRED current rolling window
+2025-06-12,3.17,317.0,5.0,FRED current rolling window
+2025-06-13,3.18,318.0,1.0,FRED current rolling window
+2025-06-16,3.1,310.0,-8.0,FRED current rolling window
+2025-06-17,3.17,317.0,7.0,FRED current rolling window
+2025-06-18,3.16,316.0,-1.0,FRED current rolling window
+2025-06-19,3.16,316.0,0.0,FRED current rolling window
+2025-06-20,3.13,313.0,-3.0,FRED current rolling window
+2025-06-23,3.12,312.0,-1.0,FRED current rolling window
+2025-06-24,3.06,306.0,-6.0,FRED current rolling window
+2025-06-25,3.04,304.0,-2.0,FRED current rolling window
+2025-06-26,3.04,304.0,0.0,FRED current rolling window
+2025-06-27,3.02,302.0,-2.0,FRED current rolling window
+2025-06-30,2.96,296.0,-6.0,FRED current rolling window
+2025-07-01,2.91,291.0,-5.0,FRED current rolling window
+2025-07-02,2.88,288.0,-3.0,FRED current rolling window
+2025-07-03,2.8,280.0,-8.0,FRED current rolling window
+2025-07-04,2.8,280.0,0.0,FRED current rolling window
+2025-07-07,2.86,286.0,6.0,FRED current rolling window
+2025-07-08,2.92,292.0,6.0,FRED current rolling window
+2025-07-09,2.94,294.0,2.0,FRED current rolling window
+2025-07-10,2.92,292.0,-2.0,FRED current rolling window
+2025-07-11,2.97,297.0,5.0,FRED current rolling window
+2025-07-14,2.95,295.0,-2.0,FRED current rolling window
+2025-07-15,2.95,295.0,0.0,FRED current rolling window
+2025-07-16,3.0,300.0,5.0,FRED current rolling window
+2025-07-17,2.91,291.0,-9.0,FRED current rolling window
+2025-07-18,2.93,293.0,2.0,FRED current rolling window
+2025-07-21,2.89,289.0,-4.0,FRED current rolling window
+2025-07-22,2.9,290.0,1.0,FRED current rolling window
+2025-07-23,2.83,283.0,-7.0,FRED current rolling window
+2025-07-24,2.82,282.0,-1.0,FRED current rolling window
+2025-07-25,2.84,284.0,2.0,FRED current rolling window
+2025-07-28,2.82,282.0,-2.0,FRED current rolling window
+2025-07-29,2.86,286.0,4.0,FRED current rolling window
+2025-07-30,2.89,289.0,3.0,FRED current rolling window
+2025-07-31,2.86,286.0,-3.0,FRED current rolling window
+2025-08-01,3.13,313.0,27.0,FRED current rolling window
+2025-08-04,3.02,302.0,-11.0,FRED current rolling window
+2025-08-05,2.98,298.0,-4.0,FRED current rolling window
+2025-08-06,2.98,298.0,0.0,FRED current rolling window
+2025-08-07,2.95,295.0,-3.0,FRED current rolling window
+2025-08-08,2.94,294.0,-1.0,FRED current rolling window
+2025-08-11,2.94,294.0,0.0,FRED current rolling window
+2025-08-12,2.93,293.0,-1.0,FRED current rolling window
+2025-08-13,2.9,290.0,-3.0,FRED current rolling window
+2025-08-14,2.89,289.0,-1.0,FRED current rolling window
+2025-08-15,2.88,288.0,-1.0,FRED current rolling window
+2025-08-18,2.88,288.0,0.0,FRED current rolling window
+2025-08-19,2.9,290.0,2.0,FRED current rolling window
+2025-08-20,2.94,294.0,4.0,FRED current rolling window
+2025-08-21,2.95,295.0,1.0,FRED current rolling window
+2025-08-22,2.88,288.0,-7.0,FRED current rolling window
+2025-08-25,2.8,280.0,-8.0,FRED current rolling window
+2025-08-26,2.78,278.0,-2.0,FRED current rolling window
+2025-08-27,2.78,278.0,0.0,FRED current rolling window
+2025-08-28,2.75,275.0,-3.0,FRED current rolling window
+2025-08-29,2.82,282.0,7.0,FRED current rolling window
+2025-08-31,2.84,284.0,2.0,FRED current rolling window
+2025-09-01,2.84,284.0,0.0,FRED current rolling window
+2025-09-02,2.92,292.0,8.0,FRED current rolling window
+2025-09-03,2.88,288.0,-4.0,FRED current rolling window
+2025-09-04,2.84,284.0,-4.0,FRED current rolling window
+2025-09-05,2.83,283.0,-1.0,FRED current rolling window
+2025-09-08,2.84,284.0,1.0,FRED current rolling window
+2025-09-09,2.87,287.0,3.0,FRED current rolling window
+2025-09-10,2.84,284.0,-3.0,FRED current rolling window
+2025-09-11,2.78,278.0,-6.0,FRED current rolling window
+2025-09-12,2.79,279.0,1.0,FRED current rolling window
+2025-09-15,2.75,275.0,-4.0,FRED current rolling window
+2025-09-16,2.79,279.0,4.0,FRED current rolling window
+2025-09-17,2.79,279.0,0.0,FRED current rolling window
+2025-09-18,2.71,271.0,-8.0,FRED current rolling window
+2025-09-19,2.72,272.0,1.0,FRED current rolling window
+2025-09-22,2.69,269.0,-3.0,FRED current rolling window
+2025-09-23,2.71,271.0,2.0,FRED current rolling window
+2025-09-24,2.7,270.0,-1.0,FRED current rolling window
+2025-09-25,2.76,276.0,6.0,FRED current rolling window
+2025-09-26,2.75,275.0,-1.0,FRED current rolling window
+2025-09-29,2.74,274.0,-1.0,FRED current rolling window
+2025-09-30,2.8,280.0,6.0,FRED current rolling window
+2025-10-01,2.81,281.0,1.0,FRED current rolling window
+2025-10-02,2.81,281.0,0.0,FRED current rolling window
+2025-10-03,2.8,280.0,-1.0,FRED current rolling window
+2025-10-06,2.76,276.0,-4.0,FRED current rolling window
+2025-10-07,2.82,282.0,6.0,FRED current rolling window
+2025-10-08,2.84,284.0,2.0,FRED current rolling window
+2025-10-09,2.95,295.0,11.0,FRED current rolling window
+2025-10-10,3.18,318.0,23.0,FRED current rolling window
+2025-10-13,3.18,318.0,0.0,FRED current rolling window
+2025-10-14,3.11,311.0,-7.0,FRED current rolling window
+2025-10-15,2.95,295.0,-16.0,FRED current rolling window
+2025-10-16,3.04,304.0,9.0,FRED current rolling window
+2025-10-17,3.04,304.0,0.0,FRED current rolling window
+2025-10-20,2.99,299.0,-5.0,FRED current rolling window
+2025-10-21,2.97,297.0,-2.0,FRED current rolling window
+2025-10-22,3.01,301.0,4.0,FRED current rolling window
+2025-10-23,2.96,296.0,-5.0,FRED current rolling window
+2025-10-24,2.88,288.0,-8.0,FRED current rolling window
+2025-10-27,2.8,280.0,-8.0,FRED current rolling window
+2025-10-28,2.82,282.0,2.0,FRED current rolling window
+2025-10-29,2.76,276.0,-6.0,FRED current rolling window
+2025-10-30,2.85,285.0,9.0,FRED current rolling window
+2025-10-31,2.94,294.0,9.0,FRED current rolling window
+2025-11-03,3.04,304.0,10.0,FRED current rolling window
+2025-11-04,3.13,313.0,9.0,FRED current rolling window
+2025-11-05,3.05,305.0,-8.0,FRED current rolling window
+2025-11-06,3.13,313.0,8.0,FRED current rolling window
+2025-11-07,3.15,315.0,2.0,FRED current rolling window
+2025-11-10,3.02,302.0,-13.0,FRED current rolling window
+2025-11-11,3.02,302.0,0.0,FRED current rolling window
+2025-11-12,3.02,302.0,0.0,FRED current rolling window
+2025-11-13,3.09,309.0,7.0,FRED current rolling window
+2025-11-14,3.07,307.0,-2.0,FRED current rolling window
+2025-11-17,3.13,313.0,6.0,FRED current rolling window
+2025-11-18,3.2,320.0,7.0,FRED current rolling window
+2025-11-19,3.17,317.0,-3.0,FRED current rolling window
+2025-11-20,3.17,317.0,0.0,FRED current rolling window
+2025-11-21,3.19,319.0,2.0,FRED current rolling window
+2025-11-24,3.15,315.0,-4.0,FRED current rolling window
+2025-11-25,3.1,310.0,-5.0,FRED current rolling window
+2025-11-26,3.0,300.0,-10.0,FRED current rolling window
+2025-11-27,3.0,300.0,0.0,FRED current rolling window
+2025-11-28,2.95,295.0,-5.0,FRED current rolling window
+2025-11-30,2.92,292.0,-3.0,FRED current rolling window
+2025-12-01,2.94,294.0,2.0,FRED current rolling window
+2025-12-02,2.92,292.0,-2.0,FRED current rolling window
+2025-12-03,2.89,289.0,-3.0,FRED current rolling window
+2025-12-04,2.88,288.0,-1.0,FRED current rolling window
+2025-12-05,2.85,285.0,-3.0,FRED current rolling window
+2025-12-08,2.89,289.0,4.0,FRED current rolling window
+2025-12-09,2.89,289.0,0.0,FRED current rolling window
+2025-12-10,2.91,291.0,2.0,FRED current rolling window
+2025-12-11,2.88,288.0,-3.0,FRED current rolling window
+2025-12-12,2.91,291.0,3.0,FRED current rolling window
+2025-12-15,2.91,291.0,0.0,FRED current rolling window
+2025-12-16,2.98,298.0,7.0,FRED current rolling window
+2025-12-17,2.99,299.0,1.0,FRED current rolling window
+2025-12-18,2.95,295.0,-4.0,FRED current rolling window
+2025-12-19,2.9,290.0,-5.0,FRED current rolling window
+2025-12-22,2.88,288.0,-2.0,FRED current rolling window
+2025-12-23,2.83,283.0,-5.0,FRED current rolling window
+2025-12-24,2.84,284.0,1.0,FRED current rolling window
+2025-12-26,2.86,286.0,2.0,FRED current rolling window
+2025-12-29,2.87,287.0,1.0,FRED current rolling window
+2025-12-30,2.84,284.0,-3.0,FRED current rolling window
+2025-12-31,2.81,281.0,-3.0,FRED current rolling window
+2026-01-02,2.83,283.0,2.0,FRED current rolling window
+2026-01-05,2.81,281.0,-2.0,FRED current rolling window
+2026-01-06,2.79,279.0,-2.0,FRED current rolling window
+2026-01-07,2.79,279.0,0.0,FRED current rolling window
+2026-01-08,2.76,276.0,-3.0,FRED current rolling window
+2026-01-09,2.74,274.0,-2.0,FRED current rolling window
+2026-01-12,2.74,274.0,0.0,FRED current rolling window
+2026-01-13,2.75,275.0,1.0,FRED current rolling window
+2026-01-14,2.76,276.0,1.0,FRED current rolling window
+2026-01-15,2.71,271.0,-5.0,FRED current rolling window
+2026-01-16,2.65,265.0,-6.0,FRED current rolling window
+2026-01-19,2.65,265.0,0.0,FRED current rolling window
+2026-01-20,2.73,273.0,8.0,FRED current rolling window
+2026-01-21,2.69,269.0,-4.0,FRED current rolling window
+2026-01-22,2.64,264.0,-5.0,FRED current rolling window
+2026-01-23,2.68,268.0,4.0,FRED current rolling window
+2026-01-26,2.69,269.0,1.0,FRED current rolling window
+2026-01-27,2.71,271.0,2.0,FRED current rolling window
+2026-01-28,2.72,272.0,1.0,FRED current rolling window
+2026-01-29,2.77,277.0,5.0,FRED current rolling window
+2026-01-30,2.8,280.0,3.0,FRED current rolling window
+2026-01-31,2.88,288.0,8.0,FRED current rolling window
+2026-02-02,2.81,281.0,-7.0,FRED current rolling window
+2026-02-03,2.85,285.0,4.0,FRED current rolling window
+2026-02-04,2.86,286.0,1.0,FRED current rolling window
+2026-02-05,2.97,297.0,11.0,FRED current rolling window
+2026-02-06,2.87,287.0,-10.0,FRED current rolling window
+2026-02-09,2.84,284.0,-3.0,FRED current rolling window
+2026-02-10,2.86,286.0,2.0,FRED current rolling window
+2026-02-11,2.84,284.0,-2.0,FRED current rolling window
+2026-02-12,2.92,292.0,8.0,FRED current rolling window
+2026-02-13,2.95,295.0,3.0,FRED current rolling window
+2026-02-16,2.94,294.0,-1.0,FRED current rolling window
+2026-02-17,2.94,294.0,0.0,FRED current rolling window
+2026-02-18,2.86,286.0,-8.0,FRED current rolling window
+2026-02-19,2.88,288.0,2.0,FRED current rolling window
+2026-02-20,2.86,286.0,-2.0,FRED current rolling window
+2026-02-23,2.95,295.0,9.0,FRED current rolling window
+2026-02-24,2.97,297.0,2.0,FRED current rolling window
+2026-02-25,2.94,294.0,-3.0,FRED current rolling window
+2026-02-26,2.98,298.0,4.0,FRED current rolling window
+2026-02-27,3.1,310.0,12.0,FRED current rolling window
+2026-02-28,3.12,312.0,2.0,FRED current rolling window
+2026-03-02,3.03,303.0,-9.0,FRED current rolling window
+2026-03-03,3.08,308.0,5.0,FRED current rolling window
+2026-03-04,2.97,297.0,-11.0,FRED current rolling window
+2026-03-05,3.0,300.0,3.0,FRED current rolling window
+2026-03-06,3.13,313.0,13.0,FRED current rolling window
+2026-03-09,3.19,319.0,6.0,FRED current rolling window
+2026-03-10,3.06,306.0,-13.0,FRED current rolling window
+2026-03-11,3.09,309.0,3.0,FRED current rolling window
+2026-03-12,3.17,317.0,8.0,FRED current rolling window
+2026-03-13,3.28,328.0,11.0,FRED current rolling window
+2026-03-16,3.27,327.0,-1.0,FRED current rolling window
+2026-03-17,3.22,322.0,-5.0,FRED current rolling window
+2026-03-18,3.2,320.0,-2.0,FRED current rolling window
+2026-03-19,3.27,327.0,7.0,FRED current rolling window
+2026-03-20,3.24,324.0,-3.0,FRED current rolling window
+2026-03-23,3.19,319.0,-5.0,FRED current rolling window
+2026-03-24,3.19,319.0,0.0,FRED current rolling window
+2026-03-25,3.17,317.0,-2.0,FRED current rolling window
+2026-03-26,3.21,321.0,4.0,FRED current rolling window
+2026-03-27,3.42,342.0,21.0,FRED current rolling window
+2026-03-30,3.46,346.0,4.0,FRED current rolling window
+2026-03-31,3.28,328.0,-18.0,FRED current rolling window
+2026-04-01,3.16,316.0,-12.0,FRED current rolling window
+2026-04-02,3.17,317.0,1.0,FRED current rolling window
+2026-04-03,3.13,313.0,-4.0,FRED current rolling window
+2026-04-06,3.05,305.0,-8.0,FRED current rolling window
+2026-04-07,3.12,312.0,7.0,FRED current rolling window
+2026-04-08,2.94,294.0,-18.0,FRED current rolling window
+2026-04-09,2.9,290.0,-4.0,FRED current rolling window
+2026-04-10,2.94,294.0,4.0,FRED current rolling window
+2026-04-13,2.95,295.0,1.0,FRED current rolling window
+2026-04-14,2.84,284.0,-11.0,FRED current rolling window
+2026-04-15,2.85,285.0,1.0,FRED current rolling window
+2026-04-16,2.86,286.0,1.0,FRED current rolling window
+2026-04-17,2.83,283.0,-3.0,FRED current rolling window
+2026-04-20,2.87,287.0,4.0,FRED current rolling window
+2026-04-21,2.85,285.0,-2.0,FRED current rolling window
+2026-04-22,2.84,284.0,-1.0,FRED current rolling window
+2026-04-23,2.86,286.0,2.0,FRED current rolling window
+2026-04-24,2.86,286.0,0.0,FRED current rolling window
+2026-04-27,2.84,284.0,-2.0,FRED current rolling window
+2026-04-28,2.85,285.0,1.0,FRED current rolling window
+2026-04-29,2.82,282.0,-3.0,FRED current rolling window
+2026-04-30,2.83,283.0,1.0,FRED current rolling window
+2026-05-01,2.77,277.0,-6.0,FRED current rolling window
+2026-05-04,2.78,278.0,1.0,FRED current rolling window
+2026-05-05,2.77,277.0,-1.0,FRED current rolling window
+2026-05-06,2.75,275.0,-2.0,FRED current rolling window
+2026-05-07,2.79,279.0,4.0,FRED current rolling window
+2026-05-08,2.81,281.0,2.0,FRED current rolling window
+2026-05-11,2.79,279.0,-2.0,FRED current rolling window
+2026-05-12,2.82,282.0,3.0,FRED current rolling window
+2026-05-13,2.82,282.0,0.0,FRED current rolling window
+2026-05-14,2.76,276.0,-6.0,FRED current rolling window
+2026-05-15,2.8,280.0,4.0,FRED current rolling window
+2026-05-18,2.83,283.0,3.0,FRED current rolling window
+2026-05-19,2.86,286.0,3.0,FRED current rolling window
+2026-05-20,2.8,280.0,-6.0,FRED current rolling window
+2026-05-21,2.78,278.0,-2.0,FRED current rolling window
+2026-05-22,2.74,274.0,-4.0,FRED current rolling window
+2026-05-25,2.74,274.0,0.0,FRED current rolling window
+2026-05-26,2.72,272.0,-2.0,FRED current rolling window
+2026-05-27,2.71,271.0,-1.0,FRED current rolling window
+2026-05-28,2.72,272.0,1.0,FRED current rolling window
+2026-05-29,2.72,272.0,0.0,FRED current rolling window
+2026-05-31,2.74,274.0,2.0,FRED current rolling window
+2026-06-01,2.72,272.0,-2.0,FRED current rolling window
+2026-06-02,2.71,271.0,-1.0,FRED current rolling window
+2026-06-03,2.75,275.0,4.0,FRED current rolling window
+2026-06-04,2.74,274.0,-1.0,FRED current rolling window
+2026-06-05,2.76,276.0,2.0,FRED current rolling window
+2026-06-08,2.75,275.0,-1.0,FRED current rolling window
+2026-06-09,2.78,278.0,3.0,FRED current rolling window
+2026-06-10,2.8,280.0,2.0,FRED current rolling window
+2026-06-11,2.78,278.0,-2.0,FRED current rolling window
+2026-06-12,2.71,271.0,-7.0,FRED current rolling window
+2026-06-15,2.66,266.0,-5.0,FRED current rolling window
+2026-06-16,2.71,271.0,5.0,FRED current rolling window
+2026-06-17,2.63,263.0,-8.0,FRED current rolling window
+2026-06-18,2.66,266.0,3.0,FRED current rolling window
+2026-06-19,2.66,266.0,0.0,FRED current rolling window
+2026-06-22,2.65,265.0,-1.0,FRED current rolling window
+2026-06-23,2.71,271.0,6.0,FRED current rolling window
+2026-06-24,2.76,276.0,5.0,FRED current rolling window
+2026-06-25,2.78,278.0,2.0,FRED current rolling window
+2026-06-26,2.83,283.0,5.0,FRED current rolling window
+2026-06-29,2.8,280.0,-3.0,FRED current rolling window
+2026-06-30,2.75,275.0,-5.0,FRED current rolling window
+2026-07-01,2.74,274.0,-1.0,FRED current rolling window
+2026-07-02,2.75,275.0,1.0,FRED current rolling window
+2026-07-03,2.74,274.0,-1.0,FRED current rolling window
+2026-07-06,2.72,272.0,-2.0,FRED current rolling window
+2026-07-07,2.67,267.0,-5.0,FRED current rolling window
+2026-07-08,2.7,270.0,3.0,FRED current rolling window
+2026-07-09,2.7,270.0,0.0,FRED current rolling window
+2026-07-10,2.69,269.0,-1.0,FRED current rolling window
+2026-07-13,2.69,269.0,0.0,FRED current rolling window
+2026-07-14,2.72,272.0,3.0,FRED current rolling window
+2026-07-15,2.71,271.0,-1.0,FRED current rolling window
+2026-07-16,2.71,271.0,0.0,FRED current rolling window
+2026-07-17,2.73,273.0,2.0,FRED current rolling window
+2026-07-20,2.69,269.0,-4.0,FRED current rolling window
+2026-07-21,2.69,269.0,0.0,FRED current rolling window
+2026-07-22,2.68,268.0,-1.0,FRED current rolling window
+2026-07-23,2.77,277.0,9.0,FRED current rolling window

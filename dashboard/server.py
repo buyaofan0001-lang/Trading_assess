@@ -56,6 +56,8 @@ INTRADAY_TTL_SECONDS = 60
 JOURNAL_DIR = REPO / "日记"
 MACRO_FRAMEWORK_PATH = (HERE / CONFIG.get("macro_framework_path", "../日记/分析框架.md")).resolve()
 MACRO_FRAMEWORK_MAX_BYTES = 512_000
+MACRO_SIGNAL_TTL_SECONDS = 15 * 60
+MACRO_ANOMALY_Z_THRESHOLD = 2.0
 JOURNAL_NAME_RE = re.compile(r"^(\d{4})-(\d{1,2})-(\d{1,2})\.md$")
 JOURNAL_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 JOURNAL_MAX_BYTES = 512_000
@@ -243,6 +245,382 @@ def read_macro_framework(path: Path | None = None) -> dict[str, Any]:
         "modified_at": datetime.fromtimestamp(stat.st_mtime).astimezone().isoformat(timespec="seconds"),
         "version": f"{stat.st_mtime_ns:x}-{stat.st_size:x}",
     }
+
+
+def fetch_fred_series(series_id: str, lookback_days: int = 500) -> pd.Series:
+    start = (datetime.now(SHANGHAI_TZ).date() - timedelta(days=lookback_days)).isoformat()
+    url = f"https://fred.stlouisfed.org/graph/fredgraph.csv?id={series_id}&cosd={start}"
+    last_error: Exception | None = None
+    frame = pd.DataFrame()
+    for attempt in range(2):
+        try:
+            frame = pd.read_csv(url)
+            break
+        except Exception as exc:
+            last_error = exc
+            if attempt == 0:
+                time.sleep(0.6)
+    if frame.empty and last_error:
+        raise last_error
+    if "observation_date" not in frame or series_id not in frame:
+        raise ValueError(f"FRED {series_id} 返回字段不完整")
+    dates = pd.to_datetime(frame["observation_date"], errors="coerce")
+    values = pd.to_numeric(frame[series_id], errors="coerce")
+    series = pd.Series(values.to_numpy(), index=dates, name=series_id).dropna()
+    return series[~series.index.duplicated(keep="last")].sort_index()
+
+
+def fetch_fred_macro_bundle() -> dict[str, pd.Series]:
+    """Fetch FRED series sequentially to avoid the public CSV endpoint's burst limits."""
+    return {
+        series_id: fetch_fred_series(series_id)
+        for series_id in ("BAMLH0A0HYM2", "DGS10", "SOFR", "IORB")
+    }
+
+
+def fetch_jnk_series() -> pd.Series:
+    frame = yf.download(
+        "JNK",
+        period="1y",
+        interval="1d",
+        auto_adjust=True,
+        progress=False,
+        threads=False,
+    )
+    if frame.empty or "Close" not in frame:
+        raise ValueError("Yahoo Finance 未返回 JNK 日线")
+    close = frame["Close"]
+    if isinstance(close, pd.DataFrame):
+        close = close.iloc[:, 0]
+    close = pd.to_numeric(close, errors="coerce").dropna()
+    close.index = pd.to_datetime(close.index, errors="coerce").tz_localize(None)
+    return close[~close.index.duplicated(keep="last")].sort_index().rename("JNK")
+
+
+def fetch_repo_fixing_spread() -> tuple[pd.Series, pd.DataFrame]:
+    """Use CFETS FR007/FDR007 fixing rates as the auditable R007-DR007 proxy."""
+    repo = ak.repo_rate_query("回购定盘利率")
+    depository = ak.repo_rate_query("银银间回购定盘利率")
+    if repo.empty or depository.empty:
+        raise ValueError("中国货币网未返回 FR007/FDR007")
+    repo = repo[["date", "FR007"]].copy()
+    depository = depository[["date", "FDR007"]].copy()
+    repo["date"] = pd.to_datetime(repo["date"], errors="coerce")
+    depository["date"] = pd.to_datetime(depository["date"], errors="coerce")
+    joined = repo.merge(depository, on="date", how="inner").dropna().sort_values("date")
+    if joined.empty:
+        raise ValueError("FR007 与 FDR007 没有共同日期")
+    joined = joined.set_index("date")
+    spread = (joined["FR007"] - joined["FDR007"]) * 100
+    return spread.rename("FR007-FDR007"), joined
+
+
+def robust_prior_z(values: pd.Series, window: int = 60, min_history: int = 20) -> pd.Series:
+    """Robust z-score against prior observations only, avoiding look-ahead dilution."""
+    clean = pd.to_numeric(values, errors="coerce")
+    result = pd.Series(index=clean.index, dtype=float)
+    for position in range(len(clean)):
+        current = finite(clean.iloc[position])
+        if current is None:
+            continue
+        history = clean.iloc[max(0, position - window):position].dropna()
+        if len(history) < min_history:
+            continue
+        median = float(history.median())
+        mad = float((history - median).abs().median())
+        if mad > 1e-12:
+            result.iloc[position] = 0.6745 * (current - median) / mad
+            continue
+        std = float(history.std(ddof=1))
+        if std > 1e-12:
+            result.iloc[position] = (current - float(history.mean())) / std
+    return result
+
+
+def analyze_macro_series(
+    series: pd.Series,
+    *,
+    change_mode: str = "difference",
+    change_scale: float = 1.0,
+    recent_observations: int = 5,
+) -> dict[str, Any]:
+    clean = pd.to_numeric(series, errors="coerce").dropna().sort_index()
+    clean = clean[~clean.index.duplicated(keep="last")]
+    if len(clean) < 2:
+        raise ValueError("宏观指标历史数据不足")
+    if change_mode == "return":
+        change_1d = clean.pct_change() * 100
+        change_5d = clean.pct_change(5) * 100
+    elif change_mode == "difference":
+        change_1d = clean.diff() * change_scale
+        change_5d = clean.diff(5) * change_scale
+    else:
+        raise ValueError("未知宏观指标变化口径")
+    z_1d = robust_prior_z(change_1d)
+    z_5d = robust_prior_z(change_5d)
+    latest_date = clean.index[-1]
+    recent = pd.DataFrame({"change": change_1d, "z": z_1d, "level": clean}).tail(recent_observations)
+    candidates = recent[recent["z"].abs() >= MACRO_ANOMALY_Z_THRESHOLD]
+    anomaly = None
+    if not candidates.empty:
+        event_date = candidates["z"].abs().idxmax()
+        event = candidates.loc[event_date]
+        anomaly = {
+            "date": pd.Timestamp(event_date).strftime("%Y-%m-%d"),
+            "window": "1D",
+            "change": float(event["change"]),
+            "z": float(event["z"]),
+            "level": float(event["level"]),
+        }
+    latest_5d_z = finite(z_5d.iloc[-1])
+    if latest_5d_z is not None and abs(latest_5d_z) >= MACRO_ANOMALY_Z_THRESHOLD:
+        five_day_candidate = {
+            "date": pd.Timestamp(latest_date).strftime("%Y-%m-%d"),
+            "window": "5D",
+            "change": float(change_5d.iloc[-1]),
+            "z": latest_5d_z,
+            "level": float(clean.iloc[-1]),
+        }
+        if anomaly is None or abs(five_day_candidate["z"]) > abs(anomaly["z"]):
+            anomaly = five_day_candidate
+    return {
+        "latest": float(clean.iloc[-1]),
+        "date": pd.Timestamp(latest_date).strftime("%Y-%m-%d"),
+        "change_1d": finite(change_1d.iloc[-1]),
+        "change_5d": finite(change_5d.iloc[-1]),
+        "z_1d": finite(z_1d.iloc[-1]),
+        "z_5d": latest_5d_z,
+        "recent_anomaly": anomaly,
+        "history": [
+            {"date": pd.Timestamp(index).strftime("%Y-%m-%d"), "value": float(value)}
+            for index, value in clean.tail(30).items()
+        ],
+    }
+
+
+def macro_anomaly_meaning(metric_id: str, event: dict[str, Any]) -> str:
+    change = float(event["change"])
+    level = float(event["level"])
+    if metric_id == "oas":
+        return "信用利差突然扩张，风险偏好转弱。" if change > 0 else "信用利差快速收窄，风险偏好改善。"
+    if metric_id == "jnk":
+        return "高收益债ETF快速下跌，信用风险偏好转弱。" if change < 0 else "高收益债ETF快速上涨，风险偏好改善。"
+    if metric_id == "ust10y":
+        return "长端美债收益率快速上行，估值折现压力增加。" if change > 0 else "长端美债收益率快速下行，避险或宽松预期增强。"
+    if metric_id == "cn_repo_spread":
+        return "非银融资相对存款类机构的溢价突然扩大。" if change > 0 else "非银融资溢价快速回落。"
+    if metric_id == "usd_funding_spread":
+        if change > 0 and level <= 0:
+            return "美元融资利差快速向零轴上移，但仍未形成正溢价拥堵。"
+        if change > 0:
+            return "SOFR升至IORB上方，美元融资管道压力上升。"
+        return "美元融资相对准备金利率的压力快速缓解。"
+    return "指标变化超过近60个观测的常态范围。"
+
+
+def macro_metric(
+    metric_id: str,
+    name: str,
+    analysis: dict[str, Any],
+    *,
+    unit: str,
+    change_unit: str,
+    source: str,
+    source_url: str,
+    components: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    event = analysis.get("recent_anomaly")
+    if event:
+        event = {
+            **event,
+            "metric_id": metric_id,
+            "name": name,
+            "unit": change_unit,
+            "meaning": macro_anomaly_meaning(metric_id, event),
+            "severity": "extreme" if abs(float(event["z"])) >= 3 else "warning",
+        }
+    latest_date = datetime.strptime(analysis["date"], "%Y-%m-%d").date()
+    age_days = (datetime.now(SHANGHAI_TZ).date() - latest_date).days
+    return {
+        "id": metric_id,
+        "name": name,
+        **{key: value for key, value in analysis.items() if key != "recent_anomaly"},
+        "unit": unit,
+        "change_unit": change_unit,
+        "source": source,
+        "source_url": source_url,
+        "components": components or {},
+        "age_days": age_days,
+        "stale": age_days > 5,
+        "recent_anomaly": event,
+    }
+
+
+def build_macro_signal_summary(metrics: list[dict[str, Any]]) -> dict[str, str]:
+    by_id = {metric["id"]: metric for metric in metrics}
+    oas = by_id.get("oas", {})
+    jnk = by_id.get("jnk", {})
+    ust10y = by_id.get("ust10y", {})
+    repo = by_id.get("cn_repo_spread", {})
+    usd = by_id.get("usd_funding_spread", {})
+
+    oas_5d = finite(oas.get("change_5d"))
+    jnk_5d = finite(jnk.get("change_5d"))
+    ust_5d = finite(ust10y.get("change_5d"))
+    repo_level = finite(repo.get("latest"))
+    usd_level = finite(usd.get("latest"))
+
+    if oas_5d is not None and jnk_5d is not None and oas_5d > 0 and jnk_5d < 0:
+        credit = f"信用偏好边际走弱：OAS五个观测扩大 {oas_5d:.1f}bp，JNK同期 {jnk_5d:+.2f}%。"
+    elif oas_5d is not None and jnk_5d is not None and oas_5d < 0 and jnk_5d > 0:
+        credit = f"信用偏好边际改善：OAS五个观测收窄 {abs(oas_5d):.1f}bp，JNK同期 {jnk_5d:+.2f}%。"
+    else:
+        credit = "OAS与JNK尚未形成方向一致的信用风险偏好信号。"
+
+    if ust_5d is not None and abs(ust_5d) >= 10:
+        rates = f"美国10年期收益率五个观测{('上行' if ust_5d > 0 else '下行')} {abs(ust_5d):.1f}bp，属于需要关注的长端利率移动。"
+    else:
+        rates = "美国10年期收益率近五个观测未出现超过10bp的方向性移动。"
+
+    liquidity_parts = []
+    if repo_level is not None:
+        liquidity_parts.append(
+            f"国内非银定盘融资溢价 {repo_level:.2f}bp"
+            + ("，当前处于正溢价" if repo_level > 0 else "，当前未见正溢价压力")
+        )
+    if usd_level is not None:
+        liquidity_parts.append(
+            f"SOFR−IORB {usd_level:.1f}bp"
+            + ("，美元融资存在正溢价" if usd_level > 0 else "，尚未显示正溢价拥堵")
+        )
+    liquidity = "；".join(liquidity_parts) + "。" if liquidity_parts else "流动性指标暂不可用。"
+
+    headline_parts = []
+    if oas_5d is not None and jnk_5d is not None and oas_5d > 0 and jnk_5d < 0:
+        headline_parts.append("信用风险偏好转弱")
+    if ust_5d is not None and ust_5d >= 10:
+        headline_parts.append("长端利率上行")
+    if repo_level is not None and repo_level >= 5:
+        headline_parts.append("非银融资溢价偏高")
+    if usd_level is not None and usd_level > 0:
+        headline_parts.append("美元融资转为正溢价")
+    headline = "；".join(headline_parts) if headline_parts else "宏观监控指标暂未形成一致的显著压力组合"
+    return {
+        "headline": headline,
+        "credit": credit,
+        "rates": rates,
+        "liquidity": liquidity,
+        "boundary": "机械统计异动只描述偏离常态的幅度，不直接生成买卖许可。",
+    }
+
+
+def build_macro_signals_uncached() -> dict[str, Any]:
+    loaders: dict[str, Callable[[], Any]] = {
+        "fred": fetch_fred_macro_bundle,
+        "jnk": fetch_jnk_series,
+        "repo": fetch_repo_fixing_spread,
+    }
+    fetched: dict[str, Any] = {}
+    errors: list[str] = []
+    with ThreadPoolExecutor(max_workers=3) as executor:
+        futures = {executor.submit(loader): key for key, loader in loaders.items()}
+        for future in as_completed(futures):
+            key = futures[future]
+            try:
+                fetched[key] = future.result()
+            except Exception as exc:
+                errors.append(f"{key}: {exc}")
+    if "fred" in fetched:
+        fetched.update({
+            "oas": fetched["fred"]["BAMLH0A0HYM2"],
+            "ust10y": fetched["fred"]["DGS10"],
+            "sofr": fetched["fred"]["SOFR"],
+            "iorb": fetched["fred"]["IORB"],
+        })
+
+    metrics: list[dict[str, Any]] = []
+    if "oas" in fetched:
+        metrics.append(macro_metric(
+            "oas", "美国高收益债 OAS",
+            analyze_macro_series(fetched["oas"] * 100),
+            unit="bp", change_unit="bp",
+            source="FRED · ICE BofA BAMLH0A0HYM2",
+            source_url="https://fred.stlouisfed.org/series/BAMLH0A0HYM2",
+        ))
+    if "jnk" in fetched:
+        metrics.append(macro_metric(
+            "jnk", "JNK 高收益债 ETF",
+            analyze_macro_series(fetched["jnk"], change_mode="return"),
+            unit="USD", change_unit="%",
+            source="Yahoo Finance · JNK",
+            source_url="https://finance.yahoo.com/quote/JNK/",
+        ))
+    if "ust10y" in fetched:
+        metrics.append(macro_metric(
+            "ust10y", "美国10年期国债收益率",
+            analyze_macro_series(fetched["ust10y"], change_scale=100),
+            unit="%", change_unit="bp",
+            source="FRED · DGS10",
+            source_url="https://fred.stlouisfed.org/series/DGS10",
+        ))
+    if "repo" in fetched:
+        spread, components = fetched["repo"]
+        analysis = analyze_macro_series(spread)
+        latest_date = pd.Timestamp(analysis["date"])
+        row = components.loc[latest_date]
+        metrics.append(macro_metric(
+            "cn_repo_spread", "FR007−FDR007 非银融资溢价",
+            analysis,
+            unit="bp", change_unit="bp",
+            source="中国货币网 · CFETS定盘利率（R007−DR007代理）",
+            source_url="https://www.chinamoney.com.cn/chinese/bkfrr/",
+            components={"FR007": float(row["FR007"]), "FDR007": float(row["FDR007"])},
+        ))
+    if "sofr" in fetched and "iorb" in fetched:
+        joined = pd.concat(
+            [fetched["sofr"].rename("SOFR"), fetched["iorb"].rename("IORB")],
+            axis=1,
+            join="inner",
+        ).dropna()
+        spread = (joined["SOFR"] - joined["IORB"]) * 100
+        analysis = analyze_macro_series(spread)
+        latest_date = pd.Timestamp(analysis["date"])
+        row = joined.loc[latest_date]
+        metrics.append(macro_metric(
+            "usd_funding_spread", "SOFR−IORB 美元融资利差",
+            analysis,
+            unit="bp", change_unit="bp",
+            source="FRED · SOFR / IORB",
+            source_url="https://fred.stlouisfed.org/graph/?g=1OaWk",
+            components={"SOFR": float(row["SOFR"]), "IORB": float(row["IORB"])},
+        ))
+    anomalies = [
+        metric["recent_anomaly"]
+        for metric in metrics
+        if metric.get("recent_anomaly")
+    ]
+    anomalies.sort(key=lambda item: abs(float(item["z"])), reverse=True)
+    return {
+        "generated_at": iso_now(),
+        "refresh_minutes": MACRO_SIGNAL_TTL_SECONDS // 60,
+        "anomaly_rule": {
+            "threshold": MACRO_ANOMALY_Z_THRESHOLD,
+            "lookback": 60,
+            "recent_observations": 5,
+            "method": "相对前60个观测的稳健Z分数，绝对值≥2.0才列为异动",
+        },
+        "summary": build_macro_signal_summary(metrics),
+        "anomalies": anomalies,
+        "metrics": metrics,
+        "errors": errors,
+        "partial": bool(errors),
+    }
+
+
+def build_macro_signals(force: bool = False) -> dict[str, Any]:
+    if force:
+        CACHE.invalidate_prefix("macro-signals")
+    return CACHE.get("macro-signals", MACRO_SIGNAL_TTL_SECONDS, build_macro_signals_uncached)
 
 
 def validate_journal_date(value: Any) -> str:
@@ -1556,6 +1934,13 @@ class DashboardHandler(SimpleHTTPRequestHandler):
                 self.send_json(read_macro_framework())
             except ValueError as exc:
                 self.send_json({"error": str(exc)}, HTTPStatus.BAD_REQUEST)
+            except Exception as exc:
+                self.send_json({"error": str(exc)}, HTTPStatus.INTERNAL_SERVER_ERROR)
+            return
+        if parsed.path == "/api/macro-signals":
+            force = parse_qs(parsed.query).get("force", ["0"])[0] == "1"
+            try:
+                self.send_json(build_macro_signals(force=force))
             except Exception as exc:
                 self.send_json({"error": str(exc)}, HTTPStatus.INTERNAL_SERVER_ERROR)
             return

@@ -4,6 +4,7 @@ const PORTFOLIO_POLL_MS = 15_000;
 const REPORT_POLL_MS = 60_000;
 const RISK_MODEL_POLL_MS = 60_000;
 const MACRO_FRAMEWORK_POLL_MS = 60_000;
+const MACRO_SIGNAL_POLL_MS = 15 * 60_000;
 const REPORT_UI = {
   premarket: { prefix: "premarket", empty: "盘前报告目录中还没有 Markdown 文件。" },
   close: { prefix: "close", empty: "收盘复盘目录中还没有 Markdown 文件。" },
@@ -22,6 +23,7 @@ const state = {
   reportPollTimer: null,
   riskModelPollTimer: null,
   macroFrameworkPollTimer: null,
+  macroSignalPollTimer: null,
   countdownTimer: null,
   nextRefreshAt: null,
   lastMeta: null,
@@ -44,6 +46,7 @@ const state = {
   },
   riskModel: { data: null, version: null, loading: false },
   macroFramework: { data: null, version: null, loading: false },
+  macroSignals: { data: null, loading: false },
 };
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -253,6 +256,146 @@ function scheduleMacroFrameworkPoll(delay = MACRO_FRAMEWORK_POLL_MS) {
   state.macroFrameworkPollTimer = window.setTimeout(async () => {
     await loadMacroFramework({ announce: true });
     scheduleMacroFrameworkPoll();
+  }, delay);
+}
+
+function macroNumber(value, unit, digits = null) {
+  if (value === null || value === undefined || Number.isNaN(Number(value))) return "—";
+  const number = Number(value);
+  const precision = digits ?? (unit === "bp" ? (Math.abs(number) < 10 ? 2 : 1) : 2);
+  const formatted = number.toLocaleString("zh-CN", {
+    minimumFractionDigits: precision,
+    maximumFractionDigits: precision,
+  });
+  if (unit === "USD") return `$${formatted}`;
+  return `${formatted}${unit}`;
+}
+
+function macroChange(value, unit) {
+  if (value === null || value === undefined || Number.isNaN(Number(value))) return "—";
+  const number = Number(value);
+  const precision = unit === "bp" ? (Math.abs(number) < 10 ? 2 : 1) : 2;
+  return `${number > 0 ? "+" : ""}${number.toFixed(precision)}${unit}`;
+}
+
+function macroSparkline(history, metricId) {
+  const points = (history || []).map(item => Number(item.value)).filter(Number.isFinite);
+  if (points.length < 2) return '<div class="macro-spark-empty">历史不足</div>';
+  const width = 220;
+  const height = 52;
+  const min = Math.min(...points);
+  const max = Math.max(...points);
+  const span = max - min || 1;
+  const coords = points.map((value, index) => {
+    const x = (index / (points.length - 1)) * width;
+    const y = height - 4 - ((value - min) / span) * (height - 8);
+    return `${x.toFixed(1)},${y.toFixed(1)}`;
+  }).join(" ");
+  const last = coords.split(" ").at(-1).split(",");
+  const toneClass = metricId === "jnk" ? "inverse" : "";
+  return `<svg class="macro-sparkline ${toneClass}" viewBox="0 0 ${width} ${height}" role="img" aria-label="最近30个观测走势">
+    <line x1="0" y1="${height - 4}" x2="${width}" y2="${height - 4}"></line>
+    <polyline points="${coords}"></polyline>
+    <circle cx="${last[0]}" cy="${last[1]}" r="2.5"></circle>
+  </svg>`;
+}
+
+function macroComponents(metric) {
+  const entries = Object.entries(metric.components || {});
+  if (!entries.length) return "";
+  return `<div class="macro-metric-components">${entries.map(([name, value]) => `<span>${escapeHtml(name)} ${Number(value).toFixed(4)}%</span>`).join("")}</div>`;
+}
+
+function macroMetricTone(metricId, value) {
+  if (value === null || value === undefined || Number.isNaN(Number(value)) || Number(value) === 0) return "neutral";
+  const stressRisesWithValue = ["oas", "ust10y", "cn_repo_spread", "usd_funding_spread"].includes(metricId);
+  const adverse = stressRisesWithValue ? Number(value) > 0 : Number(value) < 0;
+  return adverse ? "negative" : "positive";
+}
+
+function renderMacroSignals(payload) {
+  state.macroSignals.data = payload;
+  const summary = payload.summary || {};
+  const anomalies = Array.isArray(payload.anomalies) ? payload.anomalies : [];
+  const metrics = Array.isArray(payload.metrics) ? payload.metrics : [];
+  const status = $("#macroDataSyncStatus");
+  const generated = payload.generated_at ? new Date(payload.generated_at) : null;
+  $("#macroSignalHeadline").textContent = summary.headline || "宏观数据尚未形成一致信号";
+  $("#macroSignalBoundary").textContent = summary.boundary || "机械统计异动不直接生成交易许可。";
+  $("#macroCreditSummary").textContent = summary.credit || "信用指标暂不可用。";
+  $("#macroRateSummary").textContent = summary.rates || "利率指标暂不可用。";
+  $("#macroLiquiditySummary").textContent = summary.liquidity || "流动性指标暂不可用。";
+  $("#macroSignalGenerated").textContent = generated && !Number.isNaN(generated.getTime())
+    ? `计算 ${generated.toLocaleString("zh-CN", { timeZone: "Asia/Shanghai", month: "2-digit", day: "2-digit", hour: "2-digit", minute: "2-digit" })}`
+    : "计算时间待确认";
+  $("#macroAnomalyRule").textContent = payload.anomaly_rule?.method || "|Z| ≥ 2.0";
+  $("#macroAnomalyList").innerHTML = anomalies.length
+    ? anomalies.map(event => `<article class="macro-anomaly-card ${escapeHtml(event.severity || "warning")}">
+        <div class="macro-anomaly-top"><span>${escapeHtml(event.date)} · ${escapeHtml(event.window)}</span><strong>${Math.abs(Number(event.z)).toFixed(2)}σ</strong></div>
+        <h4>${escapeHtml(event.name)}</h4>
+        <div class="macro-anomaly-change">${macroChange(event.change, event.unit)}</div>
+        <p>${escapeHtml(event.meaning)}</p>
+      </article>`).join("")
+    : '<div class="macro-no-anomaly">最近五个观测没有指标超过 2.0σ；这只表示“未见统计异动”，不等于低风险。</div>';
+  $("#macroMetricGrid").innerHTML = metrics.length
+    ? metrics.map(metric => `<article class="macro-metric-card${metric.stale ? " stale" : ""}">
+        <div class="macro-metric-head">
+          <div><span>${escapeHtml(metric.date)}</span><h4>${escapeHtml(metric.name)}</h4></div>
+          <small>${metric.stale ? `滞后 ${Number(metric.age_days)} 天` : "最新可用"}</small>
+        </div>
+        <div class="macro-metric-value">${macroNumber(metric.latest, metric.unit)}</div>
+        <div class="macro-metric-deltas">
+          <span>1日 <strong class="${macroMetricTone(metric.id, metric.change_1d)}">${macroChange(metric.change_1d, metric.change_unit)}</strong></span>
+          <span>5日 <strong class="${macroMetricTone(metric.id, metric.change_5d)}">${macroChange(metric.change_5d, metric.change_unit)}</strong></span>
+        </div>
+        ${macroComponents(metric)}
+        ${macroSparkline(metric.history, metric.id)}
+        <a href="${escapeHtml(metric.source_url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(metric.source)}</a>
+      </article>`).join("")
+    : '<div class="report-empty">宏观数据源暂不可用。</div>';
+  const errors = Array.isArray(payload.errors) ? payload.errors : [];
+  const errorBox = $("#macroDataErrors");
+  errorBox.hidden = errors.length === 0;
+  errorBox.textContent = errors.length ? `部分数据缺口：${errors.join("；")}` : "";
+  status.className = `macro-framework-sync data ${payload.partial ? "partial" : "current"}`;
+  status.innerHTML = `<span class="macro-framework-dot"></span><span>${payload.partial ? "宏观数据部分更新" : `宏观数据已更新 · ${metrics.length}项`}</span>`;
+  window.requestAnimationFrame(updateActiveNavigation);
+}
+
+async function loadMacroSignals({ force = false, announce = false } = {}) {
+  if (state.macroSignals.loading) return false;
+  state.macroSignals.loading = true;
+  const button = $("#macroDataRefreshButton");
+  const status = $("#macroDataSyncStatus");
+  button.disabled = true;
+  status.className = "macro-framework-sync data loading";
+  status.innerHTML = '<span class="macro-framework-dot"></span><span>正在获取宏观数据</span>';
+  try {
+    const response = await fetch(`/api/macro-signals${force ? "?force=1" : ""}`, { cache: "no-store" });
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.error || `HTTP ${response.status}`);
+    renderMacroSignals(payload);
+    if (announce) toast(payload.partial ? "宏观数据已刷新，部分来源存在缺口" : "宏观数据与异动已刷新");
+    return true;
+  } catch (error) {
+    console.error("宏观数据读取失败", error);
+    status.className = "macro-framework-sync data error";
+    status.innerHTML = `<span class="macro-framework-dot"></span><span>宏观数据失败 · ${escapeHtml(error.message)}</span>`;
+    $("#macroMetricGrid").innerHTML = `<div class="report-empty">读取失败：${escapeHtml(error.message)}</div>`;
+    return false;
+  } finally {
+    state.macroSignals.loading = false;
+    button.disabled = false;
+  }
+}
+
+function scheduleMacroSignalPoll(delay = MACRO_SIGNAL_POLL_MS) {
+  window.clearTimeout(state.macroSignalPollTimer);
+  state.macroSignalPollTimer = null;
+  if (document.hidden) return;
+  state.macroSignalPollTimer = window.setTimeout(async () => {
+    await loadMacroSignals();
+    scheduleMacroSignalPoll();
   }, delay);
 }
 
@@ -1162,9 +1305,11 @@ $("#refreshButton").addEventListener("click", () => {
   void loadReportIndex();
   void loadRiskModel();
   void loadMacroFramework();
+  void loadMacroSignals({ force: true });
 });
 $("#riskModelRefreshButton").addEventListener("click", () => void forceRiskModelRefresh());
 $("#macroFrameworkRefreshButton").addEventListener("click", () => void loadMacroFramework({ announce: true }));
+$("#macroDataRefreshButton").addEventListener("click", () => void loadMacroSignals({ force: true, announce: true }));
 $$('[data-timeframe]').forEach(button => button.addEventListener("click", () => switchTimeframe(button.dataset.timeframe)));
 $("#journalToday").addEventListener("click", () => loadJournal(shanghaiDate()));
 $("#journalDate").addEventListener("change", event => loadJournal(event.target.value));
@@ -1204,6 +1349,7 @@ document.addEventListener("visibilitychange", () => {
     scheduleReportPoll();
     scheduleRiskModelPoll();
     scheduleMacroFrameworkPoll();
+    scheduleMacroSignalPoll();
   } else if (state.data) {
     void loadDashboard({ background: true });
     schedulePortfolioPoll();
@@ -1213,6 +1359,8 @@ document.addEventListener("visibilitychange", () => {
     scheduleRiskModelPoll();
     void loadMacroFramework({ announce: true });
     scheduleMacroFrameworkPoll();
+    void loadMacroSignals();
+    scheduleMacroSignalPoll();
   }
 });
 
@@ -1246,6 +1394,7 @@ async function initializeDashboard() {
     loadReportIndex(),
     loadRiskModel(),
     loadMacroFramework(),
+    loadMacroSignals(),
     loadDashboard(),
   ]);
   const hashTarget = window.location.hash ? $(window.location.hash) : null;
@@ -1255,6 +1404,7 @@ async function initializeDashboard() {
   scheduleReportPoll();
   scheduleRiskModelPoll();
   scheduleMacroFrameworkPoll();
+  scheduleMacroSignalPoll();
 }
 
 void initializeDashboard();

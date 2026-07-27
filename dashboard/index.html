@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
   <title>守门台 · 交易控制看板</title>
-    <link rel="stylesheet" href="styles.css?v=1.12.0">
+    <link rel="stylesheet" href="styles.css?v=1.13.0">
 </head>
 <body>
   <!--
@@ -102,9 +102,43 @@
             <p>展示你的研究方法与观察指标，不把框架条目直接当作当日市场结论或交易许可。</p>
           </div>
           <div class="macro-framework-controls">
-            <div id="macroFrameworkSyncStatus" class="macro-framework-sync"><span class="macro-framework-dot"></span><span>正在读取框架原文</span></div>
-            <button id="macroFrameworkRefreshButton" type="button" class="text-button">刷新框架</button>
+            <div class="macro-status-stack">
+              <div id="macroDataSyncStatus" class="macro-framework-sync data"><span class="macro-framework-dot"></span><span>正在获取宏观数据</span></div>
+              <div id="macroFrameworkSyncStatus" class="macro-framework-sync"><span class="macro-framework-dot"></span><span>正在读取框架原文</span></div>
+            </div>
+            <div class="macro-button-row">
+              <button id="macroDataRefreshButton" type="button" class="text-button">刷新数据</button>
+              <button id="macroFrameworkRefreshButton" type="button" class="text-button">刷新原文</button>
+            </div>
           </div>
+        </div>
+        <div class="macro-signal-dashboard" aria-live="polite">
+          <header class="macro-signal-head">
+            <div>
+              <span>RECENT ANOMALY MONITOR</span>
+              <h3 id="macroSignalHeadline">正在识别最近异动</h3>
+              <p id="macroSignalBoundary">按前60个观测的变化分布进行机械识别。</p>
+            </div>
+            <div id="macroSignalGenerated" class="macro-signal-generated">等待数据日期</div>
+          </header>
+          <div class="macro-signal-summary">
+            <article><span>信用风险偏好</span><p id="macroCreditSummary">正在计算 OAS 与 JNK 的一致性。</p></article>
+            <article><span>长端利率压力</span><p id="macroRateSummary">正在计算美国10年期国债变化。</p></article>
+            <article><span>中美资金管道</span><p id="macroLiquiditySummary">正在计算 FR007−FDR007 与 SOFR−IORB。</p></article>
+          </div>
+          <div class="macro-anomaly-section">
+            <div class="macro-subhead"><span>最近异动</span><small id="macroAnomalyRule">|Z| ≥ 2.0</small></div>
+            <div id="macroAnomalyList" class="macro-anomaly-list">
+              <div class="report-empty">正在检查最近五个观测…</div>
+            </div>
+          </div>
+          <div class="macro-metric-section">
+            <div class="macro-subhead"><span>指标当前读数</span><small>1日 / 5日变化 · 数据日期独立标注</small></div>
+            <div id="macroMetricGrid" class="macro-metric-grid">
+              <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
+            </div>
+          </div>
+          <div id="macroDataErrors" class="macro-data-errors" hidden></div>
         </div>
         <div class="macro-framework-layout">
           <aside class="macro-framework-meta" aria-label="宏观框架状态">
@@ -296,13 +330,13 @@
       </section>
 
       <footer>
-      <span>守门台 V1.12 · 宏观框架原文接入 · Excel持仓同步</span>
+      <span>守门台 V1.13 · 宏观异动监控 · Excel持仓同步</span>
         <span id="truthNote">等待数据口径说明</span>
       </footer>
     </main>
   </div>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="app.js?v=1.12.0"></script>
+  <script src="app.js?v=1.13.0"></script>
 </body>
 </html>

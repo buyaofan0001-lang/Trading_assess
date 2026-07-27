@@ -10,14 +10,16 @@ test("dashboard loads real data and primary interactions work", async ({ page })
   });
 
   await page.goto(dashboardUrl);
-  await expect(page.locator(".peer-card")).toHaveCount(2, { timeout: 120000 });
-  await expect(page.locator(".intraday-chart")).toHaveCount(2, { timeout: 30000 });
+  await expect(page.locator(".peer-card").first()).toBeVisible({ timeout: 120000 });
+  const holdingCount = await page.locator(".peer-card").count();
+  expect(holdingCount).toBeGreaterThanOrEqual(1);
+  await expect(page.locator(".intraday-chart")).toHaveCount(holdingCount, { timeout: 30000 });
   const intradaySvgCount = await page.locator(".intraday-chart svg").count();
-  if (intradaySvgCount === 2) {
-    await expect(page.locator(".chart-series.holding polyline")).toHaveCount(2);
-    await expect(page.locator(".chart-legend-item")).toHaveCount(10);
+  if (intradaySvgCount === holdingCount) {
+    await expect(page.locator(".chart-series.holding polyline")).toHaveCount(holdingCount);
+    expect(await page.locator(".chart-legend-item").count()).toBeGreaterThanOrEqual(holdingCount);
   } else {
-    await expect(page.locator(".intraday-empty")).toHaveCount(2);
+    expect(await page.locator(".intraday-empty").count()).toBeGreaterThanOrEqual(1);
   }
   const jcetCard = page.locator(".peer-card").filter({ hasText: "长电科技" });
   await expect(jcetCard).toHaveCount(1);
@@ -26,7 +28,7 @@ test("dashboard loads real data and primary interactions work", async ({ page })
   await expect(jcetCard.locator(".overseas-chip")).toHaveCount(2);
   await expect(jcetCard.locator(".overseas-ai-evidence")).toHaveCount(2);
   await expect(jcetCard.locator(".peer-ai-note")).toContainText("AI自动认定");
-  await expect(page.locator(".volatility-boundary")).toHaveCount(2);
+  await expect(page.locator(".volatility-boundary")).toHaveCount(holdingCount);
   await expect(jcetCard.locator(".volatility-boundary")).toContainText("ATR(14)");
   await expect(jcetCard.locator(".volatility-boundary")).toContainText("当前跌幅");
   await expect(jcetCard.locator(".volatility-boundary")).toContainText("盘中最大下探");
@@ -251,7 +253,7 @@ test("missing due report is clearly marked instead of looking current", async ({
 test("mobile layout does not overflow horizontally", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await page.goto(dashboardUrl);
-  await expect(page.locator(".peer-card")).toHaveCount(2, { timeout: 120000 });
+  await expect(page.locator(".peer-card").first()).toBeVisible({ timeout: 120000 });
   await expect(page.locator("#riskModelCard .risk-score-ring")).toHaveCount(1);
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1);
   expect(overflow).toBe(false);

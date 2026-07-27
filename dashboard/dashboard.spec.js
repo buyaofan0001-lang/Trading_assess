@@ -39,9 +39,13 @@ test("dashboard loads real data and primary interactions work", async ({ page })
   await expect(page.locator("#riskModelSyncStatus")).toContainText("自动同步");
   await expect(page.getByRole("button", { name: "立即同步并重跑" })).toBeEnabled();
   expect(await page.locator(".risk-factor-row").count()).toBeGreaterThanOrEqual(2);
+  await expect(page.locator("#macroFrameworkBody h2")).toContainText("宏观视角");
+  await expect(page.locator("#macroFrameworkBody")).toContainText("BAMLH0A0HYM2");
+  await expect(page.locator("#macroFrameworkFilename")).toContainText("分析框架.md");
+  await expect(page.locator("#macroFrameworkSyncStatus")).toContainText("草案已同步");
   await expect(page.locator('a[href="#overnight"]')).toHaveCount(0);
   await expect(page.locator("#overnight")).toHaveCount(0);
-  await expect(page.locator(".nav-link")).toHaveCount(7);
+  await expect(page.locator(".nav-link")).toHaveCount(8);
   await expect(page.locator("#permissionCard")).toHaveClass(/red/);
   await expect(page.locator("#gate-title")).toContainText("停止主动买入");
   await expect(page.locator("#freshness")).toContainText("数据已更新");
@@ -134,6 +138,15 @@ test("risk model result is polled independently", async ({ page }) => {
   const riskResponse = page.waitForResponse(response => response.url().endsWith("/api/risk-model") && response.ok());
   await page.clock.fastForward(61_000);
   await riskResponse;
+});
+
+test("macro framework source is polled independently", async ({ page }) => {
+  await page.clock.install({ time: new Date("2026-07-16T09:30:00Z") });
+  await page.goto(`${dashboardUrl}/#macro-framework`);
+  await expect(page.locator("#macroFrameworkBody h2")).toContainText("宏观视角");
+  const frameworkResponse = page.waitForResponse(response => response.url().endsWith("/api/macro-framework") && response.ok());
+  await page.clock.fastForward(61_000);
+  await frameworkResponse;
 });
 
 test("risk model can request a non-blocking manual refresh", async ({ page }) => {

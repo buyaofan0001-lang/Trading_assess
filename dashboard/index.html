@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="dark">
   <title>守门台 · 交易控制看板</title>
-    <link rel="stylesheet" href="styles.css?v=1.11.0">
+    <link rel="stylesheet" href="styles.css?v=1.12.0">
 </head>
 <body>
   <!--
@@ -30,12 +30,13 @@
 
       <nav>
         <a class="nav-link active" href="#gate"><span>01</span> 今日权限</a>
-        <a class="nav-link" href="#risk-model"><span>02</span> 风控雷达</a>
-        <a class="nav-link" href="#arena"><span>03</span> 同行擂台</a>
-        <a class="nav-link" href="#flows"><span>04</span> 资金去向</a>
-        <a class="nav-link" href="#premarket"><span>05</span> 昨夜盘前</a>
-        <a class="nav-link" href="#close-review"><span>06</span> 收盘复盘</a>
-        <a class="nav-link" href="#journal"><span>07</span> 每日日记</a>
+        <a class="nav-link" href="#macro-framework"><span>02</span> 宏观框架</a>
+        <a class="nav-link" href="#risk-model"><span>03</span> 风控雷达</a>
+        <a class="nav-link" href="#arena"><span>04</span> 同行擂台</a>
+        <a class="nav-link" href="#flows"><span>05</span> 资金去向</a>
+        <a class="nav-link" href="#premarket"><span>06</span> 昨夜盘前</a>
+        <a class="nav-link" href="#close-review"><span>07</span> 收盘复盘</a>
+        <a class="nav-link" href="#journal"><span>08</span> 每日日记</a>
       </nav>
 
       <div class="rail-foot">
@@ -89,6 +90,48 @@
           <article class="panel compact-panel">
             <div class="panel-label">持仓真相</div>
             <div id="holdingTruth" class="truth-lines"></div>
+          </article>
+        </div>
+      </section>
+
+      <section id="macro-framework" class="content-section macro-framework-section" aria-labelledby="macro-framework-title">
+        <div class="section-head macro-framework-head">
+          <div>
+            <div class="section-kicker">MACRO RESEARCH OPERATING SYSTEM · DRAFT</div>
+            <h2 id="macro-framework-title">宏观分析框架</h2>
+            <p>展示你的研究方法与观察指标，不把框架条目直接当作当日市场结论或交易许可。</p>
+          </div>
+          <div class="macro-framework-controls">
+            <div id="macroFrameworkSyncStatus" class="macro-framework-sync"><span class="macro-framework-dot"></span><span>正在读取框架原文</span></div>
+            <button id="macroFrameworkRefreshButton" type="button" class="text-button">刷新框架</button>
+          </div>
+        </div>
+        <div class="macro-framework-layout">
+          <aside class="macro-framework-meta" aria-label="宏观框架状态">
+            <div class="macro-draft-badge">草案 · 持续完善</div>
+            <dl>
+              <div><dt>原始文件</dt><dd id="macroFrameworkFilename">分析框架.md</dd></div>
+              <div><dt>已写章节</dt><dd id="macroFrameworkSectionCount">—</dd></div>
+              <div><dt>正文规模</dt><dd id="macroFrameworkChars">—</dd></div>
+              <div><dt>最后修改</dt><dd id="macroFrameworkModified">—</dd></div>
+            </dl>
+            <div class="macro-framework-boundary">
+              <strong>使用边界</strong>
+              <p>这里回答“应该观察什么”。当日读数、方向解释和交易动作仍需分别验证。</p>
+            </div>
+            <div id="macroFrameworkOutline" class="macro-framework-outline" aria-label="框架目录"></div>
+          </aside>
+          <article class="macro-framework-document">
+            <header>
+              <div>
+                <span>READ-ONLY SOURCE</span>
+                <h3 id="macroFrameworkDocumentTitle">等待框架原文</h3>
+              </div>
+              <small id="macroFrameworkSource">每60秒检查文件变化</small>
+            </header>
+            <div id="macroFrameworkBody" class="report-markdown macro-framework-markdown">
+              <div class="report-empty">正在读取「日记/分析框架.md」…</div>
+            </div>
           </article>
         </div>
       </section>
@@ -253,13 +296,13 @@
       </section>
 
       <footer>
-      <span>守门台 V1.11 · Excel持仓同步 · 科技风控自动重跑</span>
+      <span>守门台 V1.12 · 宏观框架原文接入 · Excel持仓同步</span>
         <span id="truthNote">等待数据口径说明</span>
       </footer>
     </main>
   </div>
 
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
-  <script src="app.js?v=1.11.0"></script>
+  <script src="app.js?v=1.12.0"></script>
 </body>
 </html>

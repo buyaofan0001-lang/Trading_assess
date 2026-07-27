@@ -3,6 +3,7 @@ const POST_CLOSE_REFRESH_MS = 5 * 60_000;
 const PORTFOLIO_POLL_MS = 15_000;
 const REPORT_POLL_MS = 60_000;
 const RISK_MODEL_POLL_MS = 60_000;
+const MACRO_FRAMEWORK_POLL_MS = 60_000;
 const REPORT_UI = {
   premarket: { prefix: "premarket", empty: "盘前报告目录中还没有 Markdown 文件。" },
   close: { prefix: "close", empty: "收盘复盘目录中还没有 Markdown 文件。" },
@@ -20,6 +21,7 @@ const state = {
   portfolioPollTimer: null,
   reportPollTimer: null,
   riskModelPollTimer: null,
+  macroFrameworkPollTimer: null,
   countdownTimer: null,
   nextRefreshAt: null,
   lastMeta: null,
@@ -41,6 +43,7 @@ const state = {
     close: { entries: [], latest: null, date: null, version: null, content: "", loading: false, health: null },
   },
   riskModel: { data: null, version: null, loading: false },
+  macroFramework: { data: null, version: null, loading: false },
 };
 
 const $ = (selector, root = document) => root.querySelector(selector);
@@ -177,6 +180,80 @@ function markdownToHtml(markdown) {
     html.push(`<p>${paragraph.map(renderInlineMarkdown).join("<br>")}</p>`);
   }
   return html.join("");
+}
+
+function macroModifiedLabel(value) {
+  if (!value) return "尚未生成";
+  return new Date(value).toLocaleString("zh-CN", {
+    timeZone: "Asia/Shanghai",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+function renderMacroFramework(payload) {
+  const exists = Boolean(payload.exists);
+  const sections = Array.isArray(payload.sections) ? payload.sections : [];
+  const status = $("#macroFrameworkSyncStatus");
+  state.macroFramework.data = payload;
+  state.macroFramework.version = payload.version || null;
+  $("#macroFrameworkFilename").textContent = payload.filename || "分析框架.md";
+  $("#macroFrameworkSectionCount").textContent = `${sections.length} 节`;
+  $("#macroFrameworkChars").textContent = `${Number(payload.chars || 0).toLocaleString("zh-CN")} 字符`;
+  $("#macroFrameworkModified").textContent = macroModifiedLabel(payload.modified_at);
+  $("#macroFrameworkDocumentTitle").textContent = exists ? (payload.title || "宏观分析框架") : "尚未找到分析框架";
+  $("#macroFrameworkSource").textContent = exists
+    ? `${payload.filename} · 每60秒自动检查`
+    : payload.path || "日记/分析框架.md";
+  $("#macroFrameworkOutline").innerHTML = sections.length
+    ? `<div class="macro-outline-label">当前目录</div>${sections.map(section => `<div class="macro-outline-item level-${Number(section.level || 2)}">${escapeHtml(section.title)}</div>`).join("")}`
+    : '<div class="macro-outline-empty">框架补充章节后，目录会自动扩展。</div>';
+  $("#macroFrameworkBody").innerHTML = exists
+    ? (markdownToHtml(payload.content || "") || '<div class="report-empty">框架文件目前为空。</div>')
+    : '<div class="report-empty">尚未找到「日记/分析框架.md」。创建文件后将在60秒内自动接入。</div>';
+  status.className = `macro-framework-sync ${exists ? "current" : "missing"}`;
+  status.innerHTML = `<span class="macro-framework-dot"></span><span>${exists ? `草案已同步 · ${macroModifiedLabel(payload.modified_at)}` : "等待框架文件"}</span>`;
+  window.requestAnimationFrame(updateActiveNavigation);
+}
+
+async function loadMacroFramework({ announce = false } = {}) {
+  if (state.macroFramework.loading) return false;
+  state.macroFramework.loading = true;
+  try {
+    const response = await fetch("/api/macro-framework", { cache: "no-store" });
+    const payload = await response.json();
+    if (!response.ok) throw new Error(payload.error || `HTTP ${response.status}`);
+    const changed = Boolean(
+      state.macroFramework.version
+      && payload.version
+      && state.macroFramework.version !== payload.version
+    );
+    renderMacroFramework(payload);
+    if (changed && announce) toast("宏观分析框架已自动更新");
+    return changed;
+  } catch (error) {
+    console.error("宏观分析框架读取失败", error);
+    const status = $("#macroFrameworkSyncStatus");
+    status.className = "macro-framework-sync error";
+    status.innerHTML = `<span class="macro-framework-dot"></span><span>读取失败 · ${escapeHtml(error.message)}</span>`;
+    $("#macroFrameworkBody").innerHTML = `<div class="report-empty">读取失败：${escapeHtml(error.message)}</div>`;
+    return false;
+  } finally {
+    state.macroFramework.loading = false;
+  }
+}
+
+function scheduleMacroFrameworkPoll(delay = MACRO_FRAMEWORK_POLL_MS) {
+  window.clearTimeout(state.macroFrameworkPollTimer);
+  state.macroFrameworkPollTimer = null;
+  if (document.hidden) return;
+  state.macroFrameworkPollTimer = window.setTimeout(async () => {
+    await loadMacroFramework({ announce: true });
+    scheduleMacroFrameworkPoll();
+  }, delay);
 }
 
 function toast(message) {
@@ -1084,8 +1161,10 @@ $("#refreshButton").addEventListener("click", () => {
   void loadDashboard({ showToast: true, force: true });
   void loadReportIndex();
   void loadRiskModel();
+  void loadMacroFramework();
 });
 $("#riskModelRefreshButton").addEventListener("click", () => void forceRiskModelRefresh());
+$("#macroFrameworkRefreshButton").addEventListener("click", () => void loadMacroFramework({ announce: true }));
 $$('[data-timeframe]').forEach(button => button.addEventListener("click", () => switchTimeframe(button.dataset.timeframe)));
 $("#journalToday").addEventListener("click", () => loadJournal(shanghaiDate()));
 $("#journalDate").addEventListener("change", event => loadJournal(event.target.value));
@@ -1124,6 +1203,7 @@ document.addEventListener("visibilitychange", () => {
     schedulePortfolioPoll();
     scheduleReportPoll();
     scheduleRiskModelPoll();
+    scheduleMacroFrameworkPoll();
   } else if (state.data) {
     void loadDashboard({ background: true });
     schedulePortfolioPoll();
@@ -1131,6 +1211,8 @@ document.addEventListener("visibilitychange", () => {
     scheduleReportPoll();
     void loadRiskModel({ announce: true });
     scheduleRiskModelPoll();
+    void loadMacroFramework({ announce: true });
+    scheduleMacroFrameworkPoll();
   }
 });
 
@@ -1163,6 +1245,7 @@ async function initializeDashboard() {
     loadJournalIndex(),
     loadReportIndex(),
     loadRiskModel(),
+    loadMacroFramework(),
     loadDashboard(),
   ]);
   const hashTarget = window.location.hash ? $(window.location.hash) : null;
@@ -1171,6 +1254,7 @@ async function initializeDashboard() {
   schedulePortfolioPoll();
   scheduleReportPoll();
   scheduleRiskModelPoll();
+  scheduleMacroFrameworkPoll();
 }
 
 void initializeDashboard();

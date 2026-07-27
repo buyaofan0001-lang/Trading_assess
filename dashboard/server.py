@@ -54,6 +54,8 @@ AI_PEERS = AIPeerResolver(
 PERIOD_DAYS = {"1d": 1, "5d": 5, "20d": 20}
 INTRADAY_TTL_SECONDS = 60
 JOURNAL_DIR = REPO / "日记"
+MACRO_FRAMEWORK_PATH = (HERE / CONFIG.get("macro_framework_path", "../日记/分析框架.md")).resolve()
+MACRO_FRAMEWORK_MAX_BYTES = 512_000
 JOURNAL_NAME_RE = re.compile(r"^(\d{4})-(\d{1,2})-(\d{1,2})\.md$")
 JOURNAL_DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
 JOURNAL_MAX_BYTES = 512_000
@@ -197,6 +199,50 @@ def portfolio_snapshot(errors: list[str] | None = None) -> dict[str, Any]:
                 "us_map": [],
             })
     return payload
+
+
+def read_macro_framework(path: Path | None = None) -> dict[str, Any]:
+    """Read the evolving macro framework as a versioned, read-only Markdown source."""
+    target = (path or MACRO_FRAMEWORK_PATH).resolve()
+    if target.is_symlink():
+        raise ValueError("宏观分析框架不能是符号链接")
+    if not target.exists():
+        return {
+            "exists": False,
+            "filename": target.name,
+            "path": str(target),
+            "content": "",
+            "title": "宏观分析框架",
+            "status": "draft",
+            "sections": [],
+            "chars": 0,
+            "modified_at": None,
+            "version": "missing",
+        }
+    if not target.is_file():
+        raise ValueError("宏观分析框架路径不是文件")
+    stat = target.stat()
+    if stat.st_size > MACRO_FRAMEWORK_MAX_BYTES:
+        raise ValueError("宏观分析框架不能超过 500KB")
+    content = target.read_text(encoding="utf-8")
+    heading_matches = list(re.finditer(r"^(#{1,4})\s+(.+?)\s*$", content, flags=re.MULTILINE))
+    sections = [
+        {"level": len(match.group(1)), "title": match.group(2).strip()}
+        for match in heading_matches
+    ]
+    title = sections[0]["title"] if sections else "宏观分析框架"
+    return {
+        "exists": True,
+        "filename": target.name,
+        "path": str(target),
+        "content": content,
+        "title": title,
+        "status": "draft",
+        "sections": sections,
+        "chars": len(content),
+        "modified_at": datetime.fromtimestamp(stat.st_mtime).astimezone().isoformat(timespec="seconds"),
+        "version": f"{stat.st_mtime_ns:x}-{stat.st_size:x}",
+    }
 
 
 def validate_journal_date(value: Any) -> str:
@@ -1502,6 +1548,14 @@ class DashboardHandler(SimpleHTTPRequestHandler):
                 payload = read_risk_model()
                 payload["sync"] = RISK_MODEL_SYNC.status()
                 self.send_json(payload)
+            except Exception as exc:
+                self.send_json({"error": str(exc)}, HTTPStatus.INTERNAL_SERVER_ERROR)
+            return
+        if parsed.path == "/api/macro-framework":
+            try:
+                self.send_json(read_macro_framework())
+            except ValueError as exc:
+                self.send_json({"error": str(exc)}, HTTPStatus.BAD_REQUEST)
             except Exception as exc:
                 self.send_json({"error": str(exc)}, HTTPStatus.INTERNAL_SERVER_ERROR)
             return

@@ -3,6 +3,7 @@
   "position_seed": "position_seed.json",
   "peer_library": "peer_library.json",
   "peer_universe_cache": ".cache/ai_peer_universe.json",
+  "macro_framework_path": "../日记/分析框架.md",
   "daily_report_root": "/Users/liuguan1/Documents/New project 2",
   "risk_model_root": "/Users/liuguan1/Documents/github/backtest/backtest_project/deliverables/tech_sector_risk_model_v8_20260718",
   "risk_model_auto_sync": true,

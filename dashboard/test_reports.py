@@ -6,10 +6,31 @@ from zoneinfo import ZoneInfo
 
 import pandas as pd
 
-from server import compute_volatility_metrics, get_daily_report, list_daily_reports
+from server import compute_volatility_metrics, get_daily_report, list_daily_reports, read_macro_framework
 
 
 class DailyReportTests(unittest.TestCase):
+    def test_reads_versioned_macro_framework_without_modifying_source(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "分析框架.md"
+            source = "## 宏观视角\n\n### 信用风险\n观察 OAS"
+            path.write_text(source, encoding="utf-8")
+            payload = read_macro_framework(path)
+            self.assertTrue(payload["exists"])
+            self.assertEqual(payload["content"], source)
+            self.assertEqual(payload["title"], "宏观视角")
+            self.assertEqual([item["title"] for item in payload["sections"]], ["宏观视角", "信用风险"])
+            self.assertEqual(path.read_text(encoding="utf-8"), source)
+
+    def test_macro_framework_version_changes_after_edit(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "分析框架.md"
+            path.write_text("## 宏观视角", encoding="utf-8")
+            before = read_macro_framework(path)["version"]
+            path.write_text("## 宏观视角\n\n### 市场流动性", encoding="utf-8")
+            after = read_macro_framework(path)["version"]
+            self.assertNotEqual(before, after)
+
     def test_discovers_both_report_kinds_and_reads_content(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)

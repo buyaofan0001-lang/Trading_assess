@@ -149,6 +149,73 @@ test("macro framework source is polled independently", async ({ page }) => {
   await frameworkResponse;
 });
 
+test("macro monitor renders recent anomalies, dates and source-backed metrics", async ({ page }) => {
+  const history = Array.from({ length: 30 }, (_, index) => ({
+    date: `2026-06-${String(index + 1).padStart(2, "0")}`,
+    value: 270 + index * 0.3,
+  }));
+  const metric = (id, name, latest, unit, changeUnit, source) => ({
+    id,
+    name,
+    latest,
+    date: "2026-07-24",
+    change_1d: 1,
+    change_5d: 6,
+    unit,
+    change_unit: changeUnit,
+    source,
+    source_url: "https://example.com/source",
+    components: {},
+    age_days: 1,
+    stale: false,
+    history,
+  });
+  await page.route("**/api/macro-signals*", async route => {
+    await route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({
+        generated_at: "2026-07-28T10:00:00+08:00",
+        partial: false,
+        errors: [],
+        anomaly_rule: { method: "相对前60个观测的稳健Z分数，绝对值≥2.0才列为异动" },
+        summary: {
+          headline: "信用风险偏好转弱；长端利率上行",
+          credit: "OAS扩大且JNK下跌。",
+          rates: "美国10年期收益率上行。",
+          liquidity: "中美融资管道未见持续拥堵。",
+          boundary: "机械统计异动只描述偏离常态的幅度，不直接生成买卖许可。",
+        },
+        anomalies: [{
+          date: "2026-07-23",
+          window: "1D",
+          z: 3.04,
+          change: 9,
+          unit: "bp",
+          name: "美国高收益债 OAS",
+          severity: "extreme",
+          meaning: "信用利差突然扩张，风险偏好转弱。",
+        }],
+        metrics: [
+          metric("oas", "美国高收益债 OAS", 279, "bp", "bp", "FRED · ICE BofA"),
+          metric("jnk", "JNK 高收益债 ETF", 95.5, "USD", "%", "Yahoo Finance · JNK"),
+          metric("ust10y", "美国10年期国债收益率", 4.71, "%", "bp", "FRED · DGS10"),
+          metric("cn_repo_spread", "FR007−FDR007 非银融资溢价", 1.51, "bp", "bp", "中国货币网"),
+          metric("usd_funding_spread", "SOFR−IORB 美元融资利差", -1, "bp", "bp", "FRED · SOFR / IORB"),
+        ],
+      }),
+    });
+  });
+  await page.goto(`${dashboardUrl}/#macro-framework`);
+  await expect(page.locator("#macroSignalHeadline")).toContainText("信用风险偏好转弱");
+  await expect(page.locator(".macro-anomaly-card")).toHaveCount(1);
+  await expect(page.locator(".macro-anomaly-card")).toContainText("2026-07-23");
+  await expect(page.locator(".macro-anomaly-card")).toContainText("3.04σ");
+  await expect(page.locator("#macroMetricGrid .macro-metric-card")).toHaveCount(5);
+  await expect(page.locator("#macroMetricGrid")).toContainText("FRED · DGS10");
+  await expect(page.locator("#macroSignalBoundary")).toContainText("不直接生成买卖许可");
+});
+
 test("risk model can request a non-blocking manual refresh", async ({ page }) => {
   await page.route("**/api/risk-model/refresh", async route => {
     await route.fulfill({

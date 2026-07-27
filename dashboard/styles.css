@@ -261,10 +261,68 @@ h3 { font-size: 14px; font-weight: 500; }
 
 .macro-framework-head { align-items: center; }
 .macro-framework-controls { display: flex; align-items: center; justify-content: flex-end; gap: 14px; flex-wrap: wrap; }
+.macro-status-stack { display: grid; justify-items: end; gap: 6px; }
+.macro-button-row { display: flex; align-items: center; gap: 12px; }
 .macro-framework-sync { display: inline-flex; align-items: center; gap: 9px; color: var(--amber); font: 9px/1.4 var(--mono); letter-spacing: .05em; }
 .macro-framework-sync.current { color: var(--green); }
+.macro-framework-sync.data { color: var(--cyan); }
+.macro-framework-sync.data.loading { color: var(--amber); }
+.macro-framework-sync.data.partial { color: var(--amber); }
 .macro-framework-sync.missing, .macro-framework-sync.error { color: var(--red); }
 .macro-framework-dot { width: 6px; height: 6px; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 5px color-mix(in srgb, currentColor 10%, transparent); }
+.macro-framework-sync.loading .macro-framework-dot { animation: risk-pulse 1.25s ease-in-out infinite; }
+.macro-signal-dashboard { min-width: 0; margin-bottom: 16px; border: 1px solid var(--line-strong); background: var(--surface); overflow: hidden; }
+.macro-signal-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 28px; min-height: 132px; padding: 25px 26px; border-bottom: 1px solid var(--line-strong); background: #1b1e18; }
+.macro-signal-head span { color: var(--cyan); font: 8px/1.4 var(--mono); letter-spacing: .16em; }
+.macro-signal-head h3 { margin: 10px 0 8px; color: var(--text); font: 400 clamp(24px,2.7vw,38px)/1.2 var(--serif); }
+.macro-signal-head p { max-width: 760px; margin: 0; color: var(--muted); font-size: 11px; line-height: 1.65; }
+.macro-signal-generated { flex: 0 0 auto; color: var(--faint); font: 8px/1.45 var(--mono); text-align: right; }
+.macro-signal-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-bottom: 1px solid var(--line); }
+.macro-signal-summary article { min-width: 0; padding: 18px 20px; border-right: 1px solid var(--line); }
+.macro-signal-summary article:last-child { border-right: 0; }
+.macro-signal-summary span { color: var(--faint); font: 8px/1.4 var(--mono); letter-spacing: .08em; }
+.macro-signal-summary p { margin: 9px 0 0; color: var(--muted); font-size: 10px; line-height: 1.7; }
+.macro-anomaly-section, .macro-metric-section { padding: 22px 20px 24px; border-bottom: 1px solid var(--line); }
+.macro-subhead { display: flex; align-items: baseline; justify-content: space-between; gap: 18px; margin-bottom: 14px; }
+.macro-subhead span { color: var(--text); font-size: 12px; }
+.macro-subhead small { color: var(--faint); font: 8px/1.5 var(--mono); text-align: right; }
+.macro-anomaly-list { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; min-width: 0; }
+.macro-anomaly-card { min-width: 0; padding: 16px; border: 1px solid #654d2f; background: color-mix(in srgb, var(--amber) 6%, var(--surface)); }
+.macro-anomaly-card.extreme { border-color: #704038; background: color-mix(in srgb, var(--red) 7%, var(--surface)); }
+.macro-anomaly-top { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; color: var(--faint); font: 8px/1.4 var(--mono); }
+.macro-anomaly-top strong { color: var(--amber); font: 11px var(--mono); font-weight: 400; }
+.macro-anomaly-card.extreme .macro-anomaly-top strong { color: var(--red); }
+.macro-anomaly-card h4 { min-height: 34px; margin: 13px 0 8px; color: var(--text); font-size: 11px; font-weight: 400; line-height: 1.55; }
+.macro-anomaly-change { color: var(--amber); font: 17px/1.2 var(--mono); }
+.macro-anomaly-card.extreme .macro-anomaly-change { color: var(--red); }
+.macro-anomaly-card p { margin: 11px 0 0; color: var(--muted); font-size: 9px; line-height: 1.65; }
+.macro-no-anomaly { grid-column: 1 / -1; padding: 22px; border: 1px dashed var(--line); color: var(--muted); font-size: 10px; line-height: 1.7; text-align: center; }
+.macro-metric-grid { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; min-width: 0; }
+.macro-metric-card { min-width: 0; padding: 16px; border: 1px solid var(--line); background: #151813; overflow: hidden; }
+.macro-metric-card.stale { border-color: #665033; }
+.macro-metric-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+.macro-metric-head > div { min-width: 0; }
+.macro-metric-head span, .macro-metric-head small { color: var(--faint); font: 7px/1.4 var(--mono); }
+.macro-metric-head small { flex: 0 0 auto; color: var(--green); }
+.macro-metric-card.stale .macro-metric-head small { color: var(--amber); }
+.macro-metric-head h4 { min-height: 37px; margin: 7px 0 0; color: var(--muted); font-size: 10px; font-weight: 400; line-height: 1.55; }
+.macro-metric-value { margin-top: 12px; color: var(--text); font: 20px/1.2 var(--mono); overflow-wrap: anywhere; }
+.macro-metric-deltas { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 13px; }
+.macro-metric-deltas span { color: var(--faint); font: 8px/1.5 var(--mono); }
+.macro-metric-deltas strong { display: block; margin-top: 3px; font: 9px/1.4 var(--mono); font-weight: 400; }
+.macro-metric-components { display: flex; flex-wrap: wrap; gap: 5px 9px; min-height: 18px; margin-top: 9px; }
+.macro-metric-components span { color: var(--faint); font: 7px/1.45 var(--mono); }
+.macro-sparkline { display: block; width: 100%; height: 54px; margin: 12px 0 9px; overflow: visible; }
+.macro-sparkline line { stroke: var(--line); stroke-width: 1; vector-effect: non-scaling-stroke; }
+.macro-sparkline polyline { fill: none; stroke: var(--amber); stroke-width: 1.5; vector-effect: non-scaling-stroke; }
+.macro-sparkline circle { fill: var(--amber); }
+.macro-sparkline.inverse polyline { stroke: var(--cyan); }
+.macro-sparkline.inverse circle { fill: var(--cyan); }
+.macro-spark-empty { display: grid; place-items: center; height: 54px; margin: 12px 0 9px; color: var(--faint); font: 8px var(--mono); }
+.macro-metric-card > a { display: block; color: var(--cyan); font: 7px/1.5 var(--mono); text-decoration: none; overflow-wrap: anywhere; }
+.macro-metric-card > a:hover { text-decoration: underline; }
+.macro-data-errors { padding: 11px 20px; border-left: 3px solid var(--amber); color: var(--amber); background: color-mix(in srgb, var(--amber) 5%, transparent); font: 8px/1.55 var(--mono); }
+.macro-data-errors[hidden] { display: none; }
 .macro-framework-layout { display: grid; grid-template-columns: minmax(220px, .62fr) minmax(0, 2.4fr); gap: 16px; align-items: start; }
 .macro-framework-meta, .macro-framework-document { min-width: 0; border: 1px solid var(--line); background: var(--surface); }
 .macro-framework-meta { position: sticky; top: 16px; overflow: hidden; }
@@ -433,7 +491,17 @@ footer { display: flex; justify-content: space-between; gap: 30px; padding: 25px
   .permission-state { min-width: 0; }
   .gate-grid, .flow-grid, .journal-layout, .report-layout, .risk-model-overview, .risk-factor-grid, .macro-framework-layout { grid-template-columns: 1fr; }
   .macro-framework-head { align-items: flex-start; }
-  .macro-framework-controls { width: 100%; justify-content: space-between; }
+  .macro-framework-controls { width: 100%; align-items: flex-start; justify-content: space-between; }
+  .macro-status-stack { justify-items: start; }
+  .macro-signal-head { min-height: 0; padding: 21px 16px; align-items: flex-start; flex-direction: column; gap: 13px; }
+  .macro-signal-generated { text-align: left; }
+  .macro-signal-summary, .macro-anomaly-list, .macro-metric-grid { grid-template-columns: 1fr; }
+  .macro-signal-summary article { border-right: 0; border-bottom: 1px solid var(--line); }
+  .macro-signal-summary article:last-child { border-bottom: 0; }
+  .macro-anomaly-section, .macro-metric-section { padding: 19px 14px 20px; }
+  .macro-anomaly-card h4, .macro-metric-head h4 { min-height: 0; }
+  .macro-subhead { align-items: flex-start; flex-direction: column; gap: 5px; }
+  .macro-subhead small { text-align: left; }
   .macro-framework-meta { position: static; }
   .macro-framework-document > header { min-height: 0; padding: 18px 16px; align-items: flex-start; flex-direction: column; gap: 12px; }
   .macro-framework-document > header small { text-align: left; }
